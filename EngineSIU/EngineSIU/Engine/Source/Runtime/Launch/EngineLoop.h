@@ -4,7 +4,7 @@
 #include "LevelEditor/SlateAppMessageHandler.h"
 #include "Renderer/Renderer.h"
 #include "UnrealEd/PrimitiveDrawBatch.h"
-
+#include "Lua/LuaCompiler.h"
 
 class FSlateAppMessageHandler;
 class UnrealEd;
@@ -44,6 +44,7 @@ public:
     static FResourceMgr ResourceManager;
     static uint32 TotalAllocationBytes;
     static uint32 TotalAllocationCount;
+    FLuaCompiler LuaCompiler;
 
     HWND AppWnd;
     bool bIsEnableShaderHotReload = true; // TODO: ImGui에서 변경가능하게 설정하기

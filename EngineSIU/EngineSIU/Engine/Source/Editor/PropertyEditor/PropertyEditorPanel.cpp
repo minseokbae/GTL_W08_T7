@@ -1,5 +1,10 @@
 #include "PropertyEditorPanel.h"
 
+#include <filesystem>
+#include <windows.h>
+#include <shellapi.h>
+#include "tchar.h"
+
 #include "World/World.h"
 #include "Actors/Player.h"
 #include "Components/Light/LightComponent.h"
@@ -94,6 +99,55 @@ void PropertyEditorPanel::Render()
             ImGui::TreePop(); // 트리 닫기
         }
         ImGui::PopStyleColor();
+    }
+
+    if (PickedActor)
+    {
+        namespace fs = std::filesystem;
+
+        FString ActorName = PickedActor->GetActorLabel();
+        ActorName += ".lua";
+        static char buf[256];
+        strcpy_s(buf, *ActorName);
+
+        if (fs::exists(buf))
+        {
+            PickedActor->SetLuaBindState(true);
+            if (ImGui::Button("Edit Script"))
+            {
+                std::string ansiStr = *ActorName;
+                std::vector<wchar_t> wbuf(ansiStr.size() + 1);
+                MultiByteToWideChar(CP_UTF8, 0, ansiStr.c_str(), -1, wbuf.data(), (int)wbuf.size());
+
+                LPCTSTR luaFilePath = wbuf.data();
+                HINSTANCE hInst = ShellExecute(
+                    NULL,
+                    _T("open"),
+                    luaFilePath,
+                    NULL,
+                    NULL,
+                    SW_SHOWNORMAL
+                );
+
+                if ((INT_PTR)hInst <= 32)
+                {
+                    MessageBox(NULL, _T("파일 열기에 실패했습니다."), _T("Error"), MB_OK | MB_ICONERROR);
+                }
+            }
+        }
+        else
+        {
+            if (ImGui::Button("Create Script"))
+            {
+                fs::copy_file("template.lua", buf);
+                PickedActor->SetLuaScriptPath(buf);
+                PickedActor->SetLuaBindState(true);
+            }
+        }
+
+        ImGui::InputText("##ScriptFile", buf, sizeof(buf), ImGuiInputTextFlags_ReadOnly);
+        ImGui::SameLine();
+        ImGui::Text("Script File");
     }
 
     if (PickedActor)

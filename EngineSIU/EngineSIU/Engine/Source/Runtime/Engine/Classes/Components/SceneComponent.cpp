@@ -3,11 +3,14 @@
 #include "Math/JungleMath.h"
 #include "UObject/Casts.h"
 #include "UObject/ObjectFactory.h"
+#include "Runtime/Lua/LuaCompiler.h"
+#include "GameFramework/Actor.h"
 
 USceneComponent::USceneComponent()
     : RelativeLocation(FVector(0.f, 0.f, 0.f))
     , RelativeRotation(FVector(0.f, 0.f, 0.f))
     , RelativeScale3D(FVector(1.f, 1.f, 1.f))
+    , ComponentVelocity(FVector(20.f, 0.f, 0.f))
 {
 }
 
@@ -18,17 +21,17 @@ UObject* USceneComponent::Duplicate(UObject* InOuter)
     NewComponent->RelativeLocation = RelativeLocation;
     NewComponent->RelativeRotation = RelativeRotation;
     NewComponent->RelativeScale3D = RelativeScale3D;
-
+    NewComponent->ComponentVelocity = ComponentVelocity;
     return NewComponent;
 }
 
 void USceneComponent::GetProperties(TMap<FString, FString>& OutProperties) const
-{
+{  
     Super::GetProperties(OutProperties);
     OutProperties.Add(TEXT("RelativeLocation"), *RelativeLocation.ToString());
     OutProperties.Add(TEXT("RelativeRotation"), *RelativeRotation.ToString());
     OutProperties.Add(TEXT("RelativeScale3D"), *RelativeScale3D.ToString());
-    
+    OutProperties.Add(TEXT("ComponentVelocity"), *ComponentVelocity.ToString());
 }
 
 void USceneComponent::SetProperties(const TMap<FString, FString>& InProperties)
@@ -49,6 +52,11 @@ void USceneComponent::SetProperties(const TMap<FString, FString>& InProperties)
     if (TempStr)
     {
         RelativeScale3D.InitFromString(*TempStr);
+    }
+    TempStr = InProperties.Find(TEXT("ComponentVelocity"));
+    if (TempStr)
+    {
+        ComponentVelocity.InitFromString(*TempStr);
     }
 }
 
@@ -239,7 +247,7 @@ void USceneComponent::SetupAttachment(USceneComponent* InParent)
         ) 
     ) {
         AttachParent = InParent;
-
+        
         // TODO: .AddUnique의 실행 위치를 RegisterComponent로 바꾸거나 해야할 듯
         InParent->AttachChildren.AddUnique(this);
     }
