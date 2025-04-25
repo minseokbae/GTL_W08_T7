@@ -165,6 +165,7 @@ void UEditorEngine::SelectActor(AActor* InActor) const
     if (InActor && CanSelectActor(InActor))
     {
         PrivateEditorSelection::GActorSelected = InActor;
+        GEngineLoop.LuaCompiler.Compile(InActor->GetRootComponent());
     }
     else if (InActor == nullptr)
     {

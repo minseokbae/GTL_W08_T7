@@ -3,6 +3,7 @@
 #include "Math/JungleMath.h"
 #include "UObject/Casts.h"
 #include "UObject/ObjectFactory.h"
+#include "Runtime/LuaCompiler.h"
 
 USceneComponent::USceneComponent()
     : RelativeLocation(FVector(0.f, 0.f, 0.f))
@@ -243,4 +244,15 @@ void USceneComponent::SetupAttachment(USceneComponent* InParent)
         // TODO: .AddUnique의 실행 위치를 RegisterComponent로 바꾸거나 해야할 듯
         InParent->AttachChildren.AddUnique(this);
     }
+}
+
+void USceneComponent::BindToLua(sol::state& Lua)
+{
+    Lua.new_usertype<USceneComponent>("GameObject",
+        "UUID", &USceneComponent::GetUUID,
+        "Location", &USceneComponent::RelativeLocation,
+        "Rotation", &USceneComponent::RelativeRotation,
+        "Scale", &USceneComponent::RelativeScale3D);
+
+    Lua["obj"] = this;
 }

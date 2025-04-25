@@ -129,6 +129,7 @@ void FEngineLoop::Tick()
 
         GEngine->Tick(DeltaTime);
         LevelEditor->Tick(DeltaTime);
+        LuaCompiler.Tick(DeltaTime);
         Render();
         UIMgr->BeginFrame();
         UnrealEditor->Render();

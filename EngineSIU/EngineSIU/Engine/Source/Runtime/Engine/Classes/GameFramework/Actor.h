@@ -129,7 +129,6 @@ public:
 
 private:
     bool bTickInEditor = false;
-
 };
 
 template <typename T>
