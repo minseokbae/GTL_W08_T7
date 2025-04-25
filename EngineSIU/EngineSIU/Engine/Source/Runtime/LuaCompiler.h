@@ -12,8 +12,16 @@ public:
 
     void Bind(USceneComponent* Comp);
 
+    void UnBind();
+
     void Tick(float DeltaTime);
 
-private:
+    void SetTickFunc(sol::function newTick);
+
     sol::state Lua;
+private:
+    
+    sol::environment SolEnv;
+    sol::function TickFunc;
+    USceneComponent* BindedComp = nullptr;
 };

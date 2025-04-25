@@ -17,6 +17,8 @@ class AActor : public UObject
 public:
     AActor() = default;
 
+    ~AActor();
+
     virtual UObject* Duplicate(UObject* InOuter) override;
 
     /** Actor가 게임에 배치되거나 스폰될 때 호출됩니다. */
@@ -106,6 +108,9 @@ private:
     /** 현재 Actor가 삭제 처리중인지 여부 */
     uint8 bActorIsBeingDestroyed : 1 = false;
 
+    /** lua 스크립트 존재여부 **/
+    bool bHasLua = false;
+
 #if 1 // TODO: WITH_EDITOR 추가
 public:
     /** Actor의 기본 Label을 가져옵니다. */
@@ -116,11 +121,18 @@ public:
 
     /** Actor의 Label을 설정합니다. */
     void SetActorLabel(const FString& NewActorLabel, bool bUUID = true);
+    
+    /** Lua 바인트 상태 가져오기 */
+    bool GetLuaBindState() { return bHasLua; }
+
+    /** Lua 바인드 상태 변경하기 */
+    void SetLuaBindState(bool state);
 
 private:
     /** 에디터상에 보이는 Actor의 이름 */
     UPROPERTY
     (FString, ActorLabel)
+
 #endif
 
 public:

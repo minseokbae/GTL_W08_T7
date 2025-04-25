@@ -1,6 +1,13 @@
 #include "Actor.h"
 #include "World/World.h"
+#include <Engine/Engine.h>
+#include "Runtime/LuaCompiler.h"
 
+
+AActor::~AActor()
+{
+    GEngineLoop.LuaCompiler.UnBind();
+}
 
 UObject* AActor::Duplicate(UObject* InOuter)
 {
@@ -8,6 +15,7 @@ UObject* AActor::Duplicate(UObject* InOuter)
 
     NewActor->Owner = Owner;
     NewActor->bTickInEditor = bTickInEditor;
+
     // 기본적으로 있던 컴포넌트 제거
     TSet CopiedComponents = NewActor->OwnedComponents;
     for (UActorComponent* Components : CopiedComponents)
@@ -59,6 +67,9 @@ UObject* AActor::Duplicate(UObject* InOuter)
         }
     }
 
+    //루아 스크립트 존재시 다시 바인드
+    NewActor->bHasLua = bHasLua;
+
     return NewActor;
 }
 
@@ -66,6 +77,12 @@ void AActor::BeginPlay()
 {
     // TODO: 나중에 삭제를 Pending으로 하던가 해서 복사비용 줄이기
     const auto CopyComponents = OwnedComponents;
+    if (bHasLua && GetWorld()->WorldType == EWorldType::PIE)
+    {
+        GEngineLoop.LuaCompiler.Bind(GetRootComponent());
+        auto result = GEngineLoop.LuaCompiler.Lua.safe_script_file("script.lua");
+    }
+        
     for (UActorComponent* Comp : CopyComponents)
     {
         Comp->BeginPlay();

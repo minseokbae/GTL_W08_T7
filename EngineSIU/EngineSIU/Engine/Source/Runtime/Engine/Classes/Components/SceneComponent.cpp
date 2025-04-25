@@ -4,6 +4,7 @@
 #include "UObject/Casts.h"
 #include "UObject/ObjectFactory.h"
 #include "Runtime/LuaCompiler.h"
+#include "GameFramework/Actor.h"
 
 USceneComponent::USceneComponent()
     : RelativeLocation(FVector(0.f, 0.f, 0.f))
@@ -246,13 +247,18 @@ void USceneComponent::SetupAttachment(USceneComponent* InParent)
     }
 }
 
-void USceneComponent::BindToLua(sol::state& Lua)
+void USceneComponent::BindToLua(sol::environment& SolEnv)
 {
-    Lua.new_usertype<USceneComponent>("GameObject",
-        "UUID", &USceneComponent::GetUUID,
-        "Location", &USceneComponent::RelativeLocation,
-        "Rotation", &USceneComponent::RelativeRotation,
-        "Scale", &USceneComponent::RelativeScale3D);
-
-    Lua["obj"] = this;
+    static bool bTypeRegistered = false;
+    if (!bTypeRegistered)
+    {
+        SolEnv.new_usertype<USceneComponent>("GameObject",
+            "UUID", &USceneComponent::GetUUID,
+            "Location", sol::property(&USceneComponent::GetRelativeLocation, &USceneComponent::SetRelativeLocation),
+            "Rotation", sol::property(&USceneComponent::GetRelativeRotation, &USceneComponent::SetRelativeRotation),
+            "Scale", sol::property(&USceneComponent::GetRelativeScale3D, &USceneComponent::SetRelativeScale3D)
+        );
+        bTypeRegistered = true;
+    }
+    GetOwner()->SetLuaBindState(true);
 }

@@ -76,7 +76,7 @@ void UEditorEngine::Tick(float DeltaTime)
             }
         }
         else if (WorldContext->WorldType == EWorldType::PIE)
-        {
+        {   
             if (UWorld* World = WorldContext->World())
             {
                 World->Tick(DeltaTime);
@@ -91,6 +91,7 @@ void UEditorEngine::Tick(float DeltaTime)
                             Actor->Tick(DeltaTime);
                         }
                     }
+                    GEngineLoop.LuaCompiler.Tick(DeltaTime);
                 }
             }
         }
@@ -165,7 +166,6 @@ void UEditorEngine::SelectActor(AActor* InActor) const
     if (InActor && CanSelectActor(InActor))
     {
         PrivateEditorSelection::GActorSelected = InActor;
-        GEngineLoop.LuaCompiler.Compile(InActor->GetRootComponent());
     }
     else if (InActor == nullptr)
     {
