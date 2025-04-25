@@ -4,7 +4,7 @@
 #include "LevelEditor/SlateAppMessageHandler.h"
 #include "Renderer/Renderer.h"
 #include "UnrealEd/PrimitiveDrawBatch.h"
-#include "LuaCompiler.h"
+#include "Lua/LuaCompiler.h"
 
 class FSlateAppMessageHandler;
 class UnrealEd;

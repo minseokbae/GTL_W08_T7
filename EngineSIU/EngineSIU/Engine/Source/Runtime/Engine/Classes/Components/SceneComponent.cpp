@@ -3,7 +3,7 @@
 #include "Math/JungleMath.h"
 #include "UObject/Casts.h"
 #include "UObject/ObjectFactory.h"
-#include "Runtime/LuaCompiler.h"
+#include "Runtime/Lua/LuaCompiler.h"
 #include "GameFramework/Actor.h"
 
 USceneComponent::USceneComponent()

@@ -1,7 +1,7 @@
 #include "Actor.h"
 #include "World/World.h"
 #include <Engine/Engine.h>
-#include "Runtime/LuaCompiler.h"
+#include "Runtime/Lua/LuaCompiler.h"
 
 
 AActor::~AActor()
