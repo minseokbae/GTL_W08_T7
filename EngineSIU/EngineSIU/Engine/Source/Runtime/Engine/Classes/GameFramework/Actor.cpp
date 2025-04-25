@@ -6,7 +6,7 @@
 
 AActor::~AActor()
 {
-    GEngineLoop.LuaCompiler.UnBind();
+    GEngineLoop.LuaCompiler.UnBind(this);
 }
 
 UObject* AActor::Duplicate(UObject* InOuter)
@@ -79,7 +79,7 @@ void AActor::BeginPlay()
     const auto CopyComponents = OwnedComponents;
     if (bHasLua && GetWorld()->WorldType == EWorldType::PIE)
     {
-        GEngineLoop.LuaCompiler.Bind(GetRootComponent());
+        GEngineLoop.LuaCompiler.Bind(this);
     }
         
     for (UActorComponent* Comp : CopyComponents)

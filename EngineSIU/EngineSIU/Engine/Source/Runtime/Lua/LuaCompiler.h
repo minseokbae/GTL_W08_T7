@@ -1,25 +1,22 @@
 #pragma once
 #include "LuaInstance.h"
+#include "HAL/PlatformType.h"
+#include <memory>
 
-class USceneComponent;
+class AActor;
 
 class FLuaCompiler
 {
 public:
     FLuaCompiler();
 
-    void Bind(USceneComponent* Comp);
+    void Bind(AActor* Actor);
 
-    void UnBind();
+    void UnBind(AActor* Actor);
 
     void Tick(float DeltaTime);
-
-    void SetTickFunc(sol::function newTick);
-
     
 private:
     sol::state Lua;
-    sol::environment SolEnv;
-    sol::function TickFunc;
-    USceneComponent* BindedComp = nullptr;
+    std::unordered_map<uint32, std::unique_ptr<FLuaInstance>> LuaInstances;
 };

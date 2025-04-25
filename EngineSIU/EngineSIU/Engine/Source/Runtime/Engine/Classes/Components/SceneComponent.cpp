@@ -252,19 +252,3 @@ void USceneComponent::SetupAttachment(USceneComponent* InParent)
         InParent->AttachChildren.AddUnique(this);
     }
 }
-
-void USceneComponent::BindToLua(sol::environment& SolEnv)
-{
-    static bool bTypeRegistered = false;
-    if (!bTypeRegistered)
-    {
-        SolEnv.new_usertype<USceneComponent>("GameObject",
-            "UUID", &USceneComponent::GetUUID,
-            "Location", sol::property(&USceneComponent::GetRelativeLocation, &USceneComponent::SetRelativeLocation),
-            "Rotation", sol::property(&USceneComponent::GetRelativeRotation, &USceneComponent::SetRelativeRotation),
-            "Scale", sol::property(&USceneComponent::GetRelativeScale3D, &USceneComponent::SetRelativeScale3D)
-        );
-        bTypeRegistered = true;
-    }
-    GetOwner()->SetLuaBindState(true);
-}

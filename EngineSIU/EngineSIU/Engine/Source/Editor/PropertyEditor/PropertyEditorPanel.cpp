@@ -120,7 +120,7 @@ void PropertyEditorPanel::Render()
 
         if (fs::exists(buf))
         {
-            GEngineLoop.LuaCompiler.Bind(PickedActor->GetRootComponent());
+            PickedActor->SetLuaBindState(true);
             if (ImGui::Button("Edit Script"))
             {
                 std::string ansiStr = *ActorName;

@@ -55,7 +55,6 @@ public:
     void SetupAttachment(USceneComponent* InParent);
 
 public:
-    void BindToLua(sol::environment& SolEnv);
     FVector ComponentVelocity;
 protected:
     /** 부모 컴포넌트로부터 상대적인 위치 */

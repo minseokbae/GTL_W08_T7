@@ -2,10 +2,18 @@
 #include "Math/Vector.h"
 #include "World/World.h"
 #include "Classes/Components/SceneComponent.h"
+#include "GameFramework/Actor.h"
 
 FLuaCompiler::FLuaCompiler()
 {
     Lua.open_libraries(sol::lib::base);
+
+    Lua.new_usertype<USceneComponent>("GameObject",
+        "UUID", &USceneComponent::GetUUID,
+        "Location", sol::property(&USceneComponent::GetRelativeLocation, &USceneComponent::SetRelativeLocation),
+        "Rotation", sol::property(&USceneComponent::GetRelativeRotation, &USceneComponent::SetRelativeRotation),
+        "Scale", sol::property(&USceneComponent::GetRelativeScale3D, &USceneComponent::SetRelativeScale3D)
+    );
 
     Lua.set_function("print", [&Lua = this->Lua](sol::variadic_args args) {
         std::ostringstream oss;
@@ -23,8 +31,6 @@ FLuaCompiler::FLuaCompiler()
         FString LuaLog = oss.str().c_str();
         UE_LOG(ELogLevel::Display, TEXT("%s"), *LuaLog);
         });
-
-    SolEnv = sol::environment(Lua, sol::create, Lua.globals());
 
     //FVector 바인딩
     Lua.new_usertype<FVector>("Vector",
@@ -66,47 +72,30 @@ FLuaCompiler::FLuaCompiler()
     );
 }
 
-void FLuaCompiler::Bind(USceneComponent* Comp)
+void FLuaCompiler::Bind(AActor* Actor)
 {
-    BindedComp = Comp;
+    uint32 UUID = Actor->GetUUID();
 
-    Comp->BindToLua(SolEnv);
+    auto Instance = LuaInstances.find(UUID);
+    if (Instance != LuaInstances.end())
+        LuaInstances.erase(Instance);
 
-    SolEnv["obj"] = Comp;
-
-    Lua.script_file("template.lua", SolEnv);
-
-    TickFunc = SolEnv["Tick"];
+    LuaInstances[UUID] = std::make_unique<FLuaInstance>(Lua, Actor->GetRootComponent());
 }
 
-void FLuaCompiler::UnBind()
+void FLuaCompiler::UnBind(AActor* Actor)
 {
-    SolEnv["obj"] = sol::nil;
-    BindedComp = nullptr;
+    uint32 UUID = Actor->GetUUID();
+
+    auto Instance = LuaInstances.find(UUID);
+    if (Instance != LuaInstances.end())
+        LuaInstances.erase(Instance);
 }
 
 void FLuaCompiler::Tick(float DeltaTime)
 {
-    if (!BindedComp)
-        return;
-
-    sol::object obj = SolEnv["obj"];
-    if (obj.is<sol::nil_t>()) {
-        std::cout << "obj is nil!" << std::endl;
+    for (auto& Instance : LuaInstances)
+    {
+        Instance.second->Tick(DeltaTime);
     }
-    else {
-        std::cout << "obj is NOT nil!" << std::endl;
-    }
-    
-    try {
-        TickFunc(DeltaTime);
-    }
-    catch (const sol::error& e) {
-        std::cout << "[Lua Error] " << e.what() << std::endl;
-    }
-}
-
-void FLuaCompiler::SetTickFunc(sol::function newTick)
-{
-    TickFunc = newTick;
 }
