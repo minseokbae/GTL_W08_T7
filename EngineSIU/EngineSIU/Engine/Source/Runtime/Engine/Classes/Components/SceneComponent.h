@@ -2,7 +2,6 @@
 #include "ActorComponent.h"
 #include "Math/Rotator.h"
 #include "UObject/ObjectMacros.h"
-#include "Runtime/LuaCompiler.h"
 
 class USceneComponent : public UActorComponent
 {
@@ -57,7 +56,7 @@ public:
 
 public:
     void BindToLua(sol::environment& SolEnv);
-
+    FVector ComponentVelocity;
 protected:
     /** 부모 컴포넌트로부터 상대적인 위치 */
     UPROPERTY
