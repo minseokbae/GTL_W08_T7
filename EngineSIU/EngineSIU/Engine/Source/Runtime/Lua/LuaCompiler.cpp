@@ -96,6 +96,11 @@ void FLuaCompiler::Tick(float DeltaTime)
 {
     for (auto& Instance : LuaInstances)
     {
+        auto curTime = std::filesystem::last_write_time(Instance.second->GetScriptFile());
+        if (curTime != Instance.second->GetLastWriteTime())
+        {
+            Instance.second->Reload(Lua);
+        }
         Instance.second->Tick(DeltaTime);
     }
 }

@@ -112,6 +112,7 @@ void PropertyEditorPanel::Render()
 
         if (fs::exists(buf))
         {
+            PickedActor->SetLuaScriptPath(buf);
             PickedActor->SetLuaBindState(true);
             if (ImGui::Button("Edit Script"))
             {
