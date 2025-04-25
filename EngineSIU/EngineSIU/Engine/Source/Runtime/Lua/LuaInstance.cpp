@@ -7,11 +7,12 @@ FLuaInstance::FLuaInstance(sol::state& Lua, USceneComponent* Comp, FString FileP
     Env["obj"] = Comp;
 
     // Load script
-    std::string ansiStr = *FilePath;
+    ScriptFile = *FilePath;
 
-    Lua.script_file(ansiStr, Env);
+    Lua.script_file(ScriptFile, Env);
 
     TickFunc = Env["Tick"];
+    LastWriteTime = std::filesystem::last_write_time(ScriptFile);
 }
 
 void FLuaInstance::Tick(float DeltaTime)
@@ -19,4 +20,10 @@ void FLuaInstance::Tick(float DeltaTime)
     if (TickFunc.valid()) {
         TickFunc(DeltaTime);
     }
+}
+
+void FLuaInstance::Reload(sol::state& Lua) {
+    Lua.script_file(ScriptFile, Env);
+    TickFunc = Env["Tick"];
+    LastWriteTime = std::filesystem::last_write_time(ScriptFile);
 }
