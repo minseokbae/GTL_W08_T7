@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include "Delegate.h"
 
-
 #define DECLARE_DELEGATE(DelegateName) FUNC_DECLARE_DELEGATE(DelegateName, void)
 #define DECLARE_MULTICAST_DELEGATE(DelegateName) FUNC_DECLARE_MULTICAST_DELEGATE(DelegateName, void)
 

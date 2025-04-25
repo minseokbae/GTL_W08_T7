@@ -1,6 +1,6 @@
 #include "Actor.h"
 #include "World/World.h"
-
+#include "FCollisionMgr.h"
 
 UObject* AActor::Duplicate(UObject* InOuter)
 {
@@ -70,6 +70,7 @@ void AActor::BeginPlay()
     {
         Comp->BeginPlay();
     }
+    FEngineLoop::CollisionMgr.OnCollision.AddDynamic(this,&AActor::TakeDamage);
 }
 
 void AActor::Tick(float DeltaTime)
@@ -82,7 +83,7 @@ void AActor::Tick(float DeltaTime)
     {
         Comp->TickComponent(DeltaTime);
     }
-}
+  }
 
 void AActor::Destroyed()
 {

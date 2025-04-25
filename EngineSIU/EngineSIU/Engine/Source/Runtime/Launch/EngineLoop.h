@@ -1,4 +1,5 @@
 #pragma once
+#include "FCollisionMgr.h"
 #include "Core/HAL/PlatformType.h"
 #include "Engine/ResourceMgr.h"
 #include "LevelEditor/SlateAppMessageHandler.h"
@@ -44,7 +45,7 @@ public:
     static FResourceMgr ResourceManager;
     static uint32 TotalAllocationBytes;
     static uint32 TotalAllocationCount;
-
+    static FCollisionMgr CollisionMgr;
     HWND AppWnd;
     bool bIsEnableShaderHotReload = true; // TODO: ImGui에서 변경가능하게 설정하기
 
