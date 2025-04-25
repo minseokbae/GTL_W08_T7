@@ -112,7 +112,7 @@ void UEditorEngine::StartPIE()
 
     PIEWorldContext.SetCurrentWorld(PIEWorld);
     ActiveWorld = PIEWorld;
-    
+
     PIEWorld->BeginPlay();
     // 여기서 Actor들의 BeginPlay를 해줄지 안에서 해줄 지 고민.
     WorldList.Add(GetWorldContextFromWorld(PIEWorld));
@@ -165,7 +165,6 @@ void UEditorEngine::SelectActor(AActor* InActor) const
     if (InActor && CanSelectActor(InActor))
     {
         PrivateEditorSelection::GActorSelected = InActor;
-        GEngineLoop.LuaCompiler.Compile(InActor->GetRootComponent());
     }
     else if (InActor == nullptr)
     {

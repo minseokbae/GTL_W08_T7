@@ -41,7 +41,7 @@ void FLuaCompiler::Bind(USceneComponent* Comp)
 void FLuaCompiler::Tick(float DeltaTime)
 {
     Lua.open_libraries(sol::lib::base);
-    Lua.script_file("script.lua");
+    Lua.script_file("template.lua");
     sol::function TickFunc = Lua["Tick"];
     TickFunc(DeltaTime);
 }
