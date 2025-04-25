@@ -262,6 +262,7 @@
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Launch\ImGuiManager.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Launch\Launch.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Lua\LuaCompiler.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Lua\LuaInstance.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Renderer\BillboardRenderPass.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Renderer\CompositingPass.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Renderer\EditorBillboardRenderPass.cpp" />
@@ -420,6 +421,7 @@
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Launch\LightDefine.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Launch\ShadowDefine.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Lua\LuaCompiler.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Lua\LuaInstance.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Renderer\BillboardRenderPass.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Renderer\CompositingPass.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Renderer\EditorBillboardRenderPass.h" />

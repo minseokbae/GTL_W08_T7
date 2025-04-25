@@ -1,7 +1,7 @@
 #include "LuaCompiler.h"
-#include "Classes/Components/SceneComponent.h"
 #include "Math/Vector.h"
 #include "World/World.h"
+#include "Classes/Components/SceneComponent.h"
 
 FLuaCompiler::FLuaCompiler()
 {

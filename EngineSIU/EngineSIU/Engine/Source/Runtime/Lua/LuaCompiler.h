@@ -1,7 +1,5 @@
 #pragma once
-#define SOL_LUAJIT 1
-#include <sol/sol.hpp>
-#include <lua.hpp>
+#include "LuaInstance.h"
 
 class USceneComponent;
 
@@ -18,9 +16,9 @@ public:
 
     void SetTickFunc(sol::function newTick);
 
-    sol::state Lua;
-private:
     
+private:
+    sol::state Lua;
     sol::environment SolEnv;
     sol::function TickFunc;
     USceneComponent* BindedComp = nullptr;

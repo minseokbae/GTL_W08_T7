@@ -80,7 +80,6 @@ void AActor::BeginPlay()
     if (bHasLua && GetWorld()->WorldType == EWorldType::PIE)
     {
         GEngineLoop.LuaCompiler.Bind(GetRootComponent());
-        auto result = GEngineLoop.LuaCompiler.Lua.safe_script_file("template.lua");
     }
         
     for (UActorComponent* Comp : CopyComponents)
