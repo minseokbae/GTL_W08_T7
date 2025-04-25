@@ -1,13 +1,15 @@
 #include "LuaInstance.h"
 #include "Classes/Components/SceneComponent.h"
 
-FLuaInstance::FLuaInstance(sol::state& Lua, USceneComponent* Comp)
+FLuaInstance::FLuaInstance(sol::state& Lua, USceneComponent* Comp, FString FilePath)
     : Env(Lua, sol::create, Lua.globals())
 {
     Env["obj"] = Comp;
 
     // Load script
-    Lua.script_file("template.lua", Env);
+    std::string ansiStr = *FilePath;
+
+    Lua.script_file(ansiStr, Env);
 
     TickFunc = Env["Tick"];
 }

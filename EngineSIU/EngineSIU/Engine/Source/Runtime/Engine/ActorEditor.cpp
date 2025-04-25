@@ -48,4 +48,9 @@ void AActor::SetLuaBindState(bool state)
     bHasLua = state;
 }
 
+void AActor::SetLuaScriptPath(FString FilePath)
+{
+    LuaScriptPath = FilePath;
+}
+
 #endif

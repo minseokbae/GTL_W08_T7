@@ -69,6 +69,7 @@ UObject* AActor::Duplicate(UObject* InOuter)
 
     //루아 스크립트 존재시 다시 바인드
     NewActor->bHasLua = bHasLua;
+    NewActor->LuaScriptPath = LuaScriptPath;
 
     return NewActor;
 }

@@ -80,7 +80,7 @@ void FLuaCompiler::Bind(AActor* Actor)
     if (Instance != LuaInstances.end())
         LuaInstances.erase(Instance);
 
-    LuaInstances[UUID] = std::make_unique<FLuaInstance>(Lua, Actor->GetRootComponent());
+    LuaInstances[UUID] = std::make_unique<FLuaInstance>(Lua, Actor->GetRootComponent(), Actor->GetLuaScriptPath());
 }
 
 void FLuaCompiler::UnBind(AActor* Actor)

@@ -2,16 +2,17 @@
 #define SOL_LUAJIT 1
 #include <sol/sol.hpp>
 #include <lua.hpp>
+#include "Container/String.h"
 
 class USceneComponent;
 
 class FLuaInstance
 {
-public:
+private:
     sol::environment Env;
     sol::function TickFunc;
-
-    FLuaInstance(sol::state& Lua, USceneComponent* Comp);
+public:
+    FLuaInstance(sol::state& Lua, USceneComponent* Comp, FString FilePath);
 
     void Tick(float DeltaTime);
 };

@@ -111,6 +111,8 @@ private:
     /** lua 스크립트 존재여부 **/
     bool bHasLua = false;
 
+    FString LuaScriptPath;
+
 #if 1 // TODO: WITH_EDITOR 추가
 public:
     /** Actor의 기본 Label을 가져옵니다. */
@@ -127,6 +129,10 @@ public:
 
     /** Lua 바인드 상태 변경하기 */
     void SetLuaBindState(bool state);
+
+    FString GetLuaScriptPath() { return LuaScriptPath; }
+
+    void SetLuaScriptPath(FString FilePath);
 
 private:
     /** 에디터상에 보이는 Actor의 이름 */

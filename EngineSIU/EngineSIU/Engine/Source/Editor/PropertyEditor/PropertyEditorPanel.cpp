@@ -98,14 +98,6 @@ void PropertyEditorPanel::Render()
             }
             ImGui::TreePop(); // 트리 닫기
         }
-        bool bLua = PickedActor->GetLuaBindState();
-        if (ImGui::Checkbox("Bind Lua Script", &bLua))
-        {
-            if (bLua)
-                PickedActor->SetLuaBindState(true);
-            else
-                PickedActor->SetLuaBindState(false);
-        }
         ImGui::PopStyleColor();
     }
 
@@ -148,6 +140,8 @@ void PropertyEditorPanel::Render()
             if (ImGui::Button("Create Script"))
             {
                 fs::copy_file("template.lua", buf);
+                PickedActor->SetLuaScriptPath(buf);
+                PickedActor->SetLuaBindState(true);
             }
         }
 
