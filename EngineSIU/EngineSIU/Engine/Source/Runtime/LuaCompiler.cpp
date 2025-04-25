@@ -88,6 +88,9 @@ void FLuaCompiler::UnBind()
 
 void FLuaCompiler::Tick(float DeltaTime)
 {
+    if (!BindedComp)
+        return;
+
     sol::object obj = SolEnv["obj"];
     if (obj.is<sol::nil_t>()) {
         std::cout << "obj is nil!" << std::endl;
@@ -95,14 +98,12 @@ void FLuaCompiler::Tick(float DeltaTime)
     else {
         std::cout << "obj is NOT nil!" << std::endl;
     }
-    if(BindedComp)
-    {
-        try {
-            TickFunc(DeltaTime);
-        }
-        catch (const sol::error& e) {
-            std::cout << "[Lua Error] " << e.what() << std::endl;
-        }
+    
+    try {
+        TickFunc(DeltaTime);
+    }
+    catch (const sol::error& e) {
+        std::cout << "[Lua Error] " << e.what() << std::endl;
     }
 }
 
