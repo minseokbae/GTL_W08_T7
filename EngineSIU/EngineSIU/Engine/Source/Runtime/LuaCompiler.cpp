@@ -1,7 +1,6 @@
 #include "LuaCompiler.h"
 #include "Classes/Components/SceneComponent.h"
 #include "Math/Vector.h"
-#include "GameFramework/Actor.h"
 #include "World/World.h"
 
 FLuaCompiler::FLuaCompiler()
@@ -75,7 +74,7 @@ void FLuaCompiler::Bind(USceneComponent* Comp)
 
     SolEnv["obj"] = Comp;
 
-    Lua.script_file("script.lua", SolEnv);
+    Lua.script_file("template.lua", SolEnv);
 
     TickFunc = SolEnv["Tick"];
 }
