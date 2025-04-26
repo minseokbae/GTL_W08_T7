@@ -1352,7 +1352,9 @@
     <ClCompile Include="EngineSIU\Engine\Source\Developer\ShaderCompileUtils\ShaderCompileUtility.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Developer\ShaderCompileUtils\ShaderFileMetadata.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Developer\ShaderCompileUtils\ShaderMetadataPtr.cpp" />
-    <ClCompile Include="EngineSIU\Engine\Source\Runtime\LuaCompiler.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Lua\LuaCompiler.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Lua\LuaInstance.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Game\Data\MapManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="EngineSIU\EngineSIU.natvis" />
@@ -1415,7 +1417,9 @@
     <ClInclude Include="EngineSIU\Engine\Source\Developer\ShaderCompileUtils\ShaderCompileUtility.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Developer\ShaderCompileUtils\ShaderFileMetadata.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Developer\ShaderCompileUtils\ShaderMetadataPtr.h" />
-    <ClInclude Include="EngineSIU\Engine\Source\Runtime\LuaCompiler.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Lua\LuaCompiler.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Lua\LuaInstance.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Game\Data\MapManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DefaultPropertySheet.props" />

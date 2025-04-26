@@ -8,6 +8,7 @@
 
 class UAssetManager;
 class UWorld;
+class UMapManager;
 
 class UEngine : public UObject
 {
@@ -19,7 +20,7 @@ public:
 public:
     UWorld* ActiveWorld;
     UAssetManager* AssetManager = nullptr;
-
+    UMapManager* MapManager = nullptr;
 protected:
     TArray<FWorldContext*> WorldList;
     int32 NextWorldContextHandle = 0;

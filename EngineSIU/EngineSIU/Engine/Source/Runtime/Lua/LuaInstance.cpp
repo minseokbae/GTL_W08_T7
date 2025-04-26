@@ -1,5 +1,6 @@
 #include "LuaInstance.h"
 #include "Classes/Components/SceneComponent.h"
+#include "Game/Data/MapManager.h"
 
 FLuaInstance::FLuaInstance(sol::state& Lua, USceneComponent* Comp, FString FilePath)
     : Env(Lua, sol::create, Lua.globals())
@@ -13,6 +14,17 @@ FLuaInstance::FLuaInstance(sol::state& Lua, USceneComponent* Comp, FString FileP
 
     TickFunc = Env["Tick"];
     LastWriteTime = std::filesystem::last_write_time(ScriptFile);
+
+    const auto& MapData = UMapManager::Get().GetMapData();
+    sol::table luaMap = Lua.create_table();
+    for (int y = 0; y < MapData.Num(); ++y)
+    {
+        sol::table row = Lua.create_table();
+        for (int x = 0; x < MapData[y].Num(); ++x)
+            row[x + 1] = static_cast<int>(MapData[y][x]);
+        luaMap[y + 1] = row;
+    }
+    Lua["gameMap"] = luaMap;
 }
 
 void FLuaInstance::Tick(float DeltaTime)
