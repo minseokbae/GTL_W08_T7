@@ -6,7 +6,7 @@
 
 FLuaCompiler::FLuaCompiler()
 {
-    Lua.open_libraries(sol::lib::base);
+    Lua.open_libraries(sol::lib::base, sol::lib::math);
 
     Lua.new_usertype<USceneComponent>("GameObject",
         "UUID", &USceneComponent::GetUUID,
@@ -70,6 +70,52 @@ FLuaCompiler::FLuaCompiler()
             return oss.str();
         }
     );
+
+    //FRotator 바인딩
+    Lua.new_usertype<FRotator>("Rotator",
+        //생성자
+        sol::constructors<
+        FRotator(),
+        FRotator(float, float, float)
+        >(),
+
+        //필드
+        "Pitch", & FRotator::Pitch,
+        "Yaw", & FRotator::Yaw,
+        "Roll", & FRotator::Roll,
+
+        //연산자 오버로딩
+        sol::meta_function::addition, [](const FRotator& a, const FRotator& b)
+        {
+            return a + b;
+        },
+        sol::meta_function::subtraction, [](const FRotator& a, const FRotator& b)
+        {
+            return a - b;
+        },
+        sol::meta_function::multiplication, sol::overload(
+            [](const FRotator& rot, float scalar) {return rot * scalar; },
+            [](float scalar, const FRotator& rot) {return rot * scalar; }
+        ),
+        sol::meta_function::unary_minus, [](const FRotator& rot)
+        {
+            return -rot;
+        },
+        sol::meta_function::to_string, [](const FRotator& rot)->std::string
+        {
+            std::ostringstream oss;
+            oss << "Rotator (" << rot.Roll << ", " << rot.Yaw << ", " << rot.Pitch << ")";
+            return oss.str();
+        },
+
+        //함수 바인딩
+        "Normalize", &FRotator::Normalize,
+        "GetNormalized", &FRotator::GetNormalized,
+        "IsNearlyZero", &FRotator::IsNearlyZero,
+        "IsZero", &FRotator::IsZero,
+        "Equals", &FRotator::Equals,
+        "Add", &FRotator::Add
+        );
 }
 
 void FLuaCompiler::Bind(AActor* Actor)
