@@ -67,7 +67,7 @@
                         "ComponentOwner": "AActor_97",
                         "ComponentOwnerClass": "AActor",
                         "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
-                        "RelativeLocation": "X=2.000 Y=2.000 Z=0.000",
+                        "RelativeLocation": "X=2.000 Y=2.000 Z=1.500",
                         "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "StaticMeshPath": "Contents/Sphere.obj",
@@ -95,7 +95,7 @@
                         "ComponentOwner": "AActor_99",
                         "ComponentOwnerClass": "AActor",
                         "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
-                        "RelativeLocation": "X=2.000 Y=19.000 Z=0.000",
+                        "RelativeLocation": "X=2.000 Y=19.000 Z=1.100",
                         "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "StaticMeshPath": "Contents/Sphere.obj",
@@ -123,7 +123,7 @@
                         "ComponentOwner": "AActor_101",
                         "ComponentOwnerClass": "AActor",
                         "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
-                        "RelativeLocation": "X=19.000 Y=2.000 Z=0.000",
+                        "RelativeLocation": "X=19.000 Y=2.000 Z=1.200",
                         "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "StaticMeshPath": "Contents/Sphere.obj",
@@ -151,7 +151,7 @@
                         "ComponentOwner": "AActor_119",
                         "ComponentOwnerClass": "AActor",
                         "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
-                        "RelativeLocation": "X=19.000 Y=19.000 Z=0.000",
+                        "RelativeLocation": "X=19.000 Y=19.000 Z=1.300",
                         "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "StaticMeshPath": "Contents/Sphere.obj",
@@ -162,6 +162,34 @@
                 }
             ],
             "RootComponentID": "SphereComponent"
+        },
+        {
+            "ActorClass": "ACube",
+            "ActorID": "ACube_119",
+            "ActorLabel": "OBJ_CUBE_119",
+            "Components": [
+                {
+                    "ComponentClass": "UStaticMeshComponent",
+                    "ComponentID": "StaticMeshComponent_0",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=1.000 Z=1.000",
+                        "AABB_min": "X=-1.000 Y=-1.000 Z=-1.000",
+                        "ComponentClass": "UStaticMeshComponent",
+                        "ComponentName": "StaticMeshComponent_0",
+                        "ComponentOwner": "ACube_119",
+                        "ComponentOwnerClass": "ACube",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=10.000 Y=10.000 Z=-1.016",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=20.000 Y=20.000 Z=1.300",
+                        "StaticMeshPath": "Contents/helloBlender.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                }
+            ],
+            "RootComponentID": "StaticMeshComponent_0"
         }
     ],
     "NextUUID": 0,
