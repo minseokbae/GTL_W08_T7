@@ -427,6 +427,23 @@ bool SceneManager::LoadWorldFromData(const FSceneData& sceneData, UWorld* target
             CurrentSceneComp->SetRelativeScale3D(RelativeScale3D);
         }
 
+        namespace fs = std::filesystem;
+        char buf[256];
+        FString ActorName = SpawnedActor->GetActorLabel();
+        ActorName += ".lua";
+        if (SpawnedActor->GetLuaBindState())
+        {
+            strcpy_s(buf, *SpawnedActor->GetLuaScriptPath());
+        }
+        else
+        {
+            strcpy_s(buf, *ActorName);
+        }
+        if (fs::exists(buf))
+        {
+            SpawnedActor->SetLuaScriptPath(buf);
+            SpawnedActor->SetLuaBindState(true);
+        }
     }
     UE_LOG(ELogLevel::Display, TEXT("Loading Scene Data: Phase 1 Complete. Spawned %d actors."), SpawnedActorsMap.Num());
 
