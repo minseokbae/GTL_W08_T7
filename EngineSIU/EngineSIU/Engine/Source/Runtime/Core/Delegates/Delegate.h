@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <functional>
 #include <atomic>
@@ -19,7 +19,7 @@ class FDelegateHandle
     explicit FDelegateHandle(uint64 InId) : HandleId(InId) {}
     static uint64 GenerateNewID()
     {
-        static std::atomic<uint64> NextHandleId{1};
+        static std::atomic<uint64> NextHandleId{ 1 };
         uint64 Id = NextHandleId.fetch_add(1, std::memory_order_relaxed);
         if (Id == 0)
             Id = NextHandleId.fetch_add(1, std::memory_order_relaxed);
@@ -27,7 +27,7 @@ class FDelegateHandle
     }
 public:
     FDelegateHandle() : HandleId(0) {}
-    static FDelegateHandle CreateHandle() { return FDelegateHandle{GenerateNewID()}; }
+    static FDelegateHandle CreateHandle() { return FDelegateHandle{ GenerateNewID() }; }
     bool IsValid() const { return HandleId != 0; }
     void Invalidate() { HandleId = 0; }
     bool operator==(const FDelegateHandle& Other) const { return HandleId == Other.HandleId; }
@@ -35,13 +35,13 @@ public:
 };
 
 namespace std {
-template<> struct hash<FDelegateHandle>
-{
-    size_t operator()(FDelegateHandle InHandle) const noexcept
+    template<> struct hash<FDelegateHandle>
     {
-        return std::hash<uint64>()(InHandle.HandleId);
-    }
-};
+        size_t operator()(FDelegateHandle InHandle) const noexcept
+        {
+            return std::hash<uint64>()(InHandle.HandleId);
+        }
+    };
 }
 
 // Single-cast delegate
@@ -57,24 +57,30 @@ public:
     template<typename FunctorType>
     void BindLambda(FunctorType&& InFunctor)
     {
+        CurrentInstance = nullptr;
         Func = std::forward<FunctorType>(InFunctor);
     }
     template<typename T>
-    void BindDynamic(T* Obj, ReturnType(T::*Method)(ParamTypes...))
+    void BindDynamic(T* Obj, ReturnType(T::* Method)(ParamTypes...))
     {
         CurrentInstance = static_cast<void*>(Obj);
         Func = [Obj, Method](ParamTypes... Params) {
             (Obj->*Method)(std::forward<ParamTypes>(Params)...);
-        };
+            };
     }
     template<typename T>
-    void BindDynamic(T* Obj, ReturnType(T::*Method)(ParamTypes...) const)
+    void BindDynamic(T* Obj, ReturnType(T::* Method)(ParamTypes...) const)
     {
+        CurrentInstance = static_cast<void*>(Obj);
         Func = [Obj, Method](ParamTypes... Params) {
             (Obj->*Method)(std::forward<ParamTypes>(Params)...);
-        };
+            };
     }
-    void Unbind() { Func = nullptr; }
+    void Unbind()
+    {
+        Func = nullptr;
+        CurrentInstance = nullptr;
+    }
     bool IsBound() const { return static_cast<bool>(Func); }
     ReturnType Execute(ParamTypes... Args) const { return Func(std::forward<ParamTypes>(Args)...); }
     bool ExecuteIfBound(ParamTypes... Args) const
@@ -104,22 +110,22 @@ public:
     }
     // Member function
     template<typename T>
-    FDelegateHandle AddDynamic(T* Obj, ReturnType(T::*Method)(ParamTypes...))
+    FDelegateHandle AddDynamic(T* Obj, ReturnType(T::* Method)(ParamTypes...))
     {
         auto Handle = FDelegateHandle::CreateHandle();
         Delegates.Add(Handle, [Obj, Method](ParamTypes... Params) {
             (Obj->*Method)(std::forward<ParamTypes>(Params)...);
-        });
+            });
         ObjectHandles.FindOrAdd(static_cast<void*>(Obj)).Add(Handle);
         return Handle;
     }
     template<typename T>
-    FDelegateHandle AddDynamic(T* Obj, ReturnType(T::*Method)(ParamTypes...) const)
+    FDelegateHandle AddDynamic(T* Obj, ReturnType(T::* Method)(ParamTypes...) const)
     {
         auto Handle = FDelegateHandle::CreateHandle();
         Delegates.Add(Handle, [Obj, Method](ParamTypes... Params) {
             (Obj->*Method)(std::forward<ParamTypes>(Params)...);
-        });
+            });
         ObjectHandles.FindOrAdd(static_cast<void*>(Obj)).Add(Handle);
         return Handle;
     }
