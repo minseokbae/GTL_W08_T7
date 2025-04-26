@@ -107,21 +107,33 @@ void PropertyEditorPanel::Render()
         static char buf[256];
         FString ActorName = PickedActor->GetActorLabel();
         ActorName += ".lua";
+
+        // 1. 처음엔 기본 ActorName으로 buf 초기화
+        strcpy_s(buf, *ActorName);
+
+        // 2. 만약 PickedActor에 이미 LuaScriptPath가 설정되어 있으면, 그걸 buf로 덮어씀
         if (PickedActor->GetLuaBindState())
         {
             strcpy_s(buf, *PickedActor->GetLuaScriptPath());
         }
-        else 
-        {
-            strcpy_s(buf, *ActorName);
-        }
 
-        if (fs::exists(buf))
+        // 3. ImGui로 사용자 입력 받음
+        if (ImGui::InputText("##ScriptFile", buf, sizeof(buf)))
         {
+            // 입력이 바뀌었으면 그대로 LuaScriptPath 업데이트
             PickedActor->SetLuaScriptPath(buf);
             PickedActor->SetLuaBindState(true);
+        }
+
+        ImGui::SameLine();
+        ImGui::Text("Script File");
+
+        // 4. 항상 최신 buf 경로 기준으로 fs::exists 검사
+        if (fs::exists(buf))
+        {
             if (ImGui::Button("Edit Script"))
             {
+                // 파일 열기
                 std::string ansiStr = buf;
                 std::vector<wchar_t> wbuf(ansiStr.size() + 1);
                 MultiByteToWideChar(CP_UTF8, 0, ansiStr.c_str(), -1, wbuf.data(), (int)wbuf.size());
@@ -146,21 +158,14 @@ void PropertyEditorPanel::Render()
         {
             if (ImGui::Button("Create Script"))
             {
-                fs::copy_file("template.lua", buf);
+                // 템플릿 복사
+                fs::copy_file("template.lua", buf, fs::copy_options::overwrite_existing);
                 PickedActor->SetLuaScriptPath(buf);
                 PickedActor->SetLuaBindState(true);
             }
         }
-        char input[256];
-        strcpy_s(input, buf);
-        if (ImGui::InputText("##ScriptFile", input, sizeof(input)))
-        {
-            strcpy_s(buf, input);
-            PickedActor->SetLuaScriptPath(input);
-        }
-        ImGui::SameLine();
-        ImGui::Text("Script File");
     }
+
 
     if (PickedActor)
     {
