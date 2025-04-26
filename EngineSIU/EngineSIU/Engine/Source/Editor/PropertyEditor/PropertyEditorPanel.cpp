@@ -104,11 +104,17 @@ void PropertyEditorPanel::Render()
     if (PickedActor)
     {
         namespace fs = std::filesystem;
-
+        static char buf[256];
         FString ActorName = PickedActor->GetActorLabel();
         ActorName += ".lua";
-        static char buf[256];
-        strcpy_s(buf, *ActorName);
+        if (PickedActor->GetLuaBindState())
+        {
+            strcpy_s(buf, *PickedActor->GetLuaScriptPath());
+        }
+        else 
+        {
+            strcpy_s(buf, *ActorName);
+        }
 
         if (fs::exists(buf))
         {
@@ -116,7 +122,7 @@ void PropertyEditorPanel::Render()
             PickedActor->SetLuaBindState(true);
             if (ImGui::Button("Edit Script"))
             {
-                std::string ansiStr = *ActorName;
+                std::string ansiStr = buf;
                 std::vector<wchar_t> wbuf(ansiStr.size() + 1);
                 MultiByteToWideChar(CP_UTF8, 0, ansiStr.c_str(), -1, wbuf.data(), (int)wbuf.size());
 
@@ -145,8 +151,13 @@ void PropertyEditorPanel::Render()
                 PickedActor->SetLuaBindState(true);
             }
         }
-
-        ImGui::InputText("##ScriptFile", buf, sizeof(buf), ImGuiInputTextFlags_ReadOnly);
+        char input[256];
+        strcpy_s(input, buf);
+        if (ImGui::InputText("##ScriptFile", input, sizeof(input)))
+        {
+            strcpy_s(buf, input);
+            PickedActor->SetLuaScriptPath(input);
+        }
         ImGui::SameLine();
         ImGui::Text("Script File");
     }
