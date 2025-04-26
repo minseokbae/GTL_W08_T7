@@ -14,6 +14,10 @@ public:
 
     void UnBind(AActor* Actor);
 
+    void BeginPlay();
+
+    void EndPlay();
+
     void Tick(float DeltaTime);
 
     void UpdateInput();

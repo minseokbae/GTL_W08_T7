@@ -83,9 +83,9 @@ FLuaCompiler::FLuaCompiler()
         >(),
 
         //필드
+        "Roll", & FRotator::Roll,
         "Pitch", & FRotator::Pitch,
         "Yaw", & FRotator::Yaw,
-        "Roll", & FRotator::Roll,
 
         //연산자 오버로딩
         sol::meta_function::addition, [](const FRotator& a, const FRotator& b)
@@ -107,7 +107,7 @@ FLuaCompiler::FLuaCompiler()
         sol::meta_function::to_string, [](const FRotator& rot)->std::string
         {
             std::ostringstream oss;
-            oss << "Rotator (" << rot.Roll << ", " << rot.Yaw << ", " << rot.Pitch << ")";
+            oss << "Rotator (" << rot.Roll << ", " << rot.Pitch << ", " << rot.Yaw << ")";
             return oss.str();
         },
 
@@ -139,6 +139,22 @@ void FLuaCompiler::UnBind(AActor* Actor)
     auto Instance = LuaInstances.find(UUID);
     if (Instance != LuaInstances.end())
         LuaInstances.erase(Instance);
+}
+
+void FLuaCompiler::BeginPlay()
+{
+    for (auto& Instance : LuaInstances)
+    {
+        Instance.second->BeginPlay();
+    }
+}
+
+void FLuaCompiler::EndPlay()
+{
+    for (auto& Instance : LuaInstances)
+    {
+        Instance.second->EndPlay();
+    }
 }
 
 void FLuaCompiler::Tick(float DeltaTime)

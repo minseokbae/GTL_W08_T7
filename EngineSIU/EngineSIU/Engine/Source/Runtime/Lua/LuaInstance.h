@@ -12,6 +12,8 @@ class FLuaInstance
 private:
     sol::environment Env;
     sol::function TickFunc;
+    sol::function BeginPlayFunc;
+    sol::function EndPlayFunc;
     std::string ScriptFile;
     std::filesystem::file_time_type LastWriteTime;
 public:
@@ -19,5 +21,7 @@ public:
     std::string GetScriptFile() { return ScriptFile; }
     std::filesystem::file_time_type GetLastWriteTime() { return LastWriteTime; }
     void Tick(float DeltaTime);
+    void BeginPlay();
+    void EndPlay();
     void Reload(sol::state& Lua);
 };
