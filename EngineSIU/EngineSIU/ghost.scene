@@ -49,6 +49,7 @@
                     }
                 }
             ],
+            "LuaScriptPath": "",
             "RootComponentID": "BillboardComponent"
         },
         {
@@ -77,6 +78,7 @@
                     }
                 }
             ],
+            "LuaScriptPath": "Ghost.lua",
             "RootComponentID": "SphereComponent"
         },
         {
@@ -105,6 +107,7 @@
                     }
                 }
             ],
+            "LuaScriptPath": "Ghost.lua",
             "RootComponentID": "SphereComponent"
         },
         {
@@ -133,6 +136,7 @@
                     }
                 }
             ],
+            "LuaScriptPath": "Ghost.lua",
             "RootComponentID": "SphereComponent"
         },
         {
@@ -161,6 +165,7 @@
                     }
                 }
             ],
+            "LuaScriptPath": "Ghost.lua",
             "RootComponentID": "SphereComponent"
         },
         {
@@ -189,6 +194,7 @@
                     }
                 }
             ],
+            "LuaScriptPath": "",
             "RootComponentID": "StaticMeshComponent_0"
         }
     ],

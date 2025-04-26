@@ -112,9 +112,10 @@ void PropertyEditorPanel::Render()
         strcpy_s(buf, *ActorName);
 
         // 2. 만약 PickedActor에 이미 LuaScriptPath가 설정되어 있으면, 그걸 buf로 덮어씀
-        if (PickedActor->GetLuaBindState())
+        if (PickedActor->GetLuaScriptPath().Len() != 0)
         {
             strcpy_s(buf, *PickedActor->GetLuaScriptPath());
+            PickedActor->SetLuaBindState(true);
         }
 
         // 3. ImGui로 사용자 입력 받음

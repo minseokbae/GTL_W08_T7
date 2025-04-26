@@ -45,6 +45,7 @@
                     }
                 }
             ],
+            "LuaScriptPath": "",
             "RootComponentID": "USphereComp_100"
         },
         {
@@ -92,6 +93,7 @@
                     }
                 }
             ],
+            "LuaScriptPath": "",
             "RootComponentID": "USphereComp_103"
         },
         {
@@ -120,6 +122,7 @@
                     }
                 }
             ],
+            "LuaScriptPath": "",
             "RootComponentID": "SphereComponent"
         }
     ],
