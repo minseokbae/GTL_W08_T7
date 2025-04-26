@@ -76,7 +76,7 @@ void UEditorEngine::Tick(float DeltaTime)
             }
         }
         else if (WorldContext->WorldType == EWorldType::PIE)
-        {
+        {   
             if (UWorld* World = WorldContext->World())
             {
                 World->Tick(DeltaTime);
@@ -91,6 +91,7 @@ void UEditorEngine::Tick(float DeltaTime)
                             Actor->Tick(DeltaTime);
                         }
                     }
+                    GEngineLoop.LuaCompiler.Tick(DeltaTime);
                 }
             }
         }
@@ -112,7 +113,7 @@ void UEditorEngine::StartPIE()
 
     PIEWorldContext.SetCurrentWorld(PIEWorld);
     ActiveWorld = PIEWorld;
-    
+
     PIEWorld->BeginPlay();
     // 여기서 Actor들의 BeginPlay를 해줄지 안에서 해줄 지 고민.
     WorldList.Add(GetWorldContextFromWorld(PIEWorld));

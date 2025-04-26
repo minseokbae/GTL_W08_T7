@@ -1,4 +1,4 @@
-﻿#include "GameFramework/Actor.h"
+#include "GameFramework/Actor.h"
 
 
 #if 1 // TODO: WITH_EDITOR 추가
@@ -41,6 +41,16 @@ void AActor::SetActorLabel(const FString& NewActorLabel, bool bUUID)
         }
     }
     
+}
+
+void AActor::SetLuaBindState(bool state)
+{
+    bHasLua = state;
+}
+
+void AActor::SetLuaScriptPath(FString FilePath)
+{
+    LuaScriptPath = FilePath;
 }
 
 #endif

@@ -8,7 +8,6 @@
 #include "UObject/ObjectMacros.h"
 #include "Core/Delegates/JungleDelegateCombination.h"
 
-#include "Components/SphereComponent.h"
 
 class UActorComponent;
 
@@ -44,10 +43,7 @@ public:
      * @note Destroyed와는 다른점은, EndPlay는 레벨 전환, 게임 종료, 또는 Destroy() 호출 시 항상 실행됩니다.
      */
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason);
-    void TakeDamage()
-    {
-        UE_LOG(ELogLevel::Error, "Taken Damage %d!!!", GetUUID());
-    }
+
 public:
     /** 이 Actor를 제거합니다. */
     virtual bool Destroy();
@@ -118,6 +114,11 @@ private:
     /** 현재 Actor가 삭제 처리중인지 여부 */
     uint8 bActorIsBeingDestroyed : 1 = false;
 
+    /** lua 스크립트 존재여부 **/
+    bool bHasLua = false;
+
+    FString LuaScriptPath;
+
 #if 1 // TODO: WITH_EDITOR 추가
 public:
     /** Actor의 기본 Label을 가져옵니다. */
@@ -128,11 +129,22 @@ public:
 
     /** Actor의 Label을 설정합니다. */
     void SetActorLabel(const FString& NewActorLabel, bool bUUID = true);
+    
+    /** Lua 바인트 상태 가져오기 */
+    bool GetLuaBindState() { return bHasLua; }
+
+    /** Lua 바인드 상태 변경하기 */
+    void SetLuaBindState(bool state);
+
+    FString GetLuaScriptPath() { return LuaScriptPath; }
+
+    void SetLuaScriptPath(FString FilePath);
 
 private:
     /** 에디터상에 보이는 Actor의 이름 */
     UPROPERTY
     (FString, ActorLabel)
+
 #endif
 
 public:
@@ -141,7 +153,6 @@ public:
 
 private:
     bool bTickInEditor = false;
-
 };
 
 template <typename T>

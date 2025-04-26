@@ -12,7 +12,6 @@ public:
 
     virtual UObject* Duplicate(UObject* InOuter) override;
 
-
     virtual void GetProperties(TMap<FString, FString>& OutProperties) const override;
     virtual void SetProperties(const TMap<FString, FString>& InProperties) override;
 
@@ -55,6 +54,8 @@ public:
     
     void SetupAttachment(USceneComponent* InParent);
 
+public:
+    FVector ComponentVelocity;
 protected:
     /** 부모 컴포넌트로부터 상대적인 위치 */
     UPROPERTY
