@@ -12,7 +12,8 @@ FLuaCompiler::FLuaCompiler()
         "UUID", &USceneComponent::GetUUID,
         "Location", sol::property(&USceneComponent::GetRelativeLocation, &USceneComponent::SetRelativeLocation),
         "Rotation", sol::property(&USceneComponent::GetRelativeRotation, &USceneComponent::SetRelativeRotation),
-        "Scale", sol::property(&USceneComponent::GetRelativeScale3D, &USceneComponent::SetRelativeScale3D)
+        "Scale", sol::property(&USceneComponent::GetRelativeScale3D, &USceneComponent::SetRelativeScale3D),
+        "Velocity", &USceneComponent::ComponentVelocity
     );
 
     Lua.set_function("print", [&Lua = this->Lua](sol::variadic_args args) {
@@ -138,6 +139,7 @@ void FLuaCompiler::UnBind(AActor* Actor)
 
     auto Instance = LuaInstances.find(UUID);
     if (Instance != LuaInstances.end())
+        //Instance->second->UnBindDelegates();
         LuaInstances.erase(Instance);
 }
 

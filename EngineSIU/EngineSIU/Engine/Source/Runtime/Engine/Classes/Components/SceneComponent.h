@@ -69,7 +69,6 @@ protected:
     UPROPERTY
     (FVector, RelativeScale3D);
 
-
     UPROPERTY
     (USceneComponent*, AttachParent, = nullptr);
 
