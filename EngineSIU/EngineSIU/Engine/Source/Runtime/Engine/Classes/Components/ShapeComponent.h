@@ -1,6 +1,5 @@
 #pragma once
 #include "PrimitiveComponent.h"
-#include "GameFramework/Actor.h"
 #include "Delegates/DelegateCombination.h"
 
 DECLARE_MULTICAST_DELEGATE_ThreeParams(FComponentOverlapSignature, UShapeComponent* /*OverlappedComponent*/, AActor* /*OtherActor*/, UShapeComponent* /*OtherComp*/);
@@ -10,6 +9,7 @@ class UShapeComponent : public UPrimitiveComponent
     DECLARE_CLASS(UShapeComponent, UPrimitiveComponent)
 public:
     UShapeComponent();
+    ~UShapeComponent();
 
     FColor ShapeColor;
 

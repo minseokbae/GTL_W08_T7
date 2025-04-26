@@ -3,6 +3,7 @@
 #include "Components/BoxComponent.h"
 #include "Components/SphereComponent.h"
 #include "Components/ShapeComponent.h"
+#include "UObject/Casts.h"
 
 //#include "CollisionHelpers.h"
 

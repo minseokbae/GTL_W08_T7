@@ -6,6 +6,10 @@ UShapeComponent::UShapeComponent()
     bDrawOnlyIfSelected = false;
 }
 
+UShapeComponent::~UShapeComponent()
+{
+}
+
 // primitive에 대해서 하는게 맞는거 같긴 한데; 아
 void UShapeComponent::NotifyBeginOverlap(UShapeComponent* OverlappedComponent, AActor* OtherActor, UShapeComponent* OtherComp)
 {
