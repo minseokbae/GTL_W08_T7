@@ -1,10 +1,13 @@
 #include "LuaInstance.h"
 #include "Classes/Components/SceneComponent.h"
+#include "GameFramework/Actor.h"
 
 FLuaInstance::FLuaInstance(sol::state& Lua, USceneComponent* Comp, FString FilePath)
     : Env(Lua, sol::create, Lua.globals())
 {
     Env["obj"] = Comp;
+
+    BindedActor = Comp->GetOwner();
 
     // Load script
     ScriptFile = *FilePath;

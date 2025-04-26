@@ -5,6 +5,8 @@
 #include "Container/String.h"
 #include <filesystem>
 
+class AActor;
+
 class USceneComponent;
 
 class FLuaInstance
@@ -16,6 +18,7 @@ private:
     sol::function EndPlayFunc;
     std::string ScriptFile;
     std::filesystem::file_time_type LastWriteTime;
+    AActor* BindedActor = nullptr;
 public:
     FLuaInstance(sol::state& Lua, USceneComponent* Comp, FString FilePath);
     std::string GetScriptFile() { return ScriptFile; }
@@ -24,4 +27,5 @@ public:
     void BeginPlay();
     void EndPlay();
     void Reload(sol::state& Lua);
+    AActor* GetBindedActor() { return BindedActor; }
 };
