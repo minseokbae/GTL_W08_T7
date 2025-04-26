@@ -6,15 +6,8 @@ function EndPlay()
     print("[EndPlay] " .. obj.UUID)
 end
 
-function OnOverlap(overlapObj)
-    --충돌 처리 overlapObj는 충돌한 액터의 루트 컴포넌트를 가리킴
-end
-
-function OnEndOverlap(overlapObj)
-    --충돌 끝 처리 overlapObj는 충돌한 액터의 루트 컴포넌트를 가리킴
-end
-
-local up = true
+--전역 변수선언
+up = true
 
 function Tick(dt)
     local ok, err = pcall(function()
@@ -29,11 +22,11 @@ function Tick(dt)
         elseif(obj.Location.X < -10 or obj.Location.Y < -10 or obj.Location.Z < -10) then
             up = true
         end
-        obj.Velocity = Vector.new(-1,-1,-1);
+        local velocity = Vector.new(-1,-1,-1);
         if up then
-            obj.Velocity = Vector.new(1,1,1);
+            velocity = Vector.new(1,1,1);
         end
-        obj.Location = obj.Location + obj.Velocity * dt * 10
+        obj.Location = obj.Location + velocity * dt * 10
         print("[Lua] success")
     end)
 

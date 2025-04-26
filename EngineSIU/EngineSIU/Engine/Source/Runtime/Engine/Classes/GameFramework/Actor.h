@@ -6,6 +6,7 @@
 #include "UObject/Object.h"
 #include "UObject/ObjectFactory.h"
 #include "UObject/ObjectMacros.h"
+#include "Core/Delegates/JungleDelegateCombination.h"
 
 
 class UActorComponent;
@@ -13,12 +14,12 @@ class UActorComponent;
 class AActor : public UObject
 {
     DECLARE_CLASS(AActor, UObject)
-
+    
 public:
+
     AActor() = default;
-
     ~AActor();
-
+    
     virtual UObject* Duplicate(UObject* InOuter) override;
 
     /** Actor가 게임에 배치되거나 스폰될 때 호출됩니다. */
