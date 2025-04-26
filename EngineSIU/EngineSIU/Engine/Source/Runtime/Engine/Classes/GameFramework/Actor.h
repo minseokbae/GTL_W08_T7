@@ -18,12 +18,7 @@ class AActor : public UObject
 public:
 
     AActor() = default;
-    ~AActor()
-    {
-        //// Begin Test
-        //FEngineLoop::CollisionMgr.OnCollision.RemoveAllForObject(this);
-        //// End Test
-    }
+    ~AActor();
     
     virtual UObject* Duplicate(UObject* InOuter) override;
 
