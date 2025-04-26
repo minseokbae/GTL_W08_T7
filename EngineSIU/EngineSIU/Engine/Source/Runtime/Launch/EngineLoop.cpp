@@ -125,7 +125,6 @@ void FEngineLoop::Tick()
                 break;
             }
         }
-
         GEngine->Tick(DeltaTime);
         LevelEditor->Tick(DeltaTime);
         Render();

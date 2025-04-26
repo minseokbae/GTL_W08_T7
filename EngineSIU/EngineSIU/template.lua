@@ -6,6 +6,7 @@ function EndPlay()
     print("[EndPlay] " .. obj.UUID)
 end
 
+--전역 변수선언
 up = true
 
 function Tick(dt)

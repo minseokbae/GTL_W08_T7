@@ -32,6 +32,9 @@ FLuaCompiler::FLuaCompiler()
         UE_LOG(ELogLevel::Display, TEXT("%s"), *LuaLog);
         });
 
+    Input = Lua.create_table();
+    Lua["Input"] = Input;
+
     //FVector 바인딩
     Lua.new_usertype<FVector>("Vector",
         // 생성자
@@ -140,6 +143,7 @@ void FLuaCompiler::UnBind(AActor* Actor)
 
 void FLuaCompiler::Tick(float DeltaTime)
 {
+    UpdateInput();
     for (auto& Instance : LuaInstances)
     {
         auto curTime = std::filesystem::last_write_time(Instance.second->GetScriptFile());
@@ -149,4 +153,16 @@ void FLuaCompiler::Tick(float DeltaTime)
         }
         Instance.second->Tick(DeltaTime);
     }
+}
+
+void FLuaCompiler::UpdateInput()
+{
+    bool A = (::GetAsyncKeyState('A') & 0x8000) != 0;
+    bool S = (::GetAsyncKeyState('S') & 0x8000) != 0;
+    bool D = (::GetAsyncKeyState('D') & 0x8000) != 0;
+    bool W = (::GetAsyncKeyState('W') & 0x8000) != 0;
+    Input.set("A", A);
+    Input.set("S", S);
+    Input.set("D", D);
+    Input.set("W", W);
 }
