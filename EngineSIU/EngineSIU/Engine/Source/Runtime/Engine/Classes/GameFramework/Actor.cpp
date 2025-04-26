@@ -2,6 +2,7 @@
 #include "World/World.h"
 #include <Engine/Engine.h>
 #include "Runtime/Lua/LuaCompiler.h"
+#include "FCollisionMgr.h"
 
 
 AActor::~AActor()
@@ -87,6 +88,9 @@ void AActor::BeginPlay()
     {
         Comp->BeginPlay();
     }
+    // Begin Test
+    //FEngineLoop::CollisionMgr.OnCollision.AddDynamic(this,&AActor::TakeDamage);
+    // End Test
 }
 
 void AActor::Tick(float DeltaTime)
@@ -99,7 +103,7 @@ void AActor::Tick(float DeltaTime)
     {
         Comp->TickComponent(DeltaTime);
     }
-}
+  }
 
 void AActor::Destroyed()
 {

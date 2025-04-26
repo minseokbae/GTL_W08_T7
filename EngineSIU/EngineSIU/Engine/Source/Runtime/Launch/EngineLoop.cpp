@@ -17,6 +17,7 @@ FGraphicsDevice FEngineLoop::GraphicDevice;
 FRenderer FEngineLoop::Renderer;
 UPrimitiveDrawBatch FEngineLoop::PrimitiveDrawBatch;
 FResourceMgr FEngineLoop::ResourceManager;
+FCollisionMgr FEngineLoop::CollisionMgr;
 uint32 FEngineLoop::TotalAllocationBytes = 0;
 uint32 FEngineLoop::TotalAllocationCount = 0;
 
@@ -125,9 +126,12 @@ void FEngineLoop::Tick()
                 break;
             }
         }
-
         GEngine->Tick(DeltaTime);
+        // Begin Test
+        CollisionMgr.UpdateCollisionChecks();
+        // End Test
         LevelEditor->Tick(DeltaTime);
+        
         Render();
         UIMgr->BeginFrame();
         UnrealEditor->Render();

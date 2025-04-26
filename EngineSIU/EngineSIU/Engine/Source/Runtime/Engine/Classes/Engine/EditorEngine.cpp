@@ -8,6 +8,8 @@
 #include "Classes/Engine/AssetManager.h"
 #include "Components/Light/DirectionalLightComponent.h"
 
+#include "Engine/Source/Runtime/Game/Data/MapManager.h"
+
 namespace PrivateEditorSelection
 {
     static AActor* GActorSelected = nullptr;
@@ -38,6 +40,13 @@ void UEditorEngine::Init()
         AssetManager = FObjectFactory::ConstructObject<UAssetManager>(this);
         assert(AssetManager);
         AssetManager->InitAssetManager();
+    }
+
+    if (MapManager == nullptr)
+    {
+        MapManager = FObjectFactory::ConstructObject<UMapManager>(this);
+        assert(MapManager);
+        MapManager->InitMapManager(FString("pacman_map.txt"));
     }
 
 #ifdef _DEBUG

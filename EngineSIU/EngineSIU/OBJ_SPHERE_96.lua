@@ -6,10 +6,12 @@ function EndPlay()
     print("[EndPlay] " .. obj.UUID)
 end
 
+--전역 변수선언
 up = true
 
 function Tick(dt)
     local ok, err = pcall(function()
+        --여기에 매 프레임 실행할 내용을 작성
         if obj == nil then
             print("[Lua] obj is nil")
             return
