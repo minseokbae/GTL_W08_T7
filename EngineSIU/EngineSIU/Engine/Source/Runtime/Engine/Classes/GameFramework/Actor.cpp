@@ -70,7 +70,6 @@ void AActor::BeginPlay()
     {
         Comp->BeginPlay();
     }
-    FEngineLoop::CollisionMgr.OnCollision.AddDynamic(this,&AActor::TakeDamage);
 }
 
 void AActor::Tick(float DeltaTime)

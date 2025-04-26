@@ -1,5 +1,6 @@
 #pragma once
 #include "GameFramework/Actor.h"
+#include "GameFramework/Controller.h"
 #include "UObject/ObjectMacros.h"
 #include "UObject/ObjectTypes.h"
 
@@ -11,15 +12,15 @@ class UPrimitiveComponent;
 class FEditorViewportClient;
 class UStaticMeshComponent;
 
-class AEditorPlayer : public AActor
+class AEditorPlayer : public AController
 {
-    DECLARE_CLASS(AEditorPlayer, AActor)
+    DECLARE_CLASS(AEditorPlayer, AController)
 
     AEditorPlayer() = default;
 
     virtual void Tick(float DeltaTime) override;
 
-    void Input();
+    void Input() override;
     bool PickGizmo(FVector& RayOrigin, FEditorViewportClient* InActiveViewport);
     void ProcessGizmoIntersection(UStaticMeshComponent* Component, const FVector& PickPosition, FEditorViewportClient* InActiveViewport, bool& bIsPickedGizmo);
     void PickActor(const FVector& pickPosition);

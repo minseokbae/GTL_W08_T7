@@ -32,5 +32,5 @@ inline float USphereComponent::GetUnscaledSphereRadius() const
 }
 inline float USphereComponent::GetShapeScale() const
 {
-    return std::min(std::min(GetWorldScale3D().X, GetWorldScale3D().Y), GetWorldScale3D().Z));
+    return std::min(std::min(GetWorldScale3D().X, GetWorldScale3D().Y), GetWorldScale3D().Z);
 }

@@ -520,7 +520,7 @@ void ControlEditorPanel::CreatePIEButton(ImVec2 ButtonSize, ImFont* IconFont) co
 
 // code is so dirty / Please refactor
 void ControlEditorPanel::CreateSRTButton(ImVec2 ButtonSize) const
-{
+{ 
     UEditorEngine* Engine = Cast<UEditorEngine>(GEngine);
     AEditorPlayer* Player = Engine->GetEditorPlayer();
 

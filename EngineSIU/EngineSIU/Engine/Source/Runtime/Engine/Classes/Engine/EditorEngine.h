@@ -8,6 +8,8 @@
     내부적으로 PIE, Editor World 두 가지 형태로 관리.
 */
 
+class APlayerController;
+class AGameMode;
 class AActor;
 class USceneComponent;
 
@@ -20,7 +22,8 @@ public:
 
     virtual void Init() override;
     virtual void Tick(float DeltaTime) override;
-
+    void Input();
+    bool bF8Clicked = false;
     UWorld* PIEWorld = nullptr;
     UWorld* EditorWorld = nullptr;
 
@@ -49,10 +52,12 @@ public:
 
 public:
     AEditorPlayer* GetEditorPlayer() const;
-    
+    AController* GetCurrentController() {return CurrentPlayer;}
 private:
     AEditorPlayer* EditorPlayer = nullptr;
-
+    AController* CurrentPlayer = nullptr;
+    APlayerController* PlayerController = nullptr;
+    AGameMode* GameMode = nullptr; 
 };
 
 
