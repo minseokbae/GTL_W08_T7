@@ -129,7 +129,9 @@ void FEngineLoop::Tick()
         }
 
         GEngine->Tick(DeltaTime);
-        CollisionMgr.OnCollisionDetected();
+        // Begin Test
+        CollisionMgr.UpdateCollisionChecks();
+        // End Test
         LevelEditor->Tick(DeltaTime);
         
         Render();

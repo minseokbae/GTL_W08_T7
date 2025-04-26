@@ -8,6 +8,8 @@
 #include "UObject/ObjectMacros.h"
 #include "Core/Delegates/JungleDelegateCombination.h"
 
+#include "Components/SphereComponent.h"
+
 class UActorComponent;
 
 class AActor : public UObject
@@ -19,7 +21,9 @@ public:
     AActor() = default;
     ~AActor()
     {
-        FEngineLoop::CollisionMgr.OnCollision.RemoveAllForObject(this);
+        //// Begin Test
+        //FEngineLoop::CollisionMgr.OnCollision.RemoveAllForObject(this);
+        //// End Test
     }
     
     virtual UObject* Duplicate(UObject* InOuter) override;

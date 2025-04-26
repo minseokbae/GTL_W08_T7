@@ -302,6 +302,7 @@
     <ClCompile Include="EngineSIU\LightGridGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CollisionHelpers.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Developer\ShaderCompileUtils\ShaderCompileData.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Developer\ShaderCompileUtils\ShaderCompile.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Developer\ShaderCompileUtils\ShaderCompileUtility.h" />
