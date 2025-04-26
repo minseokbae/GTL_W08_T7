@@ -52,3 +52,5 @@ function Tick(dt)
         print("[Lua Error]", err)
     end
 end
+
+PlaySound("piano", 1.0, true)

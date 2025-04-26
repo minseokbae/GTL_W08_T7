@@ -9,6 +9,7 @@
 #include "Components/Light/DirectionalLightComponent.h"
 
 #include "Engine/Source/Runtime/Game/Data/MapManager.h"
+#include "Engine/Source/Runtime/Game/Sound/SoundManager.h"
 
 namespace PrivateEditorSelection
 {
@@ -47,6 +48,13 @@ void UEditorEngine::Init()
         MapManager = FObjectFactory::ConstructObject<UMapManager>(this);
         assert(MapManager);
         MapManager->InitMapManager(FString("pacman_map.txt"));
+    }
+
+    if (SoundManager == nullptr)
+    {
+        SoundManager = FObjectFactory::ConstructObject<USoundManager>(this);
+        assert(SoundManager);
+        //SoundManager->InitSoundManager();
     }
 
 #ifdef _DEBUG

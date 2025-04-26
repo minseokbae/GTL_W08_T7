@@ -30,6 +30,8 @@
 #include "Actors/SpotLightActor.h"
 #include "Actors/AmbientLightActor.h"
 
+#include "Game/Sound/SoundManager.h"
+
 void ControlEditorPanel::Render()
 {
     /* Pre Setup */
@@ -506,6 +508,7 @@ void ControlEditorPanel::CreatePIEButton(ImVec2 ButtonSize, ImFont* IconFont) co
     if (ImGui::Button("\ue9a8", ButtonSize)) // Play
     {
         UE_LOG(ELogLevel::Display, TEXT("PIE Button Clicked"));
+        USoundManager::Get().InitSoundManager();
         Engine->StartPIE();
     }
 
@@ -513,6 +516,7 @@ void ControlEditorPanel::CreatePIEButton(ImVec2 ButtonSize, ImFont* IconFont) co
     if (ImGui::Button("\ue9e4", ButtonSize)) // Stop
     {
         UE_LOG(ELogLevel::Display, TEXT("Stop Button Clicked"));
+        USoundManager::Get().ReleaseAll();
         Engine->EndPIE();
     }
     

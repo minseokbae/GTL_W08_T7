@@ -140,8 +140,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\luajit;$(SolutionDir)$(ProjectName)\Engine\Source\ThirdParty\DirectXTK\Lib\$(PlatformTarget)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>DirectXTK.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\FMOD\lib;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\luajit;$(SolutionDir)$(ProjectName)\Engine\Source\ThirdParty\DirectXTK\Lib\$(PlatformTarget)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>DirectXTK.lib;lua51.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -424,6 +424,7 @@
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\World\WorldContext.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\World\WorldType.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Game\Data\MapManager.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Game\Sound\SoundManager.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\InputCore\InputCoreTypes.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\InteractiveToolsFramework\BaseGizmos\GizmoArrowComponent.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\InteractiveToolsFramework\BaseGizmos\GizmoBaseComponent.h" />

@@ -3,6 +3,7 @@
 #include "GameFramework/Actor.h"
 #include "Classes/Components/ShapeComponent.h"
 #include "Game/Data/MapManager.h"
+#include "Game/Sound/SoundManager.h"
 
 FLuaInstance::FLuaInstance(sol::state& Lua, USceneComponent* Comp, FString FilePath)
     : Env(Lua, sol::create, Lua.globals())
@@ -41,6 +42,16 @@ FLuaInstance::FLuaInstance(sol::state& Lua, USceneComponent* Comp, FString FileP
         luaMap[y + 1] = row;
     }
     Lua["gameMap"] = luaMap;
+
+    Lua.set_function("PlaySound", [](const std::string& name, float volume, bool loop) {
+        USoundManager::Get().PlaySound(name, volume, loop);
+        });
+    Lua.set_function("StopSound", [](const std::string& name) {
+        USoundManager::Get().StopSound(name);
+        });
+    Lua.set_function("SetVolume", [](const std::string& name, float volume) {
+        USoundManager::Get().SetVolume(name, volume);
+        });
 }
 
 void FLuaInstance::Tick(float DeltaTime)
