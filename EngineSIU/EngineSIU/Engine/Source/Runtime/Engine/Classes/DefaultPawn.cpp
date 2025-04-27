@@ -9,7 +9,5 @@ ADefaultPawn::ADefaultPawn()
     StaticMeshComponent->SetStaticMesh(FManagerOBJ::GetStaticMesh(L"Contents/Reference/Reference.obj"));
     CameraComponent = AddComponent<UCameraComponent>("CameraComponent");
     CameraComponent->SetRelativeLocation(FVector(-5.0f, 0.0f, 5.0f));
-    CameraComponent->SetRelativeRotation(FRotator(0.0f, 60.0f, 0.0f));
-    
     CameraComponent->SetupAttachment(RootComponent);
 }

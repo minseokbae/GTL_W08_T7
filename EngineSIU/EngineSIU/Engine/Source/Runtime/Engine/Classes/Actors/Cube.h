@@ -12,6 +12,6 @@ public:
     virtual void Tick(float DeltaTime) override;
 
     
-
+    UStaticMeshComponent* StaticMeshComponent2 = nullptr;
 };
 

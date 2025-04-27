@@ -76,16 +76,20 @@ void FEditorViewportClient::UpdateEditorCameraMovement(float DeltaTime)
         {
             if ( UCameraComponent* CameraComponent = Cast<UCameraComponent>(Component))
             {
-                FVector WorldLoc = CameraComponent->GetWorldLocation();
-                PerspectiveCamera.SetLocation(WorldLoc);
+                FVector LocalLoc = CameraComponent->GetRelativeLocation();
+                FVector PawnWorldLoc = Pawn->GetActorLocation();
                 FRotator WorldRoc =CameraComponent->GetWorldRotation();
-                FVector WorldRocVec = FVector(CameraComponent->GetWorldRotation().Pitch,CameraComponent->GetWorldRotation().Yaw,CameraComponent->GetWorldRotation().Roll);
+                // UE_LOG(ELogLevel::Warning, "Camera Comp Loc : %f %f %f", WorldLoc.X, WorldLoc.Y, WorldLoc.Z);
+                FVector RotLoc = JungleMath::FVectorRotate(LocalLoc, WorldRoc);
+                PerspectiveCamera.SetLocation(PawnWorldLoc + RotLoc);
+                
+                FVector WorldRocVec = FVector(CameraComponent->GetWorldRotation().Roll,CameraComponent->GetWorldRotation().Pitch,CameraComponent->GetWorldRotation().Yaw);
                 PerspectiveCamera.SetRotation(WorldRocVec);
                 return;
             }
         }
+        // PerspectiveCamera.SetRotation(EditorEngine->GetCurrentController()->GetPossessingPawn()->GetActorRotation().ToVector());
         PerspectiveCamera.SetLocation(EditorEngine->GetCurrentController()->GetPossessingPawn()->GetActorLocation());
-        PerspectiveCamera.SetRotation(EditorEngine->GetCurrentController()->GetPossessingPawn()->GetActorRotation().ToVector());
         return;
     }
     if (PressedKeys.Contains(EKeys::A))
