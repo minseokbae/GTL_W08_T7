@@ -316,13 +316,13 @@ void UPrimitiveDrawBatch::AddAABBToBatch(const FBoundingBox& LocalAABB, const FV
     };
 
     FVector WorldVertices[8];
-    WorldVertices[0] = Center + FMatrix::TransformVector(LocalVertices[0], ModelMatrix);
+    WorldVertices[0] = ModelMatrix.TransformPosition(LocalVertices[0]);
 
     FVector Min = WorldVertices[0], Max = WorldVertices[0];
 
     for (int i = 1; i < 8; ++i)
     {
-        WorldVertices[i] = Center + FMatrix::TransformVector(LocalVertices[i], ModelMatrix);
+        WorldVertices[i] = ModelMatrix.TransformPosition(LocalVertices[i]);
         Min.X = (WorldVertices[i].X < Min.X) ? WorldVertices[i].X : Min.X;
         Min.Y = (WorldVertices[i].Y < Min.Y) ? WorldVertices[i].Y : Min.Y;
         Min.Z = (WorldVertices[i].Z < Min.Z) ? WorldVertices[i].Z : Min.Z;
@@ -352,7 +352,7 @@ void UPrimitiveDrawBatch::AddOBBToBatch(const FBoundingBox& LocalAABB, const FVe
     FOBB OBB;
     for (int i = 0; i < 8; ++i)
     {
-        OBB.corners[i] = Center + FMatrix::TransformVector(LocalVertices[i], ModelMatrix);
+        OBB.corners[i] = ModelMatrix.TransformPosition(LocalVertices[i]);
     }
     OrientedBoundingBoxes.Add(OBB);
 }

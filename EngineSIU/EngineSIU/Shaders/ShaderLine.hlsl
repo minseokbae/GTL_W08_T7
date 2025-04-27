@@ -456,15 +456,16 @@ PS_INPUT mainVS(VS_INPUT input)
         uint index = input.instanceID - sphereEnd;
         uint boxInstanceID = index / 12;
         uint boxEdgeIndex = index % 12;
-        if (index < BoxCount)
-        {
-            pos = ComputeBoxCollisionPosition(boxInstanceID, boxEdgeIndex, input.vertexID);
-        }
-        else
-        {
-            pos = float3(0, 0, 0);
+        //if (index < BoxCount)
+        //{
+        //    pos = ComputeBoxCollisionPosition(boxInstanceID, boxEdgeIndex, input.vertexID);
+        //}
+        //else
+        //{
+        //    pos = float3(0, 0, 0);
 
-        }
+        //}
+        pos = ComputeBoxCollisionPosition(boxInstanceID, boxEdgeIndex, input.vertexID);
         color = float4(0.0, 0.0, 1.0, 1.0); // blue
     }
     else
