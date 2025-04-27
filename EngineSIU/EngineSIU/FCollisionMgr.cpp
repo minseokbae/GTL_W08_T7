@@ -11,7 +11,7 @@ namespace CollisionChecks
 {
     bool CheckSphereSphereOverlap(const USphereComponent* SphereA, const USphereComponent* SphereB);
     bool CheckBoxBoxOverlap(const UBoxComponent* BoxA, const UBoxComponent* BoxB);
-    //bool CheckSphereBoxOverlap(const USphereComponent* Sphere, const UBoxComponent* Box);
+    bool CheckSphereBoxOverlap(const USphereComponent* Sphere, const UBoxComponent* Box);
     //bool CheckCapsuleCapsuleOverlap(const UCapsuleComponent* CapsuleA, const UCapsuleComponent* CapsuleB);
     //bool CheckCapsuleSphereOverlap(const UCapsuleComponent* Capsule, const USphereComponent* Sphere);
     //bool CheckCapsuleBoxOverlap(const UCapsuleComponent* Capsule, const UBoxComponent* Box);
@@ -142,10 +142,10 @@ bool FCollisionMgr::IsOverlapping(UShapeComponent* CompA, UShapeComponent* CompB
         {
             return CollisionChecks::CheckSphereSphereOverlap(SphereA, SphereB);
         }
-        //if (auto* BoxB = Cast<UBoxComponent>(CompB))
-        //{
-        //    return CollisionChecks::CheckSphereBoxOverlap(SphereA, BoxB);
-        //}
+        if (auto* BoxB = Cast<UBoxComponent>(CompB))
+        {
+            return CollisionChecks::CheckSphereBoxOverlap(SphereA, BoxB);
+        }
     }
     //else if (auto CapsuleA = Cast<UCapsuleComponent>(CompA))
     //{
@@ -168,10 +168,10 @@ bool FCollisionMgr::IsOverlapping(UShapeComponent* CompA, UShapeComponent* CompB
         //{
         //    return CollisionChecks::CheckCapsuleBoxOverlap(CapsuleB, BoxA); 
         //}
-        //if (auto* SphereB = Cast<USphereComponent>(CompB))
-        //{
-        //    return CollisionChecks::CheckSphereBoxOverlap(SphereB, BoxA);
-        //}
+        if (auto* SphereB = Cast<USphereComponent>(CompB))
+        {
+            return CollisionChecks::CheckSphereBoxOverlap(SphereB, BoxA);
+        }
         if (auto* BoxB = Cast<UBoxComponent>(CompB))
         {
             return CollisionChecks::CheckBoxBoxOverlap(BoxA, BoxB);
@@ -286,6 +286,33 @@ namespace CollisionChecks
         // 모든 축에서 겹치면 오버랩
         return true;
     }
+    bool CheckSphereBoxOverlap(const USphereComponent* Sphere, const UBoxComponent* Box)
+    {
+        if (!Sphere || !Box)
+        {
+            return false;
+        }
+
+        const FVector SphereCenter = Sphere->GetWorldLocation();
+        const float SphereRadius = Sphere->GetScaledSphereRadius();
+        const float SphereRadiusSq = SphereRadius * SphereRadius;
+
+        const FVector BoxCenter = Box->GetWorldLocation();
+        const FVector BoxExtent = Box->GetScaledBoxExtent();
+        const FMatrix BoxRotMat = Box->GetRotationMatrix(); 
+
+        const FVector SphereCenterRelativeToBox = SphereCenter - BoxCenter;
+        const FMatrix InverseBoxRotMat = FMatrix::Transpose(BoxRotMat); // 회전 행렬의 역행렬은 전치 행렬
+        const FVector SphereCenterLocal = FMatrix::TransformVector(SphereCenterRelativeToBox, InverseBoxRotMat);
+
+        FVector ClosestPointLocal;
+        ClosestPointLocal.X = FMath::Clamp(SphereCenterLocal.X, -BoxExtent.X, BoxExtent.X);
+        ClosestPointLocal.Y = FMath::Clamp(SphereCenterLocal.Y, -BoxExtent.Y, BoxExtent.Y);
+        ClosestPointLocal.Z = FMath::Clamp(SphereCenterLocal.Z, -BoxExtent.Z, BoxExtent.Z);
+
+        const float DistSqLocal = FVector::DistanceSquared(SphereCenterLocal, ClosestPointLocal);
+        return DistSqLocal <= SphereRadiusSq;
+    }
 
 
     //bool CheckCapsuleCapsuleOverlap(const UCapsuleComponent* CapsuleA, const UCapsuleComponent* CapsuleB)
@@ -311,15 +338,5 @@ namespace CollisionChecks
     //    return false; // 임시 반환
     //}
     
-    //bool CheckSphereBoxOverlap(const USphereComponent* Sphere, const UBoxComponent* Box)
-    //{
-    //    // TODO: 실제 스피어-박스 오버랩 검사 로직 구현
-    //    // 1. 스피어의 위치, 반지름과 박스의 트랜스폼, 절반 크기를 얻습니다.
-    //    // 2. 스피어 중심점을 박스의 로컬 좌표계로 변환합니다.
-    //    // 3. 박스 내에서 스피어 중심점에 가장 가까운 점(Closest Point)을 찾습니다. (AABB의 Closest Point 찾기 로직 활용)
-    //    // 4. 스피어 중심점과 이 가장 가까운 점 사이의 거리 제곱을 계산합니다.
-    //    // 5. 이 거리 제곱이 스피어 반지름의 제곱보다 작거나 같으면 오버랩입니다.
-    //    return false; // 임시 반환
-    //}
 
 }
