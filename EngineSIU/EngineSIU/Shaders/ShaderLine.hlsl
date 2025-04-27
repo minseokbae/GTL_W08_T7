@@ -23,6 +23,9 @@ cbuffer PrimitiveCounts : register(b3)
     int ConeCount; // 렌더링할 cone의 개수
     int OBBCount;
     int SphereCount;
+    
+    int BoxCount;
+    float3 PaddingPrimitiveCounts;
 };
 
 struct FBoundingBoxData
@@ -54,11 +57,21 @@ struct FSphereCollisionData
     float3 Center;
     float Radius;
 };
+struct FBoxCollisionData
+{
+    float3 Center;
+    float paddingBoxCollision0;
+    
+    float3 Extent;
+    float paddingBoxCollision1;
+};
 
 StructuredBuffer<FBoundingBoxData> g_BoundingBoxes : register(t2);
 StructuredBuffer<FConeData> g_ConeData : register(t3);
 StructuredBuffer<FOrientedBoxCornerData> g_OrientedBoxes : register(t4);
 StructuredBuffer<FSphereCollisionData> g_SphereCollision : register(t5);
+StructuredBuffer<FBoxCollisionData> g_BoxCollision : register(t6);
+
 static const int BB_EdgeIndices[12][2] =
 {
     { 0, 1 },
@@ -235,6 +248,7 @@ float3 ComputeConePosition(uint globalInstanceID, uint vertexID)
         return (vertexID == 0) ? v0 : v1;
     }
 }
+
 /////////////////////////////////////////////////////////////////////////
 // OBB
 /////////////////////////////////////////////////////////////////////////
@@ -244,11 +258,12 @@ float3 ComputeOrientedBoxPosition(uint obIndex, uint edgeIndex, uint vertexID)
     int cornerID = BB_EdgeIndices[edgeIndex][vertexID];
     return ob.corners[cornerID].xyz;
 }
+
 /////////////////////////////////////////////////////////////////////////
 // Sphere Position Calculation
 // Calculates one vertex (start or end) of a line segment for a sphere wireframe
 /////////////////////////////////////////////////////////////////////////
-float3 ComputeSphereWireframeVertex(uint sphereIndex, uint localInstanceID, uint vertexID)
+float3 ComputeSphereCollisionPosition(uint sphereIndex, uint localInstanceID, uint vertexID)
 {
     FSphereCollisionData sphere = g_SphereCollision[sphereIndex];
 
@@ -302,6 +317,27 @@ float3 ComputeSphereWireframeVertex(uint sphereIndex, uint localInstanceID, uint
 
     return pos + sphere.Center; // Add sphere center offset
 }
+
+/////////////////////////////////////////////////////////////////////////
+// Box Position Calculation
+/////////////////////////////////////////////////////////////////////////
+float3 ComputeBoxCollisionPosition(uint boxIndex, uint edgeIndex, uint vertexID)
+{
+    FBoxCollisionData box = g_BoxCollision[boxIndex];
+    
+    int cornerIndex = BB_EdgeIndices[edgeIndex][vertexID];
+    
+    float localX = ((cornerIndex & 1) == 0) ? -box.Extent.x : box.Extent.x;
+    float localY = ((cornerIndex & 2) == 0) ? -box.Extent.y : box.Extent.y;
+    float localZ = ((cornerIndex & 4) == 0) ? -box.Extent.z : box.Extent.z;
+    float3 localOffset = float3(localX, localY, localZ);
+    
+    float3 worldPos = box.Center + localOffset;
+
+    // 5. Return the final world-space position
+    return worldPos;
+}
+
 /////////////////////////////////////////////////////////////////////////
 // 메인 버텍스 셰이더
 /////////////////////////////////////////////////////////////////////////
@@ -314,11 +350,12 @@ PS_INPUT mainVS(VS_INPUT input)
     // Grid / Axis / AABB 인스턴스 개수 계산
     uint gridLineCount = GridCount; // 그리드 라인
     uint axisCount = 3; // X, Y, Z 축 (월드 좌표축)
-    uint aabbInstanceCount = 12 * BoundingBoxCount; // AABB 하나당 12개 엣지
+    uint aabbInstanceCount = BoundingBoxCount * 12; // AABB 하나당 12개 엣지
     uint coneInstanceCount = ConeCount * 2 * g_ConeData[0].ConeSegmentCount;
     uint obbInstanceCount = OBBCount * 12; // Using the count from CBuffer
     uint instancesPerSphere = (NumSphereLatitudeLines * NumSphereSegmentsPerLine) + (NumSphereLongitudeLines * NumSphereSegmentsPerLine);
     uint sphereInstanceCount = SphereCount * instancesPerSphere;
+    uint boxInstanceCount = BoxCount * 12;
     
     // --- Calculate Start Indices ---
     uint gridEnd = gridLineCount;
@@ -327,8 +364,8 @@ PS_INPUT mainVS(VS_INPUT input)
     uint coneEnd = aabbEnd + coneInstanceCount;
     uint obbEnd = coneEnd + obbInstanceCount;
     uint sphereEnd = obbEnd + sphereInstanceCount; // End of sphere instances
-
-
+    uint boxEnd = sphereEnd + boxInstanceCount;
+    
     // --- Instance ID Branching ---
     if (input.instanceID < gridEnd)
     {
@@ -360,19 +397,23 @@ PS_INPUT mainVS(VS_INPUT input)
         // Cone
         uint coneInstanceID = input.instanceID - aabbEnd;
         pos = ComputeConePosition(coneInstanceID, input.vertexID);
-        // Cone color assignment... (using existing logic)
-         if (ConeCount > 0 && g_ConeData[0].ConeSegmentCount > 0) { // Basic check
+        if (ConeCount > 0 && g_ConeData[0].ConeSegmentCount > 0)
+        {
             int N = g_ConeData[0].ConeSegmentCount;
             uint coneIndex = coneInstanceID / (2 * N);
-            if (coneIndex < ConeCount) // Bounds check
+            if (coneIndex < ConeCount)
             {
-                 color = g_ConeData[coneIndex].Color;
-            } else {
-                 color = float4(1,0,1,1); // Magenta for error/fallback
+                color = g_ConeData[coneIndex].Color;
             }
-         } else {
-             color = float4(1,0,1,1); // Magenta for error/fallback
-         }
+            else
+            {
+                color = float4(1, 0, 1, 1);
+            }
+        }
+        else
+        {
+            color = float4(1, 0, 1, 1);
+        }
     }
     else if (input.instanceID < obbEnd)
     {
@@ -381,10 +422,13 @@ PS_INPUT mainVS(VS_INPUT input)
         uint obbIndex = obbLocalID / 12;
         uint edgeIndex = obbLocalID % 12;
         // Ensure obbIndex is within bounds of g_OrientedBoxes if OrientedBoxCount > 0
-        if (obbIndex < obbInstanceCount) {
-             pos = ComputeOrientedBoxPosition(obbIndex, edgeIndex, input.vertexID);
-        } else {
-            pos = float3(0,0,0); // Error case
+        if (obbIndex < obbInstanceCount)
+        {
+            pos = ComputeOrientedBoxPosition(obbIndex, edgeIndex, input.vertexID);
+        }
+        else
+        {
+            pos = float3(0, 0, 0); // Error case
         }
         color = float4(0.4, 1.0, 0.4, 1.0); // Light Green
     }
@@ -393,14 +437,35 @@ PS_INPUT mainVS(VS_INPUT input)
         // Sphere Collision
         uint sphereLocalInstanceID = input.instanceID - obbEnd;
         uint sphereIndex = sphereLocalInstanceID / instancesPerSphere;
+        
         uint localLineInstanceID = sphereLocalInstanceID % instancesPerSphere;
         // Ensure sphereIndex is within bounds if SphereCount > 0
-        if (sphereIndex < SphereCount) {
-            pos = ComputeSphereWireframeVertex(sphereIndex, localLineInstanceID, input.vertexID);
-        } else {
-            pos = float3(0,0,0); // Error case
+        if (sphereIndex < SphereCount)
+        {
+            pos = ComputeSphereCollisionPosition(sphereIndex, localLineInstanceID, input.vertexID);
+        }
+        else
+        {
+            pos = float3(0, 0, 0); // Error case
         }
         color = float4(0.0, 1.0, 1.0, 1.0); // Cyan
+    }
+    else if (input.instanceID < boxEnd)
+    {
+        // box Collision
+        uint index = input.instanceID - sphereEnd;
+        uint boxInstanceID = index / 12;
+        uint boxEdgeIndex = index % 12;
+        if (index < BoxCount)
+        {
+            pos = ComputeBoxCollisionPosition(boxInstanceID, boxEdgeIndex, input.vertexID);
+        }
+        else
+        {
+            pos = float3(0, 0, 0);
+
+        }
+        color = float4(0.0, 0.0, 1.0, 1.0); // blue
     }
     else
     {

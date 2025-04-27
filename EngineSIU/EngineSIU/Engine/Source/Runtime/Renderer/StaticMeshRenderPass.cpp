@@ -422,7 +422,6 @@ void FStaticMeshRenderPass::Render(const std::shared_ptr<FEditorViewportClient>&
         // Begin Test
         if (Viewport->GetShowFlag() & static_cast<uint64>(EEngineShowFlags::SF_Collision))
         {
-            // 그리는 방식 개 별론데;
             if (USphereComponent* SphereComponent = Comp->GetOwner()->GetComponentByClass<USphereComponent>())
             {
                 FEngineLoop::PrimitiveDrawBatch.AddSphereCollisionToBatch(
@@ -431,12 +430,20 @@ void FStaticMeshRenderPass::Render(const std::shared_ptr<FEditorViewportClient>&
                     WorldMatrix
                 );
             }
-        }
+
+            if (UBoxComponent* BoxComponent = Comp->GetOwner()->GetComponentByClass<UBoxComponent>())
+            {
+                FEngineLoop::PrimitiveDrawBatch.AddBoxCollisionToBatch(
+                    BoxComponent->GetWorldLocation(),
+                    BoxComponent->GetUnscaledBoxExtent(),
+                    WorldMatrix
+                );
+            }
+        }        
         // End Test
     }
 
     Graphics->DeviceContext->OMSetRenderTargets(0, nullptr, nullptr);
-    // 여기 넣는거 개별로
     ID3D11ShaderResourceView* nullSRV[1] = { nullptr };
 
     for (int i = 0; i < MAX_SPOT_LIGHT; ++i)

@@ -18,6 +18,8 @@ UPrimitiveDrawBatch::~UPrimitiveDrawBatch()
     ReleaseOBBBuffers();
     ReleaseBoundingBoxBuffers();
     ReleaseConeBuffers();
+    ReleaseSphereBuffers();
+    ReleaseBoxBuffers();
 
     // Primitive 버퍼들 릴리즈
     if (GridConstantBuffer)
@@ -51,6 +53,9 @@ void UPrimitiveDrawBatch::ReleaseResources()
     ReleaseOBBBuffers();
     ReleaseBoundingBoxBuffers();
     ReleaseConeBuffers();
+    ReleaseSphereBuffers();
+    ReleaseBoxBuffers();
+
     if (GridConstantBuffer)
     {
         GridConstantBuffer->Release();
@@ -74,18 +79,21 @@ void UPrimitiveDrawBatch::InitializeGrid(float Spacing, int GridCount)
 void UPrimitiveDrawBatch::PrepareBatch(FLinePrimitiveBatchArgs& OutLinePrimitiveBatchArgs)
 {
     InitializeVertexBuffer();
+
     UpdateGridConstantBuffer(GridParameters);
     UpdateBoundingBoxBuffers();
     UpdateConeBuffers();
     UpdateOBBBuffers();
     UpdateSphereBuffers();
+    UpdateBoxBuffers();
 
     int BoundingBoxSize = BoundingBoxes.Num();
     int ConeSize = Cones.Num();
     int OBBSize = OrientedBoundingBoxes.Num();
     int SphereSize = Spheres.Num();
+    int BoxSize = Boxes.Num();
 
-    UpdateLinePrimitiveCountBuffer(BoundingBoxSize, ConeSize, OBBSize, SphereSize);
+    UpdateLinePrimitiveCountBuffer(BoundingBoxSize, ConeSize, OBBSize, SphereSize, BoxSize);
 
     OutLinePrimitiveBatchArgs.GridParam = GridParameters;
     OutLinePrimitiveBatchArgs.VertexBuffer = VertexBuffer;
@@ -95,6 +103,7 @@ void UPrimitiveDrawBatch::PrepareBatch(FLinePrimitiveBatchArgs& OutLinePrimitive
     OutLinePrimitiveBatchArgs.OBBCount = OBBSize;
 
     OutLinePrimitiveBatchArgs.SphereCount = SphereSize;
+    OutLinePrimitiveBatchArgs.BoxCount = BoxSize;
 }
 
 void UPrimitiveDrawBatch::RemoveArr()
@@ -103,6 +112,7 @@ void UPrimitiveDrawBatch::RemoveArr()
     Cones.Empty();
     OrientedBoundingBoxes.Empty();
     Spheres.Empty();
+    Boxes.Empty();
 }
 
 // 4. 버퍼 초기화 및 업데이트
@@ -191,7 +201,23 @@ void UPrimitiveDrawBatch::UpdateSphereBuffers()
     }
 }
 
-void UPrimitiveDrawBatch::UpdateLinePrimitiveCountBuffer(int NumBoundingBox, int NumCone, int NumOBB, int NumSphere) const
+void UPrimitiveDrawBatch::UpdateBoxBuffers()
+{
+    if (Boxes.Num() > AllocatedBoxCapacity)
+    {
+        AllocatedBoxCapacity = Boxes.Num();
+        ReleaseBoxBuffers();
+        BoxBuffer = CreateBoxBuffer(static_cast<UINT>(AllocatedBoxCapacity));
+        BoxSRV = CreateBoxSRV(BoxBuffer, static_cast<UINT>(AllocatedBoxCapacity));
+    }
+    if (BoxBuffer && BoxSRV)
+    {
+        int BoxCount = Boxes.Num();
+        UpdateBoxesBuffer(BoxBuffer, Boxes, BoxCount);
+    }
+}
+
+void UPrimitiveDrawBatch::UpdateLinePrimitiveCountBuffer(int NumBoundingBox, int NumCone, int NumOBB, int NumSphere, int NumBox) const
 {
     D3D11_MAPPED_SUBRESOURCE MappedResource;
     HRESULT HR = Graphics->DeviceContext->Map(LinePrimitiveBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource);
@@ -200,6 +226,7 @@ void UPrimitiveDrawBatch::UpdateLinePrimitiveCountBuffer(int NumBoundingBox, int
     Data->ConeCount = NumCone;
     Data->OBBCount = NumOBB;
     Data->SphereCount = NumSphere;
+    Data->BoxCount = NumBox;
     Graphics->DeviceContext->Unmap(LinePrimitiveBuffer, 0);
 }
 
@@ -257,6 +284,20 @@ void UPrimitiveDrawBatch::ReleaseSphereBuffers()
     {
         SphereSRV->Release();
         SphereSRV = nullptr;
+    }
+}
+
+void UPrimitiveDrawBatch::ReleaseBoxBuffers()
+{
+    if (BoxBuffer)
+    {
+        BoxBuffer->Release();
+        BoxBuffer = nullptr;
+    }
+    if (BoxSRV)
+    {
+        BoxSRV->Release();
+        BoxSRV = nullptr;
     }
 }
 
@@ -357,6 +398,31 @@ void UPrimitiveDrawBatch::AddSphereCollisionToBatch(const FVector& Center, float
     Spheres.Add(CollisionSphere);
 }
 
+void UPrimitiveDrawBatch::AddBoxCollisionToBatch(const FVector& Center, const FVector& Extent, const FMatrix& ModelMatrix)
+{
+    FVector TransformedLocalCenter = FMatrix::TransformVector(FVector(0.0f, 0.0f, 0.0f), ModelMatrix);
+    FVector WorldCenter = Center + TransformedLocalCenter;
+
+    FVector ScaledXAxis = FMatrix::TransformVector(FVector(1.0f, 0.0f, 0.0f), ModelMatrix);
+    FVector ScaledYAxis = FMatrix::TransformVector(FVector(0.0f, 1.0f, 0.0f), ModelMatrix);
+    FVector ScaledZAxis = FMatrix::TransformVector(FVector(0.0f, 0.0f, 1.0f), ModelMatrix);
+    // Find the maximum squared length (avoids one sqrt)
+    float MaxScaleSq = ScaledXAxis.LengthSquared();
+    MaxScaleSq = std::max(MaxScaleSq, ScaledYAxis.LengthSquared()); 
+    MaxScaleSq = std::max(MaxScaleSq, ScaledZAxis.LengthSquared()); 
+
+    float MaxScale = std::sqrt(MaxScaleSq);
+    FVector Worldextent = Extent * MaxScale;
+
+    if (Worldextent.LengthSquared() < 0.0f) {
+        Worldextent = FVector();
+    }
+    FBox CollisionBox;
+    CollisionBox.Center = Center;
+    CollisionBox.Extent = Extent;
+    Boxes.Add(CollisionBox);
+}
+
 // End Test
 
 // 7. 버퍼 생성 함수들
@@ -452,6 +518,21 @@ ID3D11Buffer* UPrimitiveDrawBatch::CreateSphereBuffer(UINT NumSpheres) const
     return Buffer;
 }
 
+ID3D11Buffer* UPrimitiveDrawBatch::CreateBoxBuffer(UINT NumBoxes) const
+{
+    D3D11_BUFFER_DESC BufferDesc;
+    BufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+    BufferDesc.ByteWidth = sizeof(FBox) * NumBoxes;
+    BufferDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+    BufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+    BufferDesc.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
+    BufferDesc.StructureByteStride = sizeof(FBox);
+
+    ID3D11Buffer* Buffer = nullptr;
+    Graphics->Device->CreateBuffer(&BufferDesc, nullptr, &Buffer);
+    return Buffer;
+}
+
 // 8. SRV 생성 함수들
 ID3D11ShaderResourceView* UPrimitiveDrawBatch::CreateBoundingBoxSRV(ID3D11Buffer* Buffer, UINT NumBoundingBoxes)
 {
@@ -499,6 +580,18 @@ ID3D11ShaderResourceView* UPrimitiveDrawBatch::CreateSphereSRV(ID3D11Buffer* Buf
 
     Graphics->Device->CreateShaderResourceView(Buffer, &SRVDesc, &SphereSRV);
     return SphereSRV;
+}
+
+ID3D11ShaderResourceView* UPrimitiveDrawBatch::CreateBoxSRV(ID3D11Buffer* Buffer, UINT NumBoxes)
+{
+    D3D11_SHADER_RESOURCE_VIEW_DESC SRVDesc;
+    SRVDesc.Format = DXGI_FORMAT_UNKNOWN;
+    SRVDesc.ViewDimension = D3D11_SRV_DIMENSION_BUFFER;
+    SRVDesc.Buffer.ElementOffset = 0;
+    SRVDesc.Buffer.NumElements = NumBoxes;
+
+    Graphics->Device->CreateShaderResourceView(Buffer, &SRVDesc, &BoxSRV);
+    return BoxSRV;
 }
 
 // 9. 버퍼 업데이트 (데이터 복사) 함수들
@@ -558,6 +651,20 @@ void UPrimitiveDrawBatch::UpdateSpheresBuffer(ID3D11Buffer* Buffer, const TArray
     Graphics->DeviceContext->Unmap(Buffer, 0);
 }
 
+void UPrimitiveDrawBatch::UpdateBoxesBuffer(ID3D11Buffer* Buffer, const TArray<FBox>& Boxes, int NumBoxes) const
+{
+    if (!Buffer)
+        return;
+    D3D11_MAPPED_SUBRESOURCE MappedResource;
+    Graphics->DeviceContext->Map(Buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource);
+    auto Data = static_cast<FBox*>(MappedResource.pData);
+    for (int i = 0; i < Boxes.Num(); ++i)
+    {
+        Data[i] = Boxes[i];
+    }
+    Graphics->DeviceContext->Unmap(Buffer, 0);
+}
+
 void UPrimitiveDrawBatch::PrepareLineResources() const
 {
     if (Graphics && Graphics->DeviceContext)
@@ -574,5 +681,6 @@ void UPrimitiveDrawBatch::PrepareLineResources() const
         Graphics->DeviceContext->VSSetShaderResources(3, 1, &ConeSRV);
         Graphics->DeviceContext->VSSetShaderResources(4, 1, &OBBSRV);
         Graphics->DeviceContext->VSSetShaderResources(5, 1, &SphereSRV);
+        Graphics->DeviceContext->VSSetShaderResources(6, 1, &BoxSRV);
     }
 }
