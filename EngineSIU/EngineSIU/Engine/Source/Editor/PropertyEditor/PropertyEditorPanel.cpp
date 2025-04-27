@@ -30,6 +30,7 @@
 #include "Renderer/Shadow/PointLightShadowMap.h"
 #include "Renderer/Shadow/DirectionalShadowMap.h"
 
+#include "Components/SphereComponent.h"
 void PropertyEditorPanel::Render()
 {
     /* Pre Setup */
@@ -547,6 +548,27 @@ void PropertyEditorPanel::Render()
             }
             ImGui::PopStyleColor();
         }
+
+    if(PickedActor)
+        if (USphereComponent* SphereComponent = Cast<USphereComponent>(PickedActor->GetComponentByClass<USphereComponent>()))
+        {
+            ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
+
+            if (ImGui::TreeNodeEx("SphereComponent", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen))
+            {
+                float UnscaledRadius = SphereComponent->GetUnscaledSphereRadius();
+                if (ImGui::InputFloat("UnscaledRadius", &UnscaledRadius, 0.f, 100.0f, "%.1f"))
+                    SphereComponent->SetSphereRadius(UnscaledRadius);
+                
+                //float ScaledRadius = SphereComponent->GetScaledSphereRadius();
+                //if (ImGui::InputFloat("ScaledRadius", &ScaledRadius, 0.f, 100.0f, "%.1f"))
+                //    SphereComponent->SetSphereRadius(ScaledRadius);
+                
+                ImGui::TreePop();
+            }
+            ImGui::PopStyleColor();
+        }
+
     ImGui::End();
 }
 

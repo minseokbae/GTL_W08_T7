@@ -29,6 +29,10 @@
 #include "Renderer/Shadow/SpotLightShadowMap.h"
 #include "Renderer/Shadow/PointLightShadowMap.h"
 
+#include "Components/SphereComponent.h"
+#include "Components/BoxComponent.h"
+#include "Components/CapsuleComponent.h"
+
 
 FStaticMeshRenderPass::FStaticMeshRenderPass()
     : VertexShader(nullptr)
@@ -414,6 +418,21 @@ void FStaticMeshRenderPass::Render(const std::shared_ptr<FEditorViewportClient>&
         {
             FEngineLoop::PrimitiveDrawBatch.AddAABBToBatch(Comp->GetBoundingBox(), Comp->GetWorldLocation(), WorldMatrix);
         }
+
+        // Begin Test
+        if (Viewport->GetShowFlag() & static_cast<uint64>(EEngineShowFlags::SF_Collision))
+        {
+            // 그리는 방식 개 별론데;
+            if (USphereComponent* SphereComponent = Comp->GetOwner()->GetComponentByClass<USphereComponent>())
+            {
+                FEngineLoop::PrimitiveDrawBatch.AddSphereCollisionToBatch(
+                    SphereComponent->GetWorldLocation(), 
+                    SphereComponent->GetScaledSphereRadius(), 
+                    WorldMatrix
+                );
+            }
+        }
+        // End Test
     }
 
     Graphics->DeviceContext->OMSetRenderTargets(0, nullptr, nullptr);
