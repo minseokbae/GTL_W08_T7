@@ -4,8 +4,7 @@
 
 APlayerController::APlayerController()
 {
-    TransformComponent = AddComponent<USceneComponent>("TransformComponent_0");
-    RootComponent = TransformComponent;
+
 }
 
 void APlayerController::Tick(float DeltaTime)
@@ -19,18 +18,19 @@ void APlayerController::Input()
 
     if (GetAsyncKeyState('W') & 0x8000)
     {
-        PossessingPawn->SetActorLocation(PossessingPawn->GetActorLocation() + FVector(.1f, 0.0f, 0.0f));
+        Pawn->SetActorLocation(Pawn->GetActorLocation() + Pawn->GetActorForwardVector() * 0.1f);
     }
     if (GetAsyncKeyState('S') & 0x8000)
     {
-        PossessingPawn->SetActorLocation(PossessingPawn->GetActorLocation() + FVector(-.1f, 0.0f, 0.0f));
+        Pawn->SetActorLocation(Pawn->GetActorLocation() - Pawn->GetActorForwardVector() * 0.1f);
     }
     if (GetAsyncKeyState('A') & 0x8000)
     {
-        PossessingPawn->SetActorLocation(PossessingPawn->GetActorLocation() + FVector(0.0f, -0.1f, 0.0f));
+        Pawn->SetActorLocation(Pawn->GetActorLocation() - Pawn->GetActorRightVector() * 0.1f);
     }
     if (GetAsyncKeyState('D') & 0x8000)
     {
-        PossessingPawn->SetActorLocation(PossessingPawn->GetActorLocation() + FVector(0.0f, 0.1f, 0.0f));
+        Pawn->SetActorLocation(Pawn->GetActorLocation() + Pawn->GetActorRightVector() * 0.1f);
     }
+    // if (GetAsyncKeyState(VK_LBUTTON) & 0x8000))
 }

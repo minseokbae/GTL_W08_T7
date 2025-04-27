@@ -14,7 +14,6 @@ public:
     virtual void Tick(float DeltaTime) override;
 
 private:
-    // TODO : 원레는 Class를 등록해두고 찾는 형식일 듯 
     UClass* Controller = APlayerController::StaticClass();
     UClass* DefaultPawn = ADefaultPawn::StaticClass();
 

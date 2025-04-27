@@ -7,15 +7,16 @@ class AController : public AActor
 {
     DECLARE_CLASS(AController, AActor)
 public:
-    AController() = default;
+    AController();
 
     virtual void Tick(float DeltaTime) override;
     virtual void Input();
 
 protected:
-    APawn* PossessingPawn;
+    APawn* Pawn;
+    USceneComponent* TransformComponent;
 
 public:
-    void SetPossessingPawn(APawn* Pawn){ PossessingPawn=Pawn; }
-    APawn* GetPossessingPawn(){ return PossessingPawn; }
+    void AttachtoPawn(APawn* InPawn){ Pawn= InPawn; }
+    APawn* GetPossessingPawn(){ return Pawn; }
 };

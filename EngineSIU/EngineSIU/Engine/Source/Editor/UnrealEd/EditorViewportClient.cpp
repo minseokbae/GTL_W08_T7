@@ -70,14 +70,17 @@ void FEditorViewportClient::UpdateEditorCameraMovement(float DeltaTime)
     UEditorEngine* EditorEngine = Cast<UEditorEngine>(GEngine);
     if (!Cast<AEditorPlayer>(EditorEngine->GetCurrentController()))
     {
-        APawn* Pawn = EditorEngine->GetCurrentController()->GetPossessingPawn();
+        AController* PlayerController =  EditorEngine->GetCurrentController(); 
+        APawn* Pawn = PlayerController->GetPossessingPawn();
         for (auto Component : Pawn->GetComponents())
         {
             if ( UCameraComponent* CameraComponent = Cast<UCameraComponent>(Component))
             {
                 FVector WorldLoc = CameraComponent->GetWorldLocation();
                 PerspectiveCamera.SetLocation(WorldLoc);
-                PerspectiveCamera.SetRotation(CameraComponent->GetWorldRotation().ToVector());
+                FRotator WorldRoc =CameraComponent->GetWorldRotation();
+                FVector WorldRocVec = FVector(CameraComponent->GetWorldRotation().Pitch,CameraComponent->GetWorldRotation().Yaw,CameraComponent->GetWorldRotation().Roll);
+                PerspectiveCamera.SetRotation(WorldRocVec);
                 return;
             }
         }

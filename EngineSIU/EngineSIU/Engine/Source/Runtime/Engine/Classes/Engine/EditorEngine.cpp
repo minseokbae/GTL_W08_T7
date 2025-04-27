@@ -10,6 +10,7 @@
 #include "Classes/Engine/AssetManager.h"
 #include "Components/Light/DirectionalLightComponent.h"
 #include "GameFramework/PlayerController.h"
+#include "GameInstance.h"
 
 namespace PrivateEditorSelection
 {
@@ -162,9 +163,10 @@ void UEditorEngine::StartPIE()
             APawn* Pawn = Cast<APawn>(*iter);
             APlayerController* Controller = PIEWorld->SpawnActor<APlayerController>();
             Pawn->SetPossessedController(Controller);
-            Controller->SetPossessingPawn(Pawn);
+            Controller->AttachtoPawn(Pawn);
             PlayerController = Controller;
             CurrentPlayer = PlayerController;
+            break;
         }
     }
 }
@@ -186,6 +188,12 @@ void UEditorEngine::EndPIE()
     // 다시 EditorWorld로 돌아옴.
     ActiveWorld = EditorWorld;
     CurrentPlayer = EditorPlayer;
+}
+
+void UEditorEngine::InitGame()
+{
+    GameInstance = FObjectFactory::ConstructObject<UGameInstance>(this);
+    GameInstance->Init();
 }
 
 FWorldContext& UEditorEngine::GetEditorWorldContext(/*bool bEnsureIsGWorld*/)

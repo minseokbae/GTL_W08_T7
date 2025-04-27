@@ -1,6 +1,6 @@
 #pragma once
 #include "Engine.h"
-#include "Actors/Player.h"
+#include "Actors/EditorPlayer.h"
 
 /*
     Editor 모드에서 사용될 엔진.
@@ -8,6 +8,7 @@
     내부적으로 PIE, Editor World 두 가지 형태로 관리.
 */
 
+class UGameInstance;
 class APlayerController;
 class AGameMode;
 class AActor;
@@ -30,6 +31,9 @@ public:
     void StartPIE();
     void EndPIE();
 
+    //TODO : UGameEngine 으로 빠져야할 부부입니다. 
+    void InitGame();
+    
     // 주석은 UE에서 사용하던 매개변수.
     FWorldContext& GetEditorWorldContext(/*bool bEnsureIsGWorld = false*/);
     FWorldContext* GetPIEWorldContext(/*int32 WorldPIEInstance = 0*/);
@@ -57,7 +61,8 @@ private:
     AEditorPlayer* EditorPlayer = nullptr;
     AController* CurrentPlayer = nullptr;
     APlayerController* PlayerController = nullptr;
-    AGameMode* GameMode = nullptr; 
+    AGameMode* GameMode = nullptr;
+    UGameInstance* GameInstance = nullptr;
 };
 
 
