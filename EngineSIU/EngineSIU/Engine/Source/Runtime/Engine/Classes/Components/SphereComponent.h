@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "Components/ShapeComponent.h"
 
 class USphereComponent : UShapeComponent
@@ -7,13 +7,13 @@ class USphereComponent : UShapeComponent
 public:
     USphereComponent();
 
-protected:
-    float SphereRadius;
-    
-    void SetSphereRadius(float InSphereRadius);
-    float GetSclaedShpereRadius() const;
+    float GetScaledSphereRadius() const;
     float GetUnscaledSphereRadius() const;
     float GetShapeScale() const;
+
+protected:
+    float SphereRadius;
+    void SetSphereRadius(float InSphereRadius);
 };
 
 inline void USphereComponent::SetSphereRadius(float InSphereRadius)
@@ -21,7 +21,7 @@ inline void USphereComponent::SetSphereRadius(float InSphereRadius)
     SphereRadius = InSphereRadius;
 }
 
-inline float USphereComponent::GetSclaedShpereRadius() const
+inline float USphereComponent::GetScaledSphereRadius() const
 {
     return SphereRadius * GetShapeScale();
 }

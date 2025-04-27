@@ -20,7 +20,7 @@ void AEditorPlayer::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
     Input();
-}
+}   
 
 void AEditorPlayer::Input()
 {

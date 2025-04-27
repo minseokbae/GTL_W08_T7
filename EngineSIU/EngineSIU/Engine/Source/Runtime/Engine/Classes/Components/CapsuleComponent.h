@@ -1,5 +1,5 @@
-﻿#pragma once
-#include "ShapeComponent.h"
+#pragma once
+#include "Components/ShapeComponent.h"
 
 class UCapsuleComponent : public UShapeComponent
 {

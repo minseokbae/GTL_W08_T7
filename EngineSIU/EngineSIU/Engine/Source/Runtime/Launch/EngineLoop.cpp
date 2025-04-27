@@ -61,7 +61,6 @@ int32 FEngineLoop::Init(HINSTANCE hInstance)
 
     GEngine = FObjectFactory::ConstructObject<UEditorEngine>(nullptr);
     GEngine->Init();
-
     UpdateUI();
 
     return 0;
@@ -127,9 +126,10 @@ void FEngineLoop::Tick()
                 break;
             }
         }
-
         GEngine->Tick(DeltaTime);
-        CollisionMgr.OnCollisionDetected();
+        // Begin Test
+        CollisionMgr.UpdateCollisionChecks();
+        // End Test
         LevelEditor->Tick(DeltaTime);
         
         Render();

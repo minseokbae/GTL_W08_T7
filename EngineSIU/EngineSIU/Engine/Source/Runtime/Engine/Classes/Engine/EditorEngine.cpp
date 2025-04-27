@@ -12,6 +12,9 @@
 #include "GameFramework/PlayerController.h"
 #include "GameInstance.h"
 
+#include "Engine/Source/Runtime/Game/Data/MapManager.h"
+#include "Engine/Source/Runtime/Game/Sound/SoundManager.h"
+
 namespace PrivateEditorSelection
 {
     static AActor* GActorSelected = nullptr;
@@ -47,7 +50,20 @@ void UEditorEngine::Init()
     GameMode = FObjectFactory::ConstructObject<AGameMode>(this);
 #pragma endregion
 
-    
+    if (MapManager == nullptr)
+    {
+        MapManager = FObjectFactory::ConstructObject<UMapManager>(this);
+        assert(MapManager);
+        MapManager->InitMapManager(FString("pacman_map.txt"));
+    }
+
+    if (SoundManager == nullptr)
+    {
+        SoundManager = FObjectFactory::ConstructObject<USoundManager>(this);
+        assert(SoundManager);
+        //SoundManager->InitSoundManager();
+    }
+
 #ifdef _DEBUG
     AActor* Actor = EditorWorld->SpawnActor<ACube>();
     
@@ -86,7 +102,7 @@ void UEditorEngine::Tick(float DeltaTime)
             }
         }
         else if (WorldContext->WorldType == EWorldType::PIE)
-        {
+        {   
             if (UWorld* World = WorldContext->World())
             {
                 World->Tick(DeltaTime);
@@ -102,10 +118,10 @@ void UEditorEngine::Tick(float DeltaTime)
                             Actor->Tick(DeltaTime);
                         }
                     }
+                    GEngineLoop.LuaCompiler.Tick(DeltaTime);
                 }
             }
         }
-
     }
     Input();
 }

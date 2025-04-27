@@ -1,7 +1,7 @@
-﻿#include "SphereComponent.h"
+#include "SphereComponent.h"
 
 USphereComponent::USphereComponent()
 {
-    SphereRadius = 32.0f;
+    SphereRadius = 1.0f;
 }
 

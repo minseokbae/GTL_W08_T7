@@ -1,4 +1,4 @@
-﻿#include "CapsuleComponent.h"
+#include "CapsuleComponent.h"
 
 UCapsuleComponent::UCapsuleComponent()
 {

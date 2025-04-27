@@ -61,6 +61,7 @@ void UWorld::BeginPlay()
             Actor->BeginPlay();
         }
     }
+    GEngineLoop.LuaCompiler.BeginPlay();
 }
 
 void UWorld::Release()

@@ -127,6 +127,7 @@ public:
     static inline FVector UnitZ() { return ZAxisVector; }
 
     static float Distance(const FVector& V1, const FVector& V2);
+    static float DistanceSquared(const FVector& V1, const FVector& V2);
 
     /** Dot Product */
     float operator|(const FVector& Other) const;
@@ -196,6 +197,14 @@ inline float FVector::Distance(const FVector& V1, const FVector& V2)
 {
     return FMath::Sqrt(
         FMath::Square(V2.X - V1.X)
+        + FMath::Square(V2.Y - V1.Y)
+        + FMath::Square(V2.Z - V1.Z)
+    );
+}
+
+inline float FVector::DistanceSquared(const FVector& V1, const FVector& V2)
+{
+    return (FMath::Square(V2.X - V1.X)
         + FMath::Square(V2.Y - V1.Y)
         + FMath::Square(V2.Z - V1.Z)
     );

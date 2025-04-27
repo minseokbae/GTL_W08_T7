@@ -132,7 +132,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)$(ProjectName);$(ProjectDir)$(ProjectName)\Engine\Source;$(ProjectDir)$(ProjectName)\Engine\Source\Editor;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Core;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\CoreUObject;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Engine;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Engine\Classes;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\InputCore;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\InteractiveToolsFramework;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Launch;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Renderer;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Serialization;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Slate;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\SlateCore;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Windows;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\tinyfiledialogs\include;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\Json\include;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\DirectXTK\Include;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\ImGui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)$(ProjectName);$(ProjectDir)$(ProjectName)\Engine\Source;$(ProjectDir)$(ProjectName)\Engine\Source\Editor;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Core;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\CoreUObject;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Engine;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Engine\Classes;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\InputCore;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\InteractiveToolsFramework;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Launch;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Renderer;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Serialization;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Slate;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\SlateCore;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Windows;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\tinyfiledialogs\include;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\Json\include;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\DirectXTK\Include;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\luajit;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\sol;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\ImGui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -140,8 +140,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(ProjectName)\Engine\Source\ThirdParty\DirectXTK\Lib\$(PlatformTarget)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>DirectXTK.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\FMOD\lib;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\luajit;$(SolutionDir)$(ProjectName)\Engine\Source\ThirdParty\DirectXTK\Lib\$(PlatformTarget)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>DirectXTK.lib;lua51.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -152,7 +152,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)$(ProjectName);$(ProjectDir)$(ProjectName)\Engine\Source;$(ProjectDir)$(ProjectName)\Engine\Source\Editor;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Core;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\CoreUObject;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Engine;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Engine\Classes;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\InputCore;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\InteractiveToolsFramework;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Launch;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Renderer;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Serialization;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Slate;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\SlateCore;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Windows;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\tinyfiledialogs\include;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\Json\include;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\DirectXTK\Include;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\ImGui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)$(ProjectName);$(ProjectDir)$(ProjectName)\Engine\Source;$(ProjectDir)$(ProjectName)\Engine\Source\Editor;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Core;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\CoreUObject;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Engine;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Engine\Classes;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\InputCore;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\InteractiveToolsFramework;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Launch;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Renderer;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Serialization;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Slate;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\SlateCore;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Windows;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\tinyfiledialogs\include;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\Json\include;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\DirectXTK\Include;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\luajit;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\sol;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\ImGui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -162,8 +162,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(ProjectName)\Engine\Source\ThirdParty\DirectXTK\Lib\$(PlatformTarget)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>DirectXTK.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\luajit;$(SolutionDir)$(ProjectName)\Engine\Source\ThirdParty\DirectXTK\Lib\$(PlatformTarget)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>DirectXTK.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -265,6 +265,7 @@
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\UnrealClient.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\UserInterface\Console.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\World\World.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Game\Data\MapManager.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\InputCore\InputCoreTypes.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\InteractiveToolsFramework\BaseGizmos\GizmoArrowComponent.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\InteractiveToolsFramework\BaseGizmos\GizmoBaseComponent.cpp" />
@@ -274,6 +275,8 @@
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Launch\EngineLoop.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Launch\ImGuiManager.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Launch\Launch.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Lua\LuaCompiler.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Lua\LuaInstance.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Renderer\BillboardRenderPass.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Renderer\CompositingPass.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Renderer\EditorBillboardRenderPass.cpp" />
@@ -311,13 +314,17 @@
     <ClCompile Include="EngineSIU\LightGridGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CollisionHelpers.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Developer\ShaderCompileUtils\ShaderCompileData.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Developer\ShaderCompileUtils\ShaderCompile.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Developer\ShaderCompileUtils\ShaderCompileUtility.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Developer\ShaderCompileUtils\ShaderFileMetadata.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Developer\ShaderCompileUtils\ShaderMetadataPtr.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Core\Container\Queue.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Core\Container\StringConv.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Core\Container\TSafeQueue.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Core\Traits\IsCharType.h" />
+
     <None Include="EngineSIU\Engine\Source\Runtime\Core\Delegates\JungleDelegate.h" />
     <None Include="EngineSIU\Engine\Source\Runtime\Core\Delegates\JungleDelegateCombination.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Actors\AmbientLightActor.h" />
@@ -436,6 +443,8 @@
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\World\World.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\World\WorldContext.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\World\WorldType.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Game\Data\MapManager.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Game\Sound\SoundManager.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\InputCore\InputCoreTypes.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\InteractiveToolsFramework\BaseGizmos\GizmoArrowComponent.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\InteractiveToolsFramework\BaseGizmos\GizmoBaseComponent.h" />
@@ -448,6 +457,8 @@
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Launch\ImGuiManager.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Launch\LightDefine.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Launch\ShadowDefine.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Lua\LuaCompiler.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Lua\LuaInstance.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Renderer\BillboardRenderPass.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Renderer\CompositingPass.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Renderer\EditorBillboardRenderPass.h" />
@@ -510,6 +521,53 @@
     <ClInclude Include="EngineSIU\Engine\Source\ThirdParty\ImGui\include\ImGui\imstb_truetype.h" />
     <ClInclude Include="EngineSIU\Engine\Source\ThirdParty\Json\include\Json\json.hpp" />
     <ClInclude Include="EngineSIU\Engine\Source\ThirdParty\tinyfiledialogs\include\tinyfiledialogs.h" />
+    <ClInclude Include="EngineSIU\FCollisionMgr.h" />
+      <AdditionalIncludeDirectories>$(ProjectDir)$(ProjectName);$(ProjectDir)$(ProjectName)\Engine\Source;$(ProjectDir)$(ProjectName)\Engine\Source\Editor;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Core;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\CoreUObject;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Engine;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Engine\Classes;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\InputCore;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\InteractiveToolsFramework;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Launch;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Renderer;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Serialization;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Slate;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\SlateCore;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Windows;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\tinyfiledialogs\include;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\Json\include;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\DirectXTK\Include;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\luajit;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\sol;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\ImGui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\FMOD\lib;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\luajit;$(SolutionDir)$(ProjectName)\Engine\Source\ThirdParty\DirectXTK\Lib\$(PlatformTarget)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>DirectXTK.lib;lua51.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalIncludeDirectories>$(ProjectDir)$(ProjectName);$(ProjectDir)$(ProjectName)\Engine\Source;$(ProjectDir)$(ProjectName)\Engine\Source\Editor;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Core;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\CoreUObject;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Engine;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Engine\Classes;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\InputCore;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\InteractiveToolsFramework;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Launch;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Renderer;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Serialization;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Slate;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\SlateCore;$(ProjectDir)$(ProjectName)\Engine\Source\Runtime\Windows;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\tinyfiledialogs\include;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\Json\include;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\DirectXTK\Include;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\luajit;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\sol;$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\ImGui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)$(ProjectName)\Engine\Source\ThirdParty\luajit;$(SolutionDir)$(ProjectName)\Engine\Source\ThirdParty\DirectXTK\Lib\$(PlatformTarget)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>DirectXTK.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Actors\EditorPlayer.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Components\BoxComponent.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Components\CapsuleComponent.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Components\SphereComponent.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Components\ShapeComponent.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\DefaultPawn.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Engine\HitResult.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Engine\LocalPlayer.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Engine\Player.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Engine\GameInstance.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\GameFramework\Controller.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\GameFramework\GameMode.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\GameFramework\Pawn.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\GameFramework\PlayerController.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Game\Data\MapManager.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Lua\LuaCompiler.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Lua\LuaInstance.cpp" />
+    <ClCompile Include="EngineSIU\FCollisionMgr.cpp" />
+    <ClInclude Include="CollisionHelpers.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Core\Container\StringConv.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Core\Traits\IsCharType.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Actors\EditorPlayer.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Components\BoxComponent.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Components\CapsuleComponent.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Components\SphereComponent.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Components\ShapeComponent.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\DefaultPawn.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Engine\HitResult.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Engine\LocalPlayer.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Engine\Player.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Engine\GameInstance.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\GameFramework\Controller.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\GameFramework\GameMode.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\GameFramework\Pawn.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\GameFramework\PlayerController.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\OverlapInfo.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Game\Data\MapManager.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Game\Sound\SoundManager.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Lua\LuaCompiler.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Lua\LuaInstance.h" />
     <ClInclude Include="EngineSIU\FCollisionMgr.h" />
     <ClInclude Include="EngineSIU\LightGridGenerator.h" />
   </ItemGroup>
