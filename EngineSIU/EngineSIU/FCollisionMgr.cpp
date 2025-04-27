@@ -15,6 +15,11 @@ namespace CollisionChecks
     //bool CheckCapsuleCapsuleOverlap(const UCapsuleComponent* CapsuleA, const UCapsuleComponent* CapsuleB);
     //bool CheckCapsuleSphereOverlap(const UCapsuleComponent* Capsule, const USphereComponent* Sphere);
     //bool CheckCapsuleBoxOverlap(const UCapsuleComponent* Capsule, const UBoxComponent* Box);
+    //bool CheckCapsuleCapsuleOverlap(const UCapsuleComponent* CapsuleA, const UCapsuleComponent* CapsuleB);
+    //bool CheckBoxBoxOverlap(const UBoxComponent* BoxA, const UBoxComponent* BoxB);
+    //bool CheckCapsuleSphereOverlap(const UCapsuleComponent* Capsule, const USphereComponent* Sphere);
+    //bool CheckCapsuleBoxOverlap(const UCapsuleComponent* Capsule, const UBoxComponent* Box);
+    //bool CheckSphereBoxOverlap(const USphereComponent* Sphere, const UBoxComponent* Box);
 } 
 
 FCollisionMgr::FCollisionMgr()
@@ -146,6 +151,10 @@ bool FCollisionMgr::IsOverlapping(UShapeComponent* CompA, UShapeComponent* CompB
         {
             return CollisionChecks::CheckSphereBoxOverlap(SphereA, BoxB);
         }
+        //if (auto* BoxB = Cast<UBoxComponent>(CompB))
+        //{
+        //    return CollisionChecks::CheckSphereBoxOverlap(SphereA, BoxB);
+        //}
     }
     //else if (auto CapsuleA = Cast<UCapsuleComponent>(CompA))
     //{
@@ -177,6 +186,21 @@ bool FCollisionMgr::IsOverlapping(UShapeComponent* CompA, UShapeComponent* CompB
             return CollisionChecks::CheckBoxBoxOverlap(BoxA, BoxB);
         }
     }
+    //else if (auto* BoxA = Cast<UBoxComponent>(CompA))
+    //{
+    //    if (auto* CapsuleB = Cast<UCapsuleComponent>(CompB))
+    //    {
+    //        return CollisionChecks::CheckCapsuleBoxOverlap(CapsuleB, BoxA); 
+    //    }
+    //    if (auto* SphereB = Cast<USphereComponent>(CompB))
+    //    {
+    //        return CollisionChecks::CheckSphereBoxOverlap(SphereB, BoxA);
+    //    }
+    //    if (auto* BoxB = Cast<UBoxComponent>(CompB))
+    //    {
+    //        return CollisionChecks::CheckBoxBoxOverlap(BoxA, BoxB);
+    //    }
+    //}
 
     return false;
 }
@@ -313,30 +337,4 @@ namespace CollisionChecks
         const float DistSqLocal = FVector::DistanceSquared(SphereCenterLocal, ClosestPointLocal);
         return DistSqLocal <= SphereRadiusSq;
     }
-
-
-    //bool CheckCapsuleCapsuleOverlap(const UCapsuleComponent* CapsuleA, const UCapsuleComponent* CapsuleB)
-    //{
-    //    FVector PosA = CapsuleA->GetWorldLocation();
-    //    return false; // 임시 반환
-    //}
-
-    //bool CheckCapsuleSphereOverlap(const UCapsuleComponent* Capsule, const USphereComponent* Sphere)
-    //{
-    //    // TODO: 실제 캡슐-스피어 오버랩 검사 로직 구현
-    //    // 1. 캡슐의 트랜스폼, 반지름, 절반 높이와 스피어의 위치, 반지름을 얻습니다.
-    //    // 2. 스피어 중심점에서 캡슐의 중심 선분까지의 최단 거리를 계산합니다.
-    //    // 3. 이 최단 거리가 캡슐 반지름과 스피어 반지름의 합보다 작거나 같으면 오버랩입니다.
-    //    return false; // 임시 반환
-    //}
-    
-    //bool CheckCapsuleBoxOverlap(const UCapsuleComponent* Capsule, const UBoxComponent* Box)
-    //{
-    //    // TODO: 실제 캡슐-박스 오버랩 검사 로직 구현 (SAT 변형 또는 다른 기법 사용)
-    //    // SAT를 사용할 경우 축 검사가 더 복잡해집니다. (캡슐 투영 처리 등)
-    //    // 또는 박스를 확장( Minkowski Sum 반대 개념)하고 캡슐 선분과의 교차 검사 등을 사용할 수 있습니다.
-    //    return false; // 임시 반환
-    //}
-    
-
 }

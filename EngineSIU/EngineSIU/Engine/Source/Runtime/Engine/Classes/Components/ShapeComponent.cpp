@@ -1,4 +1,5 @@
 #include "Components/ShapeComponent.h"
+#include "GameFramework/Actor.h"
 
 UShapeComponent::UShapeComponent()
 {

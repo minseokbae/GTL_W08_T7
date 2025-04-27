@@ -11,6 +11,8 @@
 
 #include "UObject/ObjectFactory.h"
 #include "BaseGizmos/TransformGizmo.h"
+#include "Camera/CameraComponent.h"
+#include "GameFramework/Pawn.h"
 #include "LevelEditor/SLevelEditor.h"
 #include "SlateCore/Input/Events.h"
 
@@ -65,6 +67,31 @@ void FEditorViewportClient::Release() const
 
 void FEditorViewportClient::UpdateEditorCameraMovement(float DeltaTime)
 {
+    UEditorEngine* EditorEngine = Cast<UEditorEngine>(GEngine);
+    if (!Cast<AEditorPlayer>(EditorEngine->GetCurrentController()))
+    {
+        AController* PlayerController =  EditorEngine->GetCurrentController(); 
+        APawn* Pawn = PlayerController->GetPossessingPawn();
+        for (auto Component : Pawn->GetComponents())
+        {
+            if ( UCameraComponent* CameraComponent = Cast<UCameraComponent>(Component))
+            {
+                FVector LocalLoc = CameraComponent->GetRelativeLocation();
+                FVector PawnWorldLoc = Pawn->GetActorLocation();
+                FRotator WorldRoc =CameraComponent->GetWorldRotation();
+                // UE_LOG(ELogLevel::Warning, "Camera Comp Loc : %f %f %f", WorldLoc.X, WorldLoc.Y, WorldLoc.Z);
+                FVector RotLoc = JungleMath::FVectorRotate(LocalLoc, WorldRoc);
+                PerspectiveCamera.SetLocation(PawnWorldLoc + RotLoc);
+                
+                FVector WorldRocVec = FVector(CameraComponent->GetWorldRotation().Roll,CameraComponent->GetWorldRotation().Pitch,CameraComponent->GetWorldRotation().Yaw);
+                PerspectiveCamera.SetRotation(WorldRocVec);
+                return;
+            }
+        }
+        // PerspectiveCamera.SetRotation(EditorEngine->GetCurrentController()->GetPossessingPawn()->GetActorRotation().ToVector());
+        PerspectiveCamera.SetLocation(EditorEngine->GetCurrentController()->GetPossessingPawn()->GetActorLocation());
+        return;
+    }
     if (PressedKeys.Contains(EKeys::A))
     {
         CameraMoveRight(-100.f * DeltaTime);
@@ -267,6 +294,9 @@ void FEditorViewportClient::InputKey(const FKeyEvent& InKeyEvent)
 
 void FEditorViewportClient::MouseMove(const FPointerEvent& InMouseEvent)
 {
+    UEditorEngine* EditorEngine = Cast<UEditorEngine>(GEngine);
+    if (!Cast<AEditorPlayer>(EditorEngine->GetCurrentController()))
+        return;
     const auto& [DeltaX, DeltaY] = InMouseEvent.GetCursorDelta();
 
     // Yaw(좌우 회전) 및 Pitch(상하 회전) 값 변경

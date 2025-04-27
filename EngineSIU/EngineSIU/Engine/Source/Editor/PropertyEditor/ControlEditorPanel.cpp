@@ -2,7 +2,7 @@
 
 #include "World/World.h"
 
-#include "Actors/Player.h"
+#include "Actors/EditorPlayer.h"
 #include "Actors/LightActor.h"
 #include "Actors/FireballActor.h"
 
@@ -29,6 +29,8 @@
 #include "Actors/DirectionalLightActor.h"
 #include "Actors/SpotLightActor.h"
 #include "Actors/AmbientLightActor.h"
+
+#include "Game/Sound/SoundManager.h"
 
 void ControlEditorPanel::Render()
 {
@@ -508,6 +510,7 @@ void ControlEditorPanel::CreatePIEButton(ImVec2 ButtonSize, ImFont* IconFont) co
     if (ImGui::Button("\ue9a8", ButtonSize)) // Play
     {
         UE_LOG(ELogLevel::Display, TEXT("PIE Button Clicked"));
+        USoundManager::Get().InitSoundManager();
         Engine->StartPIE();
     }
 
@@ -515,6 +518,7 @@ void ControlEditorPanel::CreatePIEButton(ImVec2 ButtonSize, ImFont* IconFont) co
     if (ImGui::Button("\ue9e4", ButtonSize)) // Stop
     {
         UE_LOG(ELogLevel::Display, TEXT("Stop Button Clicked"));
+        USoundManager::Get().ReleaseAll();
         Engine->EndPIE();
     }
     
@@ -522,7 +526,7 @@ void ControlEditorPanel::CreatePIEButton(ImVec2 ButtonSize, ImFont* IconFont) co
 
 // code is so dirty / Please refactor
 void ControlEditorPanel::CreateSRTButton(ImVec2 ButtonSize) const
-{
+{ 
     UEditorEngine* Engine = Cast<UEditorEngine>(GEngine);
     AEditorPlayer* Player = Engine->GetEditorPlayer();
 

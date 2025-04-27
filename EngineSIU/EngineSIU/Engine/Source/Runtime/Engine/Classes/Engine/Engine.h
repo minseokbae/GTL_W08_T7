@@ -8,6 +8,8 @@
 
 class UAssetManager;
 class UWorld;
+class UMapManager;
+class USoundManager;
 
 class UEngine : public UObject
 {
@@ -19,7 +21,8 @@ public:
 public:
     UWorld* ActiveWorld;
     UAssetManager* AssetManager = nullptr;
-
+    UMapManager* MapManager = nullptr;
+    USoundManager* SoundManager = nullptr;
 protected:
     TArray<FWorldContext*> WorldList;
     int32 NextWorldContextHandle = 0;

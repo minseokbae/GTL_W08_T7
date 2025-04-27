@@ -126,7 +126,6 @@ void FEngineLoop::Tick()
                 break;
             }
         }
-
         GEngine->Tick(DeltaTime);
         // Begin Test
         CollisionMgr.UpdateCollisionChecks();

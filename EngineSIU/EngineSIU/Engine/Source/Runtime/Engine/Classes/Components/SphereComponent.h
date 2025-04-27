@@ -10,8 +10,8 @@ public:
     float GetScaledSphereRadius() const;
     float GetUnscaledSphereRadius() const;
     float GetShapeScale() const;
-
     void SetSphereRadius(float InSphereRadius);
+    
 protected:
     float SphereRadius;
 };
