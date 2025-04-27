@@ -39,9 +39,14 @@ public:
 
     void InitSoundManager()
     {
+        if (FmodSystem != nullptr)
+        {
+            UE_LOG(ELogLevel::Warning, TEXT("PIEWorld already exists!"));
+            return;
+        }
+
         FMOD::System_Create(&FmodSystem);
         FmodSystem->init(512, FMOD_INIT_NORMAL, nullptr);
-
         LoadSound("piano", "Assets/Sounds/piano_loop.wav");
     }
 
