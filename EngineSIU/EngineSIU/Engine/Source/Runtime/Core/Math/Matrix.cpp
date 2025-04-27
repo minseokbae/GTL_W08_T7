@@ -331,6 +331,30 @@ FMatrix FMatrix::GetRotationMatrix(const FQuat& InRotation)
     return Result;
 }
 
+FVector FMatrix::GetColumn(const FMatrix& InMatrix, int32 ColumnIndex)
+{
+    if (ColumnIndex < 0 || ColumnIndex > 4)
+    {
+        return FVector::ZeroVector;
+    }
+
+    // FMatrix는 FPlane M[4]로 구성되며, 각 FPlane은 행(Row)입니다. (Row-Major)
+
+    switch (ColumnIndex)
+    {
+    case 0:
+        return FVector(InMatrix.M[0][0], InMatrix.M[1][0], InMatrix.M[2][0]);
+    case 1:
+        return FVector(InMatrix.M[0][1], InMatrix.M[1][1], InMatrix.M[2][1]);
+    case 2:
+        return FVector(InMatrix.M[0][2], InMatrix.M[1][2], InMatrix.M[2][2]);
+    case 3:
+        // 3번째 열: (M[0][3], M[1][3], M[2][3]) - 주로 Translation 정보
+        return FVector(InMatrix.M[0][3], InMatrix.M[1][3], InMatrix.M[2][3]);
+    default:
+        return FVector::ZeroVector;
+    }
+}
 FQuat FMatrix::ToQuat(const FMatrix& M) const
 {
     return FQuat(M);

@@ -2,7 +2,7 @@
 
 UBoxComponent::UBoxComponent()
 {
-    BoxExtent = FVector(32.0f, 32.0f,32.0f);
+    BoxExtent = FVector(16.0f, 16.0f, 16.0f);
 }
 
 void UBoxComponent::SetBoxExtent(FVector InBoxExtent)

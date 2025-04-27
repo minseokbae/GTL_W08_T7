@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "Serialization/Archive.h"
 
 struct FVector;
@@ -44,6 +44,10 @@ public:
     static FMatrix GetTranslationMatrix(const FVector& InPosition);
     static FMatrix GetRotationMatrix(const FRotator& InRotation);
     static FMatrix GetRotationMatrix(const FQuat& InRotation);
+
+
+    static FVector GetColumn(const FMatrix& InMatrix, int32 ColumnIndex);
+
 
     FQuat ToQuat(const FMatrix& M) const;
 };
