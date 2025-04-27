@@ -5,8 +5,15 @@
 #include "Actors/Cube.h"
 #include "Actors/DirectionalLightActor.h"
 #include "GameFramework/Actor.h"
+#include "GameFramework/GameMode.h"
+#include "GameFramework/PlayerController.h"
 #include "Classes/Engine/AssetManager.h"
 #include "Components/Light/DirectionalLightComponent.h"
+#include "GameFramework/PlayerController.h"
+#include "GameInstance.h"
+
+#include "Engine/Source/Runtime/Game/Data/MapManager.h"
+#include "Engine/Source/Runtime/Game/Sound/SoundManager.h"
 
 namespace PrivateEditorSelection
 {
@@ -32,12 +39,29 @@ void UEditorEngine::Init()
     ActiveWorld = EditorWorld;
 
     EditorPlayer = FObjectFactory::ConstructObject<AEditorPlayer>(this);
-
+    CurrentPlayer = EditorPlayer;
     if (AssetManager == nullptr)
     {
         AssetManager = FObjectFactory::ConstructObject<UAssetManager>(this);
         assert(AssetManager);
         AssetManager->InitAssetManager();
+    }
+#pragma region GameMode
+    GameMode = FObjectFactory::ConstructObject<AGameMode>(this);
+#pragma endregion
+
+    if (MapManager == nullptr)
+    {
+        MapManager = FObjectFactory::ConstructObject<UMapManager>(this);
+        assert(MapManager);
+        MapManager->InitMapManager(FString("pacman_map.txt"));
+    }
+
+    if (SoundManager == nullptr)
+    {
+        SoundManager = FObjectFactory::ConstructObject<USoundManager>(this);
+        assert(SoundManager);
+        //SoundManager->InitSoundManager();
     }
 
 #ifdef _DEBUG
@@ -47,6 +71,8 @@ void UEditorEngine::Init()
     DirLight->SetActorRotation(FRotator(20, -61, 11));
     DirLight->SetActorLocation(FVector(0, 0, 20));
     DirLight->SetIntensity(2.f);
+
+    APawn* TestPawn = EditorWorld->SpawnActor<ADefaultPawn>();
 #endif
 }
 
@@ -80,6 +106,7 @@ void UEditorEngine::Tick(float DeltaTime)
             if (UWorld* World = WorldContext->World())
             {
                 World->Tick(DeltaTime);
+                CurrentPlayer->Input();
                 ULevel* Level = World->GetActiveLevel();
                 TArray CachedActors = Level->Actors;
                 if (Level)
@@ -96,6 +123,31 @@ void UEditorEngine::Tick(float DeltaTime)
             }
         }
     }
+    Input();
+}
+
+void UEditorEngine::Input()
+{
+        if (GetAsyncKeyState(VK_F8) & 0x8000)
+        {
+            if (bF8Clicked == false)
+            {
+                bF8Clicked = true;
+                if (ActiveWorld->WorldType == EWorldType::PIE)
+                {
+                    if (CurrentPlayer == EditorPlayer)
+                        CurrentPlayer = PlayerController;
+                    else
+                    {
+                        CurrentPlayer = EditorPlayer;
+                    }
+                }
+            }
+        }
+        else
+        {
+            bF8Clicked = false; 
+        }
 }
 
 void UEditorEngine::StartPIE()
@@ -113,10 +165,26 @@ void UEditorEngine::StartPIE()
 
     PIEWorldContext.SetCurrentWorld(PIEWorld);
     ActiveWorld = PIEWorld;
-
+    
     PIEWorld->BeginPlay();
     // 여기서 Actor들의 BeginPlay를 해줄지 안에서 해줄 지 고민.
     WorldList.Add(GetWorldContextFromWorld(PIEWorld));
+
+    TArray<AActor*> Actors = PIEWorld->GetActiveLevel()->Actors;
+    for (auto iter = Actors.begin(); iter != Actors.end(); iter++)
+    {
+        if (Cast<ADefaultPawn>(*iter))
+        {
+            UE_LOG(ELogLevel::Error, TEXT("Actor Test"));
+            APawn* Pawn = Cast<APawn>(*iter);
+            APlayerController* Controller = PIEWorld->SpawnActor<APlayerController>();
+            Pawn->SetPossessedController(Controller);
+            Controller->AttachtoPawn(Pawn);
+            PlayerController = Controller;
+            CurrentPlayer = PlayerController;
+            break;
+        }
+    }
 }
 
 void UEditorEngine::EndPIE()
@@ -135,6 +203,13 @@ void UEditorEngine::EndPIE()
     }
     // 다시 EditorWorld로 돌아옴.
     ActiveWorld = EditorWorld;
+    CurrentPlayer = EditorPlayer;
+}
+
+void UEditorEngine::InitGame()
+{
+    GameInstance = FObjectFactory::ConstructObject<UGameInstance>(this);
+    GameInstance->Init();
 }
 
 FWorldContext& UEditorEngine::GetEditorWorldContext(/*bool bEnsureIsGWorld*/)

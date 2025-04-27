@@ -1,0 +1,435 @@
+{
+    "Actors": [
+        {
+            "ActorClass": "ADirectionalLight",
+            "ActorID": "ADirectionalLight_94",
+            "ActorLabel": "ADirectionalLight94",
+            "Components": [
+                {
+                    "ComponentClass": "UDirectionalLightComponent",
+                    "ComponentID": "DirectionalLightComponent",
+                    "Properties": {
+                        "AABB_Max": "X=1.000 Y=1.000 Z=0.100",
+                        "AABB_Min": "X=-1.000 Y=-1.000 Z=-0.100",
+                        "ComponentClass": "UDirectionalLightComponent",
+                        "ComponentName": "DirectionalLightComponent",
+                        "ComponentOwner": "ADirectionalLight_94",
+                        "ComponentOwnerClass": "ADirectionalLight",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "Direction": "X=-0.000 Y=-0.000 Z=-1.000",
+                        "Intensity": "2.000000",
+                        "LightColor": "R=1.000 G=1.000 B=1.000 A=1.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "UBillboardComponent",
+                    "ComponentID": "BillboardComponent",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "BufferKey": "Assets/Editor/Icon/DirectionalLight_64x.png",
+                        "ComponentClass": "UBillboardComponent",
+                        "ComponentName": "BillboardComponent",
+                        "ComponentOwner": "ADirectionalLight_94",
+                        "ComponentOwnerClass": "ADirectionalLight",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "FinalIndexU": "0.000000",
+                        "FinalIndexV": "0.000000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=20.000",
+                        "RelativeRotation": "Pitch=20.000 Yaw=-61.000 Roll=11.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "UBillboardComponent"
+                    }
+                }
+            ],
+            "LuaScriptPath": "",
+            "RootComponentID": "BillboardComponent"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_97",
+            "ActorLabel": "OBJ_SPHERE_97",
+            "Components": [
+                {
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "SphereComponent",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=1.000 Z=1.000",
+                        "AABB_min": "X=-1.000 Y=-1.000 Z=-1.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "SphereComponent",
+                        "ComponentOwner": "AActor_97",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=2.000 Y=2.000 Z=1.500",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "StaticMeshPath": "Contents/Sphere.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                }
+            ],
+            "LuaScriptPath": "Ghost.lua",
+            "RootComponentID": "SphereComponent"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_99",
+            "ActorLabel": "OBJ_SPHERE_99",
+            "Components": [
+                {
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "SphereComponent",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=1.000 Z=1.000",
+                        "AABB_min": "X=-1.000 Y=-1.000 Z=-1.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "SphereComponent",
+                        "ComponentOwner": "AActor_99",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=2.000 Y=19.000 Z=1.100",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "StaticMeshPath": "Contents/Sphere.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                }
+            ],
+            "LuaScriptPath": "Ghost.lua",
+            "RootComponentID": "SphereComponent"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_101",
+            "ActorLabel": "OBJ_SPHERE_101",
+            "Components": [
+                {
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "SphereComponent",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=1.000 Z=1.000",
+                        "AABB_min": "X=-1.000 Y=-1.000 Z=-1.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "SphereComponent",
+                        "ComponentOwner": "AActor_101",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=19.000 Y=2.000 Z=1.200",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "StaticMeshPath": "Contents/Sphere.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                }
+            ],
+            "LuaScriptPath": "Ghost.lua",
+            "RootComponentID": "SphereComponent"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_119",
+            "ActorLabel": "OBJ_SPHERE_119",
+            "Components": [
+                {
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "SphereComponent",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=1.000 Z=1.000",
+                        "AABB_min": "X=-1.000 Y=-1.000 Z=-1.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "SphereComponent",
+                        "ComponentOwner": "AActor_119",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=19.000 Y=19.000 Z=1.300",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "StaticMeshPath": "Contents/Sphere.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                }
+            ],
+            "LuaScriptPath": "Ghost.lua",
+            "RootComponentID": "SphereComponent"
+        },
+        {
+            "ActorClass": "ACube",
+            "ActorID": "ACube_119",
+            "ActorLabel": "OBJ_CUBE_119",
+            "Components": [
+                {
+                    "ComponentClass": "UStaticMeshComponent",
+                    "ComponentID": "StaticMeshComponent_0",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=1.000 Z=1.000",
+                        "AABB_min": "X=-1.000 Y=-1.000 Z=-1.000",
+                        "ComponentClass": "UStaticMeshComponent",
+                        "ComponentName": "StaticMeshComponent_0",
+                        "ComponentOwner": "ACube_119",
+                        "ComponentOwnerClass": "ACube",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=10.000 Y=10.000 Z=-1.016",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=20.000 Y=20.000 Z=1.300",
+                        "StaticMeshPath": "Contents/helloBlender.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                }
+            ],
+            "LuaScriptPath": "",
+            "RootComponentID": "StaticMeshComponent_0"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_134",
+            "ActorLabel": "OBJ_SPHERE_134",
+            "Components": [
+                {
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "SphereComponent",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=-0.000 Z=1.000",
+                        "AABB_min": "X=0.000 Y=-1.000 Z=0.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "SphereComponent",
+                        "ComponentOwner": "AActor_134",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=12.895 Y=2.287 Z=1.334",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "StaticMeshPath": "Contents/Cube/cube-tex.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                }
+            ],
+            "LuaScriptPath": "Coin.lua",
+            "RootComponentID": "SphereComponent"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_136",
+            "ActorLabel": "AActor136",
+            "Components": [
+                {
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "USphereComp_137",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=-0.000 Z=1.000",
+                        "AABB_min": "X=0.000 Y=-1.000 Z=0.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "USphereComp_137",
+                        "ComponentOwner": "AActor_136",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=12.895 Y=4.094 Z=1.441",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "StaticMeshPath": "Contents/Cube/cube-tex.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                }
+            ],
+            "LuaScriptPath": "Coin.lua",
+            "RootComponentID": "USphereComp_137"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_138",
+            "ActorLabel": "AActor138",
+            "Components": [
+                {
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "USphereComp_139",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=-0.000 Z=1.000",
+                        "AABB_min": "X=0.000 Y=-1.000 Z=0.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "USphereComp_139",
+                        "ComponentOwner": "AActor_138",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=12.895 Y=5.927 Z=1.327",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "StaticMeshPath": "Contents/Cube/cube-tex.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                }
+            ],
+            "LuaScriptPath": "Coin.lua",
+            "RootComponentID": "USphereComp_139"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_140",
+            "ActorLabel": "AActor140",
+            "Components": [
+                {
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "USphereComp_141",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=-0.000 Z=1.000",
+                        "AABB_min": "X=0.000 Y=-1.000 Z=0.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "USphereComp_141",
+                        "ComponentOwner": "AActor_140",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=12.895 Y=7.702 Z=1.328",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "StaticMeshPath": "Contents/Cube/cube-tex.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                }
+            ],
+            "LuaScriptPath": "Coin.lua",
+            "RootComponentID": "USphereComp_141"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_142",
+            "ActorLabel": "AActor142",
+            "Components": [
+                {
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "USphereComp_143",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=-0.000 Z=1.000",
+                        "AABB_min": "X=0.000 Y=-1.000 Z=0.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "USphereComp_143",
+                        "ComponentOwner": "AActor_142",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=12.846 Y=9.268 Z=1.338",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "StaticMeshPath": "Contents/Cube/cube-tex.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                }
+            ],
+            "LuaScriptPath": "Coin.lua",
+            "RootComponentID": "USphereComp_143"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_144",
+            "ActorLabel": "AActor144",
+            "Components": [
+                {
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "USphereComp_145",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=-0.000 Z=1.000",
+                        "AABB_min": "X=0.000 Y=-1.000 Z=0.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "USphereComp_145",
+                        "ComponentOwner": "AActor_144",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=12.895 Y=10.896 Z=1.364",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "StaticMeshPath": "Contents/Cube/cube-tex.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                }
+            ],
+            "LuaScriptPath": "Coin.lua",
+            "RootComponentID": "USphereComp_145"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_146",
+            "ActorLabel": "AActor146",
+            "Components": [
+                {
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "USphereComp_147",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=-0.000 Z=1.000",
+                        "AABB_min": "X=0.000 Y=-1.000 Z=0.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "USphereComp_147",
+                        "ComponentOwner": "AActor_146",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=12.895 Y=12.438 Z=1.372",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "StaticMeshPath": "Contents/Cube/cube-tex.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                }
+            ],
+            "LuaScriptPath": "Coin.lua",
+            "RootComponentID": "USphereComp_147"
+        },
+        {
+            "ActorClass": "ACube",
+            "ActorID": "ACube_276",
+            "ActorLabel": "OBJ_CUBE_276",
+            "Components": [
+                {
+                    "ComponentClass": "UStaticMeshComponent",
+                    "ComponentID": "StaticMeshComponent_0",
+                    "Properties": {
+                        "AABB_max": "X=1.287 Y=1.199 Z=2.555",
+                        "AABB_min": "X=-1.287 Y=-1.199 Z=-0.000",
+                        "ComponentClass": "UStaticMeshComponent",
+                        "ComponentName": "StaticMeshComponent_0",
+                        "ComponentOwner": "ACube_276",
+                        "ComponentOwnerClass": "ACube",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=2.017 Y=7.817 Z=0.307",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "StaticMeshPath": "Contents/Reference/Reference.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                }
+            ],
+            "LuaScriptPath": "Player.lua",
+            "RootComponentID": "StaticMeshComponent_0"
+        }
+    ],
+    "NextUUID": 0,
+    "Version": 1
+}

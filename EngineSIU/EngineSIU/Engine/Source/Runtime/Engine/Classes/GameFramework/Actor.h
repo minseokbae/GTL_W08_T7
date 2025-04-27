@@ -6,7 +6,6 @@
 #include "UObject/Object.h"
 #include "UObject/ObjectFactory.h"
 #include "UObject/ObjectMacros.h"
-#include "Core/Delegates/JungleDelegateCombination.h"
 
 
 class UActorComponent;
@@ -16,7 +15,6 @@ class AActor : public UObject
     DECLARE_CLASS(AActor, UObject)
     
 public:
-
     AActor() = default;
     ~AActor();
     

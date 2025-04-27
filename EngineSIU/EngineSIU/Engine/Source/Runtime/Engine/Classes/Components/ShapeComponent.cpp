@@ -1,4 +1,5 @@
 #include "Components/ShapeComponent.h"
+#include "GameFramework/Actor.h"
 
 UShapeComponent::UShapeComponent()
 {
@@ -19,11 +20,9 @@ void UShapeComponent::BeginPlay()
 void UShapeComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
     Super::EndPlay(EndPlayReason);
-    // 파이 꺼질때 이게 호출이 안됌.
     FEngineLoop::CollisionMgr.UnregisterComponent(this);
 }
     
-// primitive에 대해서 하는게 맞는거 같긴 한데
 void UShapeComponent::NotifyBeginOverlap(UShapeComponent* OverlappedComponent, AActor* OtherActor, UShapeComponent* OtherComp)
 {
     UE_LOG(ELogLevel::Display, "Begin Overlap");
