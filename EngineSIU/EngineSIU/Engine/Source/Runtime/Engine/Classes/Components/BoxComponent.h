@@ -1,7 +1,7 @@
 #pragma once
 #include "ShapeComponent.h"
 
-class UBoxComponent : UShapeComponent
+class UBoxComponent : public UShapeComponent
 {
     DECLARE_CLASS(UBoxComponent, UShapeComponent)
 public:

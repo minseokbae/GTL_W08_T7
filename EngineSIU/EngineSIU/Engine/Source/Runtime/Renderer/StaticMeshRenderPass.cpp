@@ -29,6 +29,10 @@
 #include "Renderer/Shadow/SpotLightShadowMap.h"
 #include "Renderer/Shadow/PointLightShadowMap.h"
 
+#include "Components/SphereComponent.h"
+#include "Components/BoxComponent.h"
+#include "Components/CapsuleComponent.h"
+
 
 FStaticMeshRenderPass::FStaticMeshRenderPass()
     : VertexShader(nullptr)
@@ -414,10 +418,32 @@ void FStaticMeshRenderPass::Render(const std::shared_ptr<FEditorViewportClient>&
         {
             FEngineLoop::PrimitiveDrawBatch.AddAABBToBatch(Comp->GetBoundingBox(), Comp->GetWorldLocation(), WorldMatrix);
         }
+
+        // Begin Test
+        if (Viewport->GetShowFlag() & static_cast<uint64>(EEngineShowFlags::SF_Collision))
+        {
+            if (USphereComponent* SphereComponent = Comp->GetOwner()->GetComponentByClass<USphereComponent>())
+            {
+                FEngineLoop::PrimitiveDrawBatch.AddSphereCollisionToBatch(
+                    SphereComponent->GetWorldLocation(), 
+                    SphereComponent->GetScaledSphereRadius(), 
+                    WorldMatrix
+                );
+            }
+
+            if (UBoxComponent* BoxComponent = Comp->GetOwner()->GetComponentByClass<UBoxComponent>())
+            {
+                FEngineLoop::PrimitiveDrawBatch.AddBoxCollisionToBatch(
+                    BoxComponent->GetWorldLocation(),
+                    BoxComponent->GetUnscaledBoxExtent(),
+                    WorldMatrix
+                );
+            }
+        }        
+        // End Test
     }
 
     Graphics->DeviceContext->OMSetRenderTargets(0, nullptr, nullptr);
-    // 여기 넣는거 개별로
     ID3D11ShaderResourceView* nullSRV[1] = { nullptr };
 
     for (int i = 0; i < MAX_SPOT_LIGHT; ++i)

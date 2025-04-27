@@ -329,12 +329,29 @@ struct FCone
     float pad[3];
 };
 
+struct FSphere
+{
+    FVector Center;
+    float Radius;
+};
+struct FBox
+{
+    FVector Center;
+    float pad0;
+
+    FVector Extent;
+    float pad1;
+};
+
 struct FPrimitiveCounts
 {
     int BoundingBoxCount;
-    int pad;
     int ConeCount;
-    int pad1;
+    int OBBCount;
+    int SphereCount;
+
+    int BoxCount;
+    float pad[3];
 };
 
 #define MAX_LIGHTS 16
@@ -428,6 +445,9 @@ struct FLinePrimitiveBatchArgs
     int ConeCount;
     int ConeSegmentCount;
     int OBBCount;
+
+    int SphereCount;
+    int BoxCount;
 };
 
 struct FViewportSize

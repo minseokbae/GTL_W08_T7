@@ -1456,7 +1456,6 @@
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Components\CapsuleComponent.h">
       <Filter>EngineSIU\Engine\Source\Runtime\Engine\Classes\Components</Filter>
     </ClInclude>
-
   </ItemGroup>
   <ItemGroup>
     <None Include="EngineSIU\Engine\Source\Runtime\Core\Delegates\JungleDelegate.h" />

@@ -30,6 +30,8 @@
 #include "Renderer/Shadow/PointLightShadowMap.h"
 #include "Renderer/Shadow/DirectionalShadowMap.h"
 
+#include "Components/SphereComponent.h"
+#include "Components/BoxComponent.h"
 void PropertyEditorPanel::Render()
 {
     /* Pre Setup */
@@ -564,6 +566,41 @@ void PropertyEditorPanel::Render()
             }
             ImGui::PopStyleColor();
         }
+
+    if(PickedActor)
+        if (USphereComponent* SphereComponent = Cast<USphereComponent>(PickedActor->GetComponentByClass<USphereComponent>()))
+        {
+            ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
+
+            if (ImGui::TreeNodeEx("SphereComponent", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen))
+            {
+                float UnscaledRadius = SphereComponent->GetUnscaledSphereRadius();
+                if (ImGui::InputFloat("UnscaledRadius", &UnscaledRadius, 0.f, 100.0f, "%.1f"))
+                    SphereComponent->SetSphereRadius(UnscaledRadius);
+
+                ImGui::TreePop();
+            }
+            ImGui::PopStyleColor();
+        }    
+    if(PickedActor)
+        if (UBoxComponent* BoxComponent = Cast<UBoxComponent>(PickedActor->GetComponentByClass<UBoxComponent>()))
+        {
+            ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
+
+            if (ImGui::TreeNodeEx("BoxComponent", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen))
+            {
+                FVector UnscaledExtent = BoxComponent->GetUnscaledBoxExtent();
+                float Extent[3] = { UnscaledExtent.X, UnscaledExtent.Y, UnscaledExtent.Z };
+                if (ImGui::InputFloat3("UnscaledExtent", Extent, "%.1f"))
+                {
+                    BoxComponent->SetBoxExtent(FVector(Extent[0], Extent[1], Extent[2]));
+                }
+
+                ImGui::TreePop();
+            }
+            ImGui::PopStyleColor();
+        }
+
     ImGui::End();
 }
 

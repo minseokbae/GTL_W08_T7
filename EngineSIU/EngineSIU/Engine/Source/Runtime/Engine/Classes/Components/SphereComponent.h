@@ -10,10 +10,10 @@ public:
     float GetScaledSphereRadius() const;
     float GetUnscaledSphereRadius() const;
     float GetShapeScale() const;
-
+    void SetSphereRadius(float InSphereRadius);
+    
 protected:
     float SphereRadius;
-    void SetSphereRadius(float InSphereRadius);
 };
 
 inline void USphereComponent::SetSphereRadius(float InSphereRadius)

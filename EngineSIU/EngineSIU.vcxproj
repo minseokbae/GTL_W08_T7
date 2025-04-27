@@ -314,7 +314,7 @@
     <ClCompile Include="EngineSIU\LightGridGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CollisionHelpers.h" />
+    <ClInclude Include="EngineSIU\CollisionHelpers.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Developer\ShaderCompileUtils\ShaderCompileData.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Developer\ShaderCompileUtils\ShaderCompile.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Developer\ShaderCompileUtils\ShaderCompileUtility.h" />
@@ -324,6 +324,8 @@
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Core\Container\StringConv.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Core\Container\TSafeQueue.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Core\Traits\IsCharType.h" />
+    <None Include="EngineSIU\Engine\Source\Runtime\Core\Delegates\JungleDelegate.h" />
+    <None Include="EngineSIU\Engine\Source\Runtime\Core\Delegates\JungleDelegateCombination.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Actors\AmbientLightActor.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Editor\LevelEditor\SlateAppMessageHandler.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Editor\LevelEditor\SLevelEditor.h" />

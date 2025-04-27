@@ -5,11 +5,16 @@
 #include "Components/ShapeComponent.h"
 #include "UObject/Casts.h"
 
-//#include "CollisionHelpers.h"
+#include "CollisionHelpers.h"
 
 namespace CollisionChecks
 {
     bool CheckSphereSphereOverlap(const USphereComponent* SphereA, const USphereComponent* SphereB);
+    bool CheckBoxBoxOverlap(const UBoxComponent* BoxA, const UBoxComponent* BoxB);
+    bool CheckSphereBoxOverlap(const USphereComponent* Sphere, const UBoxComponent* Box);
+    //bool CheckCapsuleCapsuleOverlap(const UCapsuleComponent* CapsuleA, const UCapsuleComponent* CapsuleB);
+    //bool CheckCapsuleSphereOverlap(const UCapsuleComponent* Capsule, const USphereComponent* Sphere);
+    //bool CheckCapsuleBoxOverlap(const UCapsuleComponent* Capsule, const UBoxComponent* Box);
     //bool CheckCapsuleCapsuleOverlap(const UCapsuleComponent* CapsuleA, const UCapsuleComponent* CapsuleB);
     //bool CheckBoxBoxOverlap(const UBoxComponent* BoxA, const UBoxComponent* BoxB);
     //bool CheckCapsuleSphereOverlap(const UCapsuleComponent* Capsule, const USphereComponent* Sphere);
@@ -142,6 +147,10 @@ bool FCollisionMgr::IsOverlapping(UShapeComponent* CompA, UShapeComponent* CompB
         {
             return CollisionChecks::CheckSphereSphereOverlap(SphereA, SphereB);
         }
+        if (auto* BoxB = Cast<UBoxComponent>(CompB))
+        {
+            return CollisionChecks::CheckSphereBoxOverlap(SphereA, BoxB);
+        }
         //if (auto* BoxB = Cast<UBoxComponent>(CompB))
         //{
         //    return CollisionChecks::CheckSphereBoxOverlap(SphereA, BoxB);
@@ -162,6 +171,21 @@ bool FCollisionMgr::IsOverlapping(UShapeComponent* CompA, UShapeComponent* CompB
     //        return CollisionChecks::CheckCapsuleBoxOverlap(CapsuleA, BoxB);
     //    }
     //}
+    else if (auto* BoxA = Cast<UBoxComponent>(CompA))
+    {
+        //if (auto* CapsuleB = Cast<UCapsuleComponent>(CompB))
+        //{
+        //    return CollisionChecks::CheckCapsuleBoxOverlap(CapsuleB, BoxA); 
+        //}
+        if (auto* SphereB = Cast<USphereComponent>(CompB))
+        {
+            return CollisionChecks::CheckSphereBoxOverlap(SphereB, BoxA);
+        }
+        if (auto* BoxB = Cast<UBoxComponent>(CompB))
+        {
+            return CollisionChecks::CheckBoxBoxOverlap(BoxA, BoxB);
+        }
+    }
     //else if (auto* BoxA = Cast<UBoxComponent>(CompA))
     //{
     //    if (auto* CapsuleB = Cast<UCapsuleComponent>(CompB))
@@ -213,103 +237,104 @@ namespace CollisionChecks
         return DistSq <= (RadiiSum * RadiiSum);
     }
 
-    //bool CheckCapsuleCapsuleOverlap(const UCapsuleComponent* CapsuleA, const UCapsuleComponent* CapsuleB)
-    //{
-    //    FVector PosA = CapsuleA->GetWorldLocation();
-    //    return false; // 임시 반환
-    //}
-   
-    //bool CheckBoxBoxOverlap(const UBoxComponent* BoxA, const UBoxComponent* BoxB)
-    //{
-    //    if (!BoxA || !BoxB) return false; // Null check
-    //
-    //    FTransform TransformA = BoxA->GetComponentTransform(); // GetComponentTransform이 월드 트랜스폼 제공
-    //    FVector ExtentA = BoxA->GetScaledBoxExtent();
-    //    FVector CenterA = TransformA.GetLocation();
-    //    FRotationMatrix RotMatA(TransformA.GetRotation()); // 회전 행렬 사용
-    //
-    //    FTransform TransformB = BoxB->GetComponentTransform();
-    //    FVector ExtentB = BoxB->GetScaledBoxExtent();
-    //    FVector CenterB = TransformB.GetLocation();
-    //    FRotationMatrix RotMatB(TransformB.GetRotation());
-    //
-    //    // --- 분리 축 정리 (Separating Axis Theorem) ---
-    //
-    //    // 테스트할 축들을 저장할 배열
-    //    TArray<FVector> AxesToTest;
-    //    AxesToTest.Reserve(15); // 최대 15개 축
-    //
-    //    // 1. Box A의 3개 면 법선 (월드 공간)
-    //    AxesToTest.Add(RotMatA.GetScaledAxis(EAxis::X));
-    //    AxesToTest.Add(RotMatA.GetScaledAxis(EAxis::Y));
-    //    AxesToTest.Add(RotMatA.GetScaledAxis(EAxis::Z));
-    //
-    //    // 2. Box B의 3개 면 법선 (월드 공간)
-    //    AxesToTest.Add(RotMatB.GetScaledAxis(EAxis::X));
-    //    AxesToTest.Add(RotMatB.GetScaledAxis(EAxis::Y));
-    //    AxesToTest.Add(RotMatB.GetScaledAxis(EAxis::Z));
-    //
-    //    // 3. 두 박스 모서리 방향 간의 외적 9개
-    //    for (int i = 0; i < 3; ++i)
-    //    {
-    //        for (int j = 0; j < 3; ++j)
-    //        {
-    //            FVector CrossProduct = FVector::CrossProduct(AxesToTest[i], AxesToTest[3 + j]);
-    //            // 외적이 0벡터에 가까우면 (두 모서리가 평행하면) 유효한 축이 아님
-    //            if (!CrossProduct.IsNearlyZero())
-    //            {
-    //                AxesToTest.Add(CrossProduct.GetSafeNormal()); // 정규화하여 축으로 사용
-    //            }
-    //        }
-    //    }
-    //
-    //    // 각 축에 대해 투영하여 분리되는지 검사
-    //    for (const FVector& Axis : AxesToTest)
-    //    {
-    //        // 축이 유효한지 확인 (Zero Vector 방지)
-    //        if (Axis.IsNearlyZero()) continue;
-    //
-    //        float MinA, MaxA, MinB, MaxB;
-    //        ProjectBoxOntoAxis(Axis, CenterA, ExtentA, RotMatA, MinA, MaxA);
-    //        ProjectBoxOntoAxis(Axis, CenterB, ExtentB, RotMatB, MinB, MaxB);
-    //
-    //        // 한 축이라도 분리되면 오버랩하지 않음
-    //        if (!OverlapOnAxis(MinA, MaxA, MinB, MaxB))
-    //        {
-    //            return false;
-    //        }
-    //    }
-    //
-    //    // 모든 축에서 겹치면 오버랩
-    //    return true;
-    //}
-    
-    //bool CheckCapsuleSphereOverlap(const UCapsuleComponent* Capsule, const USphereComponent* Sphere)
-    //{
-    //    // TODO: 실제 캡슐-스피어 오버랩 검사 로직 구현
-    //    // 1. 캡슐의 트랜스폼, 반지름, 절반 높이와 스피어의 위치, 반지름을 얻습니다.
-    //    // 2. 스피어 중심점에서 캡슐의 중심 선분까지의 최단 거리를 계산합니다.
-    //    // 3. 이 최단 거리가 캡슐 반지름과 스피어 반지름의 합보다 작거나 같으면 오버랩입니다.
-    //    return false; // 임시 반환
-    //}
-    
-    //bool CheckCapsuleBoxOverlap(const UCapsuleComponent* Capsule, const UBoxComponent* Box)
-    //{
-    //    // TODO: 실제 캡슐-박스 오버랩 검사 로직 구현 (SAT 변형 또는 다른 기법 사용)
-    //    // SAT를 사용할 경우 축 검사가 더 복잡해집니다. (캡슐 투영 처리 등)
-    //    // 또는 박스를 확장( Minkowski Sum 반대 개념)하고 캡슐 선분과의 교차 검사 등을 사용할 수 있습니다.
-    //    return false; // 임시 반환
-    //}
-    
-    //bool CheckSphereBoxOverlap(const USphereComponent* Sphere, const UBoxComponent* Box)
-    //{
-    //    // TODO: 실제 스피어-박스 오버랩 검사 로직 구현
-    //    // 1. 스피어의 위치, 반지름과 박스의 트랜스폼, 절반 크기를 얻습니다.
-    //    // 2. 스피어 중심점을 박스의 로컬 좌표계로 변환합니다.
-    //    // 3. 박스 내에서 스피어 중심점에 가장 가까운 점(Closest Point)을 찾습니다. (AABB의 Closest Point 찾기 로직 활용)
-    //    // 4. 스피어 중심점과 이 가장 가까운 점 사이의 거리 제곱을 계산합니다.
-    //    // 5. 이 거리 제곱이 스피어 반지름의 제곱보다 작거나 같으면 오버랩입니다.
-    //    return false; // 임시 반환
-    //}
+    bool CheckBoxBoxOverlap(const UBoxComponent* BoxA, const UBoxComponent* BoxB)
+    {
+        if (!BoxA || !BoxB) return false; // Null check
 
+        FVector ExtentA = BoxA->GetScaledBoxExtent();
+        FVector CenterA = BoxA->GetWorldLocation();
+        FMatrix RotMatA = BoxA->GetRotationMatrix();
+
+        FVector ExtentB = BoxB->GetScaledBoxExtent();
+        FVector CenterB = BoxB->GetWorldLocation();
+        FMatrix RotMatB = BoxB->GetRotationMatrix();
+        // --- 분리 축 정리 (Separating Axis Theorem) ---
+    
+        TArray<FVector> AxesToTest;
+        AxesToTest.Reserve(15); // 최대 15개 축
+
+        const FVector AxisA_X = FMatrix::GetColumn(RotMatA, 0);
+        const FVector AxisA_Y = FMatrix::GetColumn(RotMatA, 1);
+        const FVector AxisA_Z = FMatrix::GetColumn(RotMatA, 2);
+
+        const FVector AxisB_X = FMatrix::GetColumn(RotMatB, 0);
+        const FVector AxisB_Y = FMatrix::GetColumn(RotMatB, 1);
+        const FVector AxisB_Z = FMatrix::GetColumn(RotMatB, 2);
+
+        // 1. Box A's 3 face normals (world space axes)
+        AxesToTest.Add(AxisA_X);
+        AxesToTest.Add(AxisA_Y);
+        AxesToTest.Add(AxisA_Z);
+
+        // 2. Box B's 3 face normals (world space axes)
+        AxesToTest.Add(AxisB_X);
+        AxesToTest.Add(AxisB_Y);
+        AxesToTest.Add(AxisB_Z);
+
+        // 3. Cross products of edges (9 axes)
+        // Using the already extracted axes vectors
+        const FVector AxesA[] = { AxisA_X, AxisA_Y, AxisA_Z };
+        const FVector AxesB[] = { AxisB_X, AxisB_Y, AxisB_Z };
+
+        // 3. 두 박스 모서리 방향 간의 외적 9개
+        for (int i = 0; i < 3; ++i)
+        {
+            for (int j = 0; j < 3; ++j)
+            {
+                FVector CrossProduct = FVector::CrossProduct(AxesToTest[i], AxesToTest[j]);
+                // 외적이 0벡터에 가까우면 (두 모서리가 평행하면) 유효한 축이 아님
+                if (!CrossProduct.IsNearlyZero())
+                {
+                    AxesToTest.Add(CrossProduct.GetSafeNormal()); // 정규화하여 축으로 사용
+                }
+            }
+        }
+    
+        // 각 축에 대해 투영하여 분리되는지 검사
+        for (const FVector& Axis : AxesToTest)
+        {
+            // 축이 유효한지 확인 (Zero Vector 방지)
+            if (Axis.IsNearlyZero()) continue;
+    
+            float MinA, MaxA, MinB, MaxB;
+            ProjectBoxOntoAxis(Axis, CenterA, ExtentA, RotMatA, MinA, MaxA);
+            ProjectBoxOntoAxis(Axis, CenterB, ExtentB, RotMatB, MinB, MaxB);
+    
+            // 한 축이라도 분리되면 오버랩하지 않음
+            if (!OverlapOnAxis(MinA, MaxA, MinB, MaxB))
+            {
+                return false;
+            }
+        }
+    
+        // 모든 축에서 겹치면 오버랩
+        return true;
+    }
+    bool CheckSphereBoxOverlap(const USphereComponent* Sphere, const UBoxComponent* Box)
+    {
+        if (!Sphere || !Box)
+        {
+            return false;
+        }
+
+        const FVector SphereCenter = Sphere->GetWorldLocation();
+        const float SphereRadius = Sphere->GetScaledSphereRadius();
+        const float SphereRadiusSq = SphereRadius * SphereRadius;
+
+        const FVector BoxCenter = Box->GetWorldLocation();
+        const FVector BoxExtent = Box->GetScaledBoxExtent();
+        const FMatrix BoxRotMat = Box->GetRotationMatrix(); 
+
+        const FVector SphereCenterRelativeToBox = SphereCenter - BoxCenter;
+        const FMatrix InverseBoxRotMat = FMatrix::Transpose(BoxRotMat); // 회전 행렬의 역행렬은 전치 행렬
+        const FVector SphereCenterLocal = FMatrix::TransformVector(SphereCenterRelativeToBox, InverseBoxRotMat);
+
+        FVector ClosestPointLocal;
+        ClosestPointLocal.X = FMath::Clamp(SphereCenterLocal.X, -BoxExtent.X, BoxExtent.X);
+        ClosestPointLocal.Y = FMath::Clamp(SphereCenterLocal.Y, -BoxExtent.Y, BoxExtent.Y);
+        ClosestPointLocal.Z = FMath::Clamp(SphereCenterLocal.Z, -BoxExtent.Z, BoxExtent.Z);
+
+        const float DistSqLocal = FVector::DistanceSquared(SphereCenterLocal, ClosestPointLocal);
+        return DistSqLocal <= SphereRadiusSq;
+    }
 }
