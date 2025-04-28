@@ -13,6 +13,7 @@ namespace CollisionChecks
     bool CheckBoxBoxOverlap(const UBoxComponent* BoxA, const UBoxComponent* BoxB);
     bool CheckSphereBoxOverlap(const USphereComponent* Sphere, const UBoxComponent* Box);
     //bool CheckCapsuleCapsuleOverlap(const UCapsuleComponent* CapsuleA, const UCapsuleComponent* CapsuleB);
+    //bool CheckBoxBoxOverlap(const UBoxComponent* BoxA, const UBoxComponent* BoxB);
     //bool CheckCapsuleSphereOverlap(const UCapsuleComponent* Capsule, const USphereComponent* Sphere);
     //bool CheckCapsuleBoxOverlap(const UCapsuleComponent* Capsule, const UBoxComponent* Box);
 } 
