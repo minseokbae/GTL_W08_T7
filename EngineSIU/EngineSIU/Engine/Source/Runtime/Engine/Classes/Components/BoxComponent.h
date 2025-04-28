@@ -11,6 +11,8 @@ protected:
     FVector BoxExtent;
 
 public:
+    virtual UObject* Duplicate(UObject* InOuter) override;
+
     void SetBoxExtent(FVector InBoxExtent);
     bool IsZeroExtent() const;
     FVector GetScaledBoxExtent() const;

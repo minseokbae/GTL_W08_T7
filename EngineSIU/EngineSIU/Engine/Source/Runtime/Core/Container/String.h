@@ -82,6 +82,8 @@ public:
 
     FString(BaseStringType InString) : PrivateString(std::move(InString)) {}
 
+    bool LuaEquals(const std::string& Other) const;
+
 public:
 #if USE_WIDECHAR
     FString(const std::wstring& InString) : PrivateString(InString) {}

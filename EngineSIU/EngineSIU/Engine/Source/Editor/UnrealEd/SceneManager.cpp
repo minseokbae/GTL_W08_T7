@@ -83,12 +83,13 @@ struct FActorSaveData
     FString ActorClass; // 액터의 클래스 이름 (예: "AStaticMeshActor", "APointLight")
     FString ActorLabel; // 에디터에서 보이는 이름 (선택적)
     FString LuaScriptPath;
+    FString ActorTag;
     // FTransform ActorTransform; // 액터 자체의 트랜스폼 (보통 루트 컴포넌트가 결정) - 필요 여부 검토
 
     FString RootComponentID;               // 이 액터의 루트 컴포넌트 ID (아래 Components 리스트 내 ID 참조)
     TArray<FComponentSaveData> Components; // 이 액터가 소유한 컴포넌트 목록
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(FActorSaveData, ActorID, ActorClass, ActorLabel, LuaScriptPath, RootComponentID, Components)
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(FActorSaveData, ActorID, ActorClass, ActorLabel, LuaScriptPath, ActorTag, RootComponentID, Components)
 };
 
 struct FSceneData
@@ -202,6 +203,7 @@ FSceneData SceneManager::WorldToSceneData(const UWorld& InWorld)
         actorData.ActorClass = Actor->GetClass()->GetName();
         actorData.ActorLabel = Actor->GetActorLabel();
         actorData.LuaScriptPath = Actor->GetLuaScriptPath();
+        actorData.ActorTag = Actor->GetActorTag();
 
         USceneComponent* RootComp = Actor->GetRootComponent();
         actorData.RootComponentID = (RootComp != nullptr) ? RootComp->GetName() : TEXT(""); // 루트 없으면 빈 문자열
@@ -465,6 +467,8 @@ bool SceneManager::LoadWorldFromData(const FSceneData& sceneData, UWorld* target
             SpawnedActor->SetLuaScriptPath(buf);
             SpawnedActor->SetLuaBindState(true);
         }
+
+        SpawnedActor->SetActorTag(actorData.ActorTag);
     }
     UE_LOG(ELogLevel::Display, TEXT("Loading Scene Data: Phase 1 Complete. Spawned %d actors."), SpawnedActorsMap.Num());
 

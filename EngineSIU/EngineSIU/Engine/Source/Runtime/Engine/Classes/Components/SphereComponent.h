@@ -7,6 +7,8 @@ class USphereComponent : public UShapeComponent
 public:
     USphereComponent();
 
+    virtual UObject* Duplicate(UObject* InOuter) override;
+
     float GetScaledSphereRadius() const;
     float GetUnscaledSphereRadius() const;
     float GetShapeScale() const;

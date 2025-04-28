@@ -6,6 +6,11 @@
 #include "Math/MathUtility.h"
 
 
+bool FString::LuaEquals(const std::string& Other) const
+{
+    return Equals(FString(Other));
+}
+
 FString FString::SanitizeFloat(float InFloat)
 {
 #if USE_WIDECHAR

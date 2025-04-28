@@ -1,8 +1,16 @@
 #include "BoxComponent.h"
+#include <UObject/Casts.h>
 
 UBoxComponent::UBoxComponent()
 {
     BoxExtent = FVector(10.0f, 10.0f, 10.0f);
+}
+
+UObject* UBoxComponent::Duplicate(UObject* InOuter)
+{
+    ThisClass* NewComponent = Cast<ThisClass>(Super::Duplicate(InOuter));
+    NewComponent->BoxExtent = BoxExtent;
+    return NewComponent;
 }
 
 void UBoxComponent::SetBoxExtent(FVector InBoxExtent)

@@ -54,6 +54,12 @@ public:
     
     void SetupAttachment(USceneComponent* InParent);
 
+    void SetTag(FString NewTag) { Tag = NewTag; }
+
+    FString GetTag() { return Tag; }
+
+    void DestroyOwner();
+
 public:
     FVector ComponentVelocity;
 protected:
@@ -74,4 +80,7 @@ protected:
 
     UPROPERTY
     (TArray<USceneComponent*>, AttachChildren);
+
+    UPROPERTY
+    (FString, Tag, = "");
 };
