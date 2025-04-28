@@ -120,7 +120,7 @@
                     }
                 }
             ],
-            "LuaScriptPath": "Playe.lua",
+            "LuaScriptPath": "Player.lua",
             "RootComponentID": "StaticMeshComponent_0"
         },
         {

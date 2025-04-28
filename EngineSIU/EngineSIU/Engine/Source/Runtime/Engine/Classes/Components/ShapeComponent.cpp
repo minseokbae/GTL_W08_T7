@@ -18,6 +18,16 @@ UObject* UShapeComponent::Duplicate(UObject* InOuter)
     return NewComponent;
 }
 
+void UShapeComponent::GetProperties(TMap<FString, FString>& OutProperties) const
+{
+    Super::GetProperties(OutProperties);
+}
+
+void UShapeComponent::SetProperties(const TMap<FString, FString>& InProperties)
+{
+    Super::SetProperties(InProperties);
+}
+
 void UShapeComponent::BeginPlay()
 {
     Super::BeginPlay();
