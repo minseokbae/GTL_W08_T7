@@ -28,7 +28,6 @@ public:
         if (USoundManager* Singleton = GEngine->SoundManager)
         {
             return *Singleton;
-
         }
         else
         {
@@ -48,10 +47,6 @@ public:
         FMOD::System_Create(&FmodSystem);
         FmodSystem->init(512, FMOD_INIT_NORMAL, nullptr);
         LoadSound("piano", "Assets/Sounds/piano_loop.wav");
-        LoadSound("score", "Assets/Sounds/mixkit-arcade-bonus-alert-767.wav");
-        LoadSound("lose", "mixkit-player-losing-or-failing-2042.wav");
-        //LoadSound("lose", "mixkit-arcade-retro-game-over-213.wav");
-        LoadSound("win", "mixkit-video-game-win-2016.wav");
     }
 
     bool LoadSound(const std::string& Name, const std::string& FilePath)

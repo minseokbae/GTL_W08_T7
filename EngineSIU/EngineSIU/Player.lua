@@ -10,7 +10,6 @@ function OnOverlap(overlapObj)
     --충돌 처리 overlapObj는 충돌한 액터의 루트 컴포넌트를 가리킴
     print(overlapObj.Tag)
     if (overlapObj.Tag:Equals("Coin")) then
-        PlaySound("score", 1.0, false) -- AddScore
         AddScore(1)
     elseif overlapObj.Tag:Equals("Ghost") then
         print("GameOver")
@@ -43,4 +42,4 @@ function Tick(dt)
     end
 end
 
-PlaySound("piano", 1.0, true) -- BGM
+PlaySound("piano", 1.0, true)

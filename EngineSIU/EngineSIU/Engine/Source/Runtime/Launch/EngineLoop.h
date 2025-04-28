@@ -63,8 +63,6 @@ private:
     bool bIsExit = false;
     int32 TargetFPS = 60;
 
-    const float fixedUpdateInterval = 0.05f; // 업데이트 간격 (초 단위, 예: 1초)
-    float accumulatedIntervalTime = 0.0f;   // 누적 시간 (초 단위)
 public:
     SLevelEditor* GetLevelEditor() const { return LevelEditor; }
     UnrealEd* GetUnrealEditor() const { return UnrealEditor; }
