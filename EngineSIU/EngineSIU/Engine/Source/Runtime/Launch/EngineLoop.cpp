@@ -27,6 +27,7 @@ FEngineLoop::FEngineLoop()
     , LevelEditor(nullptr)
     , UnrealEditor(nullptr)
     , BufferManager(nullptr)
+    , accumulatedIntervalTime(0.f)
 {
 }
 
@@ -107,40 +108,42 @@ void FEngineLoop::Tick()
     QueryPerformanceFrequency(&Frequency);
 
     LARGE_INTEGER startTime, endTime;
-    double elapsedTime = 0.0;
+    double frameElapsedTimeMs = 0.0; // 현재 프레임의 경과 시간 (밀리초) - 이름 명확화
+
+    accumulatedIntervalTime = 0.0f; // 필요하다면 여기에 추가
 
     while (bIsExit == false)
     {
         QueryPerformanceCounter(&startTime);
-        float DeltaTime = elapsedTime / 1000.f;
+
+        float DeltaTime = static_cast<float>(frameElapsedTimeMs / 1000.0);
 
         MSG msg;
         while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
-            TranslateMessage(&msg); // 키보드 입력 메시지를 문자메시지로 변경
-            DispatchMessage(&msg);  // 메시지를 WndProc에 전달
+            TranslateMessage(&msg); 
+            DispatchMessage(&msg);  
 
             if (msg.message == WM_QUIT)
             {
                 bIsExit = true;
-                break;
+                break; 
             }
         }
+        if (bIsExit)
+        {
+            break;
+        }
+
         GEngine->Tick(DeltaTime);
-        // Begin Test
-        CollisionMgr.UpdateCollisionChecks();
-        // End Test
         LevelEditor->Tick(DeltaTime);
-        
+
         Render();
         UIMgr->BeginFrame();
         UnrealEditor->Render();
-
         FConsole::GetInstance().Draw();
-
         UIMgr->EndFrame();
 
-        // Pending 처리된 오브젝트 제거
         GUObjectArray.ProcessPendingDestroyObjects();
 
         GraphicDevice.SwapBuffer();
@@ -151,14 +154,30 @@ void FEngineLoop::Tick()
             (void)Renderer.HandleHotReloadShader();
         }
 #endif
+        accumulatedIntervalTime += DeltaTime;
 
-        do
+        if (accumulatedIntervalTime >= fixedUpdateInterval)
+        {
+            CollisionMgr.UpdateCollisionChecks();
+            UE_LOG(ELogLevel::Display, "accumulatedIntervalTime: %6f", accumulatedIntervalTime);
+            accumulatedIntervalTime -= fixedUpdateInterval;
+        }
+
+        QueryPerformanceCounter(&endTime);
+
+        frameElapsedTimeMs = (endTime.QuadPart - startTime.QuadPart) * 1000.0 / Frequency.QuadPart;
+
+        double currentFrameTimeMs = frameElapsedTimeMs; // 루프 조건용 변수
+        while (currentFrameTimeMs < targetFrameTime)
         {
             Sleep(0);
             QueryPerformanceCounter(&endTime);
-            elapsedTime = (endTime.QuadPart - startTime.QuadPart) * 1000.f / Frequency.QuadPart;
-        } while (elapsedTime < targetFrameTime);
-    }
+            currentFrameTimeMs = (endTime.QuadPart - startTime.QuadPart) * 1000.0 / Frequency.QuadPart;
+        }
+
+        frameElapsedTimeMs = currentFrameTimeMs;
+
+    } 
 }
 
 void FEngineLoop::GetClientSize(uint32& OutWidth, uint32& OutHeight) const
