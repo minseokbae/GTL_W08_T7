@@ -149,9 +149,6 @@ FLuaCompiler::FLuaCompiler()
         },
         "Equals", &FString::LuaEquals
     );
-
-    Lua.script_file("Global.lua");
-    LastWriteTime = std::filesystem::last_write_time("Global.lua");
 }
 
 void FLuaCompiler::Bind(AActor* Actor)
@@ -193,7 +190,6 @@ void FLuaCompiler::EndPlay()
 
 void FLuaCompiler::Tick(float DeltaTime)
 {
-    Reload();
     UpdateInput();
     for (auto& Instance : LuaInstances)
     {
@@ -216,16 +212,6 @@ void FLuaCompiler::UpdateInput()
     Input.set("S", S);
     Input.set("D", D);
     Input.set("W", W);
-}
-
-void FLuaCompiler::Reload()
-{
-    auto curTime = std::filesystem::last_write_time("Global.lua");
-    if (curTime != LastWriteTime)
-    {
-        Lua.script_file("Global.lua");
-        LastWriteTime = std::filesystem::last_write_time("Global.lua");
-    }
 }
 
 void FLuaCompiler::AddScore(float score)

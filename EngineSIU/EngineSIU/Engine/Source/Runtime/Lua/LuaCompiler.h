@@ -22,8 +22,6 @@ public:
 
     void UpdateInput();
 
-    void Reload();
-    
 private:
     sol::state Lua;
     sol::table Input;
