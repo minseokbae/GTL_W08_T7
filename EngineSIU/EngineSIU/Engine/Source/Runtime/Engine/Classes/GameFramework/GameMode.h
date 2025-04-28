@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "Actor.h"
 #include "Controller.h"
 #include "DefaultPawn.h"
@@ -17,7 +17,7 @@ private:
     UClass* Controller = APlayerController::StaticClass();
     UClass* DefaultPawn = ADefaultPawn::StaticClass();
 
-    float Score =0.0f;
+    float Score = 0.0f;
     bool bGameOver = false;
     bool bWin = false;
 

@@ -60,7 +60,6 @@ void APlayerController::Input()
     // ControlRot.Pitch = FMath::Clamp(ControlRot.Pitch + dy, -45.f, +45.f);
 
     Pawn->GetRootComponent()->SetRelativeRotation(ControlRot);
-    
 }
 
 void APlayerController::BeginPlay()

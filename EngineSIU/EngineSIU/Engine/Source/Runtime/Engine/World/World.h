@@ -58,7 +58,10 @@ public:
 
     EWorldType WorldType = EWorldType::None;
     
-    
+    FString GetWorldName() const { return WorldName; }
+    void SetWorldName(const FString& InWorldName) { WorldName = InWorldName; }
+
+    AGameMode* GetGameMode() { return GameMode; }
 private:
     FString WorldName = "DefaultWorld";
 

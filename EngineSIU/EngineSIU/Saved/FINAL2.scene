@@ -1,0 +1,1388 @@
+{
+    "Actors": [
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_120",
+            "ActorLabel": "OBJ_SPHERE_120",
+            "ActorTag": "",
+            "Components": [
+                {
+                    "AttachParentID": "SphereComponent",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "SphereComponent",
+                    "Properties": {
+                        "AABB_max": "X=47.500 Y=47.500 Z=0.250",
+                        "AABB_min": "X=-2.500 Y=-2.500 Z=-0.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "SphereComponent",
+                        "ComponentOwner": "AActor_120",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=5.000 Y=5.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "StaticMeshPath": "Contents/FinalFloor.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                }
+            ],
+            "LuaScriptPath": "",
+            "RootComponentID": "SphereComponent"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_122",
+            "ActorLabel": "OBJ_SPHERE_122",
+            "ActorTag": "",
+            "Components": [
+                {
+                    "AttachParentID": "SphereComponent",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "SphereComponent",
+                    "Properties": {
+                        "AABB_max": "X=47.500 Y=47.500 Z=5.500",
+                        "AABB_min": "X=-2.500 Y=-2.500 Z=-0.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "SphereComponent",
+                        "ComponentOwner": "AActor_122",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=5.000 Y=5.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "StaticMeshPath": "Contents/FinalField.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                }
+            ],
+            "LuaScriptPath": "",
+            "RootComponentID": "SphereComponent"
+        },
+        {
+            "ActorClass": "ADirectionalLight",
+            "ActorID": "ADirectionalLight_124",
+            "ActorLabel": "OBJ_DIRECTIONALLGIHT_124",
+            "ActorTag": "",
+            "Components": [
+                {
+                    "AttachParentID": "BillboardComponent",
+                    "ComponentClass": "UDirectionalLightComponent",
+                    "ComponentID": "DirectionalLightComponent",
+                    "Properties": {
+                        "AABB_Max": "X=1.000 Y=1.000 Z=0.100",
+                        "AABB_Min": "X=-1.000 Y=-1.000 Z=-0.100",
+                        "ComponentClass": "UDirectionalLightComponent",
+                        "ComponentName": "DirectionalLightComponent",
+                        "ComponentOwner": "ADirectionalLight_124",
+                        "ComponentOwnerClass": "ADirectionalLight",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "Direction": "X=-0.000 Y=-0.000 Z=-1.000",
+                        "Intensity": "1.500000",
+                        "LightColor": "R=1.000 G=1.000 B=1.000 A=1.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "AttachParentID": "BillboardComponent",
+                    "ComponentClass": "UBillboardComponent",
+                    "ComponentID": "BillboardComponent",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "BufferKey": "Assets/Editor/Icon/DirectionalLight_64x.png",
+                        "ComponentClass": "UBillboardComponent",
+                        "ComponentName": "BillboardComponent",
+                        "ComponentOwner": "ADirectionalLight_124",
+                        "ComponentOwnerClass": "ADirectionalLight",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "FinalIndexU": "0.000000",
+                        "FinalIndexV": "0.000000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "UBillboardComponent"
+                    }
+                }
+            ],
+            "LuaScriptPath": "",
+            "RootComponentID": "BillboardComponent"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_140",
+            "ActorLabel": "OBJ_SPHERE_140",
+            "ActorTag": "",
+            "Components": [
+                {
+                    "AttachParentID": "SphereComponent",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "SphereComponent",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=1.000 Z=1.000",
+                        "AABB_min": "X=-1.000 Y=-1.000 Z=-1.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "SphereComponent",
+                        "ComponentOwner": "AActor_140",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=5.000 Y=27.500 Z=3.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=0.000 Y=0.000 Z=0.000",
+                        "StaticMeshPath": "Contents/Sphere.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                },
+                {
+                    "AttachParentID": "SphereComponent",
+                    "ComponentClass": "UBoxComponent",
+                    "ComponentID": "UBoxComponent_0",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "BoxExtent": "X=2.500 Y=25.000 Z=2.500",
+                        "ComponentClass": "UBoxComponent",
+                        "ComponentName": "UBoxComponent_0",
+                        "ComponentOwner": "AActor_140",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                }
+            ],
+            "LuaScriptPath": "",
+            "RootComponentID": "SphereComponent"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_143",
+            "ActorLabel": "AActor143",
+            "ActorTag": "",
+            "Components": [
+                {
+                    "AttachParentID": "USphereComp_144",
+                    "ComponentClass": "UBoxComponent",
+                    "ComponentID": "UBoxComponent_145",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "BoxExtent": "X=2.500 Y=25.000 Z=3.000",
+                        "ComponentClass": "UBoxComponent",
+                        "ComponentName": "UBoxComponent_145",
+                        "ComponentOwner": "AActor_143",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                },
+                {
+                    "AttachParentID": "USphereComp_144",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "USphereComp_144",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=1.000 Z=1.000",
+                        "AABB_min": "X=-1.000 Y=-1.000 Z=-1.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "USphereComp_144",
+                        "ComponentOwner": "AActor_143",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=50.000 Y=27.500 Z=3.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=0.000 Y=0.000 Z=0.000",
+                        "StaticMeshPath": "Contents/Sphere.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                }
+            ],
+            "LuaScriptPath": "",
+            "RootComponentID": "USphereComp_144"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_146",
+            "ActorLabel": "AActor146",
+            "ActorTag": "",
+            "Components": [
+                {
+                    "AttachParentID": "USphereComp_147",
+                    "ComponentClass": "UBoxComponent",
+                    "ComponentID": "UBoxComponent_148",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "BoxExtent": "X=25.000 Y=2.500 Z=3.000",
+                        "ComponentClass": "UBoxComponent",
+                        "ComponentName": "UBoxComponent_148",
+                        "ComponentOwner": "AActor_146",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                },
+                {
+                    "AttachParentID": "USphereComp_147",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "USphereComp_147",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=1.000 Z=1.000",
+                        "AABB_min": "X=-1.000 Y=-1.000 Z=-1.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "USphereComp_147",
+                        "ComponentOwner": "AActor_146",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=27.500 Y=5.000 Z=3.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=0.000 Y=0.000 Z=0.000",
+                        "StaticMeshPath": "Contents/Sphere.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                }
+            ],
+            "LuaScriptPath": "",
+            "RootComponentID": "USphereComp_147"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_149",
+            "ActorLabel": "AActor149",
+            "ActorTag": "",
+            "Components": [
+                {
+                    "AttachParentID": "USphereComp_150",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "USphereComp_150",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=1.000 Z=1.000",
+                        "AABB_min": "X=-1.000 Y=-1.000 Z=-1.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "USphereComp_150",
+                        "ComponentOwner": "AActor_149",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=27.500 Y=50.000 Z=3.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=0.000 Y=0.000 Z=0.000",
+                        "StaticMeshPath": "Contents/Sphere.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                },
+                {
+                    "AttachParentID": "USphereComp_150",
+                    "ComponentClass": "UBoxComponent",
+                    "ComponentID": "UBoxComponent_151",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "BoxExtent": "X=25.000 Y=2.500 Z=3.000",
+                        "ComponentClass": "UBoxComponent",
+                        "ComponentName": "UBoxComponent_151",
+                        "ComponentOwner": "AActor_149",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                }
+            ],
+            "LuaScriptPath": "",
+            "RootComponentID": "USphereComp_150"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_178",
+            "ActorLabel": "OBJ_SPHERE_178",
+            "ActorTag": "",
+            "Components": [
+                {
+                    "AttachParentID": "SphereComponent",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "SphereComponent",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=1.000 Z=1.000",
+                        "AABB_min": "X=-1.000 Y=-1.000 Z=-1.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "SphereComponent",
+                        "ComponentOwner": "AActor_178",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=40.555 Y=25.018 Z=3.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=0.000 Y=0.000 Z=0.000",
+                        "StaticMeshPath": "Contents/Sphere.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                },
+                {
+                    "AttachParentID": "SphereComponent",
+                    "ComponentClass": "UBoxComponent",
+                    "ComponentID": "UBoxComponent_0",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "BoxExtent": "X=8.000 Y=2.500 Z=3.000",
+                        "ComponentClass": "UBoxComponent",
+                        "ComponentName": "UBoxComponent_0",
+                        "ComponentOwner": "AActor_178",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                }
+            ],
+            "LuaScriptPath": "",
+            "RootComponentID": "SphereComponent"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_181",
+            "ActorLabel": "AActor181",
+            "ActorTag": "",
+            "Components": [
+                {
+                    "AttachParentID": "USphereComp_182",
+                    "ComponentClass": "UBoxComponent",
+                    "ComponentID": "UBoxComponent_183",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "BoxExtent": "X=2.500 Y=2.500 Z=3.000",
+                        "ComponentClass": "UBoxComponent",
+                        "ComponentName": "UBoxComponent_183",
+                        "ComponentOwner": "AActor_181",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                },
+                {
+                    "AttachParentID": "USphereComp_182",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "USphereComp_182",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=1.000 Z=1.000",
+                        "AABB_min": "X=-1.000 Y=-1.000 Z=-1.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "USphereComp_182",
+                        "ComponentOwner": "AActor_181",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=35.052 Y=20.043 Z=3.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=0.000 Y=0.000 Z=0.000",
+                        "StaticMeshPath": "Contents/Sphere.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                }
+            ],
+            "LuaScriptPath": "",
+            "RootComponentID": "USphereComp_182"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_184",
+            "ActorLabel": "AActor184",
+            "ActorTag": "",
+            "Components": [
+                {
+                    "AttachParentID": "USphereComp_185",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "USphereComp_185",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=1.000 Z=1.000",
+                        "AABB_min": "X=-1.000 Y=-1.000 Z=-1.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "USphereComp_185",
+                        "ComponentOwner": "AActor_184",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=37.487 Y=15.066 Z=3.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=0.000 Y=0.000 Z=0.000",
+                        "StaticMeshPath": "Contents/Sphere.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                },
+                {
+                    "AttachParentID": "USphereComp_185",
+                    "ComponentClass": "UBoxComponent",
+                    "ComponentID": "UBoxComponent_186",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "BoxExtent": "X=5.000 Y=2.500 Z=3.000",
+                        "ComponentClass": "UBoxComponent",
+                        "ComponentName": "UBoxComponent_186",
+                        "ComponentOwner": "AActor_184",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                }
+            ],
+            "LuaScriptPath": "",
+            "RootComponentID": "USphereComp_185"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_187",
+            "ActorLabel": "AActor187",
+            "ActorTag": "",
+            "Components": [
+                {
+                    "AttachParentID": "USphereComp_188",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "USphereComp_188",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=1.000 Z=1.000",
+                        "AABB_min": "X=-1.000 Y=-1.000 Z=-1.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "USphereComp_188",
+                        "ComponentOwner": "AActor_187",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=25.006 Y=14.995 Z=3.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=0.000 Y=0.000 Z=0.000",
+                        "StaticMeshPath": "Contents/Sphere.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                },
+                {
+                    "AttachParentID": "USphereComp_188",
+                    "ComponentClass": "UBoxComponent",
+                    "ComponentID": "UBoxComponent_189",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "BoxExtent": "X=2.500 Y=2.500 Z=3.000",
+                        "ComponentClass": "UBoxComponent",
+                        "ComponentName": "UBoxComponent_189",
+                        "ComponentOwner": "AActor_187",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                }
+            ],
+            "LuaScriptPath": "",
+            "RootComponentID": "USphereComp_188"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_190",
+            "ActorLabel": "AActor190",
+            "ActorTag": "",
+            "Components": [
+                {
+                    "AttachParentID": "USphereComp_191",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "USphereComp_191",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=1.000 Z=1.000",
+                        "AABB_min": "X=-1.000 Y=-1.000 Z=-1.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "USphereComp_191",
+                        "ComponentOwner": "AActor_190",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=37.487 Y=34.993 Z=3.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=0.000 Y=0.000 Z=0.000",
+                        "StaticMeshPath": "Contents/Sphere.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                },
+                {
+                    "AttachParentID": "USphereComp_191",
+                    "ComponentClass": "UBoxComponent",
+                    "ComponentID": "UBoxComponent_192",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "BoxExtent": "X=5.000 Y=2.500 Z=3.000",
+                        "ComponentClass": "UBoxComponent",
+                        "ComponentName": "UBoxComponent_192",
+                        "ComponentOwner": "AActor_190",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                }
+            ],
+            "LuaScriptPath": "",
+            "RootComponentID": "USphereComp_191"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_193",
+            "ActorLabel": "AActor193",
+            "ActorTag": "",
+            "Components": [
+                {
+                    "AttachParentID": "USphereComp_194",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "USphereComp_194",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=1.000 Z=1.000",
+                        "AABB_min": "X=-1.000 Y=-1.000 Z=-1.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "USphereComp_194",
+                        "ComponentOwner": "AActor_193",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=35.052 Y=39.971 Z=3.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=0.000 Y=0.000 Z=0.000",
+                        "StaticMeshPath": "Contents/Sphere.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                },
+                {
+                    "AttachParentID": "USphereComp_194",
+                    "ComponentClass": "UBoxComponent",
+                    "ComponentID": "UBoxComponent_195",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "BoxExtent": "X=2.500 Y=2.500 Z=3.000",
+                        "ComponentClass": "UBoxComponent",
+                        "ComponentName": "UBoxComponent_195",
+                        "ComponentOwner": "AActor_193",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                }
+            ],
+            "LuaScriptPath": "",
+            "RootComponentID": "USphereComp_194"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_196",
+            "ActorLabel": "AActor196",
+            "ActorTag": "",
+            "Components": [
+                {
+                    "AttachParentID": "USphereComp_197",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "USphereComp_197",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=1.000 Z=1.000",
+                        "AABB_min": "X=-1.000 Y=-1.000 Z=-1.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "USphereComp_197",
+                        "ComponentOwner": "AActor_196",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=24.895 Y=42.487 Z=3.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=0.000 Y=0.000 Z=0.000",
+                        "StaticMeshPath": "Contents/Sphere.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                },
+                {
+                    "AttachParentID": "USphereComp_197",
+                    "ComponentClass": "UBoxComponent",
+                    "ComponentID": "UBoxComponent_198",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "BoxExtent": "X=2.500 Y=5.000 Z=3.000",
+                        "ComponentClass": "UBoxComponent",
+                        "ComponentName": "UBoxComponent_198",
+                        "ComponentOwner": "AActor_196",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                }
+            ],
+            "LuaScriptPath": "",
+            "RootComponentID": "USphereComp_197"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_202",
+            "ActorLabel": "AActor202",
+            "ActorTag": "",
+            "Components": [
+                {
+                    "AttachParentID": "USphereComp_203",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "USphereComp_203",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=1.000 Z=1.000",
+                        "AABB_min": "X=-1.000 Y=-1.000 Z=-1.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "USphereComp_203",
+                        "ComponentOwner": "AActor_202",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=24.895 Y=27.431 Z=3.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=0.000 Y=0.000 Z=0.000",
+                        "StaticMeshPath": "Contents/Sphere.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                },
+                {
+                    "AttachParentID": "USphereComp_203",
+                    "ComponentClass": "UBoxComponent",
+                    "ComponentID": "UBoxComponent_204",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "BoxExtent": "X=2.500 Y=5.000 Z=3.000",
+                        "ComponentClass": "UBoxComponent",
+                        "ComponentName": "UBoxComponent_204",
+                        "ComponentOwner": "AActor_202",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                }
+            ],
+            "LuaScriptPath": "",
+            "RootComponentID": "USphereComp_203"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_205",
+            "ActorLabel": "AActor205",
+            "ActorTag": "",
+            "Components": [
+                {
+                    "AttachParentID": "USphereComp_206",
+                    "ComponentClass": "UBoxComponent",
+                    "ComponentID": "UBoxComponent_207",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "BoxExtent": "X=2.500 Y=5.000 Z=3.000",
+                        "ComponentClass": "UBoxComponent",
+                        "ComponentName": "UBoxComponent_207",
+                        "ComponentOwner": "AActor_205",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                },
+                {
+                    "AttachParentID": "USphereComp_206",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "USphereComp_206",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=1.000 Z=1.000",
+                        "AABB_min": "X=-1.000 Y=-1.000 Z=-1.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "USphereComp_206",
+                        "ComponentOwner": "AActor_205",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=14.866 Y=37.515 Z=3.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=0.000 Y=0.000 Z=0.000",
+                        "StaticMeshPath": "Contents/Sphere.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                }
+            ],
+            "LuaScriptPath": "",
+            "RootComponentID": "USphereComp_206"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_208",
+            "ActorLabel": "AActor208",
+            "ActorTag": "",
+            "Components": [
+                {
+                    "AttachParentID": "USphereComp_209",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "USphereComp_209",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=1.000 Z=1.000",
+                        "AABB_min": "X=-1.000 Y=-1.000 Z=-1.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "USphereComp_209",
+                        "ComponentOwner": "AActor_208",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=17.346 Y=30.011 Z=3.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=0.000 Y=0.000 Z=0.000",
+                        "StaticMeshPath": "Contents/Sphere.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                },
+                {
+                    "AttachParentID": "USphereComp_209",
+                    "ComponentClass": "UBoxComponent",
+                    "ComponentID": "UBoxComponent_210",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "BoxExtent": "X=5.000 Y=2.500 Z=3.000",
+                        "ComponentClass": "UBoxComponent",
+                        "ComponentName": "UBoxComponent_210",
+                        "ComponentOwner": "AActor_208",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                }
+            ],
+            "LuaScriptPath": "",
+            "RootComponentID": "USphereComp_209"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_211",
+            "ActorLabel": "AActor211",
+            "ActorTag": "",
+            "Components": [
+                {
+                    "AttachParentID": "USphereComp_212",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "USphereComp_212",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=1.000 Z=1.000",
+                        "AABB_min": "X=-1.000 Y=-1.000 Z=-1.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "USphereComp_212",
+                        "ComponentOwner": "AActor_211",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=10.067 Y=20.043 Z=3.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "StaticMeshPath": "Contents/Sphere.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                },
+                {
+                    "AttachParentID": "USphereComp_212",
+                    "ComponentClass": "UBoxComponent",
+                    "ComponentID": "UBoxComponent_213",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "BoxExtent": "X=2.500 Y=2.500 Z=3.000",
+                        "ComponentClass": "UBoxComponent",
+                        "ComponentName": "UBoxComponent_213",
+                        "ComponentOwner": "AActor_211",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                }
+            ],
+            "LuaScriptPath": "",
+            "RootComponentID": "USphereComp_212"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_214",
+            "ActorLabel": "AActor214",
+            "ActorTag": "",
+            "Components": [
+                {
+                    "AttachParentID": "USphereComp_215",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "USphereComp_215",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=1.000 Z=1.000",
+                        "AABB_min": "X=-1.000 Y=-1.000 Z=-1.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "USphereComp_215",
+                        "ComponentOwner": "AActor_214",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=15.051 Y=17.535 Z=3.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=0.000 Y=0.000 Z=0.000",
+                        "StaticMeshPath": "Contents/Sphere.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                },
+                {
+                    "AttachParentID": "USphereComp_215",
+                    "ComponentClass": "UBoxComponent",
+                    "ComponentID": "UBoxComponent_216",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "BoxExtent": "X=2.500 Y=5.000 Z=3.000",
+                        "ComponentClass": "UBoxComponent",
+                        "ComponentName": "UBoxComponent_216",
+                        "ComponentOwner": "AActor_214",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                }
+            ],
+            "LuaScriptPath": "",
+            "RootComponentID": "USphereComp_215"
+        },
+        {
+            "ActorClass": "ADefaultPawn",
+            "ActorID": "ADefaultPawn_191",
+            "ActorLabel": "DefaultPawn_191",
+            "ActorTag": "Player",
+            "Components": [
+                {
+                    "AttachParentID": "StaticMeshComponent_0",
+                    "ComponentClass": "UStaticMeshComponent",
+                    "ComponentID": "StaticMeshComponent_0",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=1.000 Z=1.000",
+                        "AABB_min": "X=-1.000 Y=-1.000 Z=-1.000",
+                        "ComponentClass": "UStaticMeshComponent",
+                        "ComponentName": "StaticMeshComponent_0",
+                        "ComponentOwner": "ADefaultPawn_191",
+                        "ComponentOwnerClass": "ADefaultPawn",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=9.909 Y=13.647 Z=3.080",
+                        "RelativeRotation": "Pitch=0.000 Yaw=-90.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "StaticMeshPath": "Contents/Sphere.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                },
+                {
+                    "AttachParentID": "StaticMeshComponent_0",
+                    "ComponentClass": "UCameraComponent",
+                    "ComponentID": "CameraComponent",
+                    "Properties": {
+                        "ComponentClass": "UCameraComponent",
+                        "ComponentName": "CameraComponent",
+                        "ComponentOwner": "ADefaultPawn_191",
+                        "ComponentOwnerClass": "ADefaultPawn",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "AttachParentID": "StaticMeshComponent_0",
+                    "ComponentClass": "USphereComponent",
+                    "ComponentID": "USphereComponent_0",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "ComponentClass": "USphereComponent",
+                        "ComponentName": "USphereComponent_0",
+                        "ComponentOwner": "ADefaultPawn_191",
+                        "ComponentOwnerClass": "ADefaultPawn",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "SphereRadius": "1.000000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                }
+            ],
+            "LuaScriptPath": "Player.lua",
+            "RootComponentID": "StaticMeshComponent_0"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_698",
+            "ActorLabel": "AActor698",
+            "ActorTag": "Ghost",
+            "Components": [
+                {
+                    "AttachParentID": "USphereComp_699",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "USphereComp_699",
+                    "Properties": {
+                        "AABB_max": "X=0.948 Y=1.215 Z=3.301",
+                        "AABB_min": "X=-1.409 Y=-1.075 Z=0.172",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "USphereComp_699",
+                        "ComponentOwner": "AActor_698",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=9.566 Y=45.077 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "StaticMeshPath": "Contents/Ghost.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                },
+                {
+                    "AttachParentID": "USphereComp_699",
+                    "ComponentClass": "UBoxComponent",
+                    "ComponentID": "UBoxComponent_1",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "BoxExtent": "X=1.000 Y=1.000 Z=3.000",
+                        "ComponentClass": "UBoxComponent",
+                        "ComponentName": "UBoxComponent_1",
+                        "ComponentOwner": "AActor_698",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                }
+            ],
+            "LuaScriptPath": "NormalGhost.lua",
+            "RootComponentID": "USphereComp_699"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_701",
+            "ActorLabel": "AActor701",
+            "ActorTag": "Ghost",
+            "Components": [
+                {
+                    "AttachParentID": "USphereComp_702",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "USphereComp_702",
+                    "Properties": {
+                        "AABB_max": "X=0.948 Y=1.215 Z=3.301",
+                        "AABB_min": "X=-1.409 Y=-1.075 Z=0.172",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "USphereComp_702",
+                        "ComponentOwner": "AActor_701",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=41.267 Y=19.775 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "StaticMeshPath": "Contents/Ghost.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                },
+                {
+                    "AttachParentID": "USphereComp_702",
+                    "ComponentClass": "UBoxComponent",
+                    "ComponentID": "UBoxComponent_703",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "BoxExtent": "X=1.000 Y=1.000 Z=3.000",
+                        "ComponentClass": "UBoxComponent",
+                        "ComponentName": "UBoxComponent_703",
+                        "ComponentOwner": "AActor_701",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                }
+            ],
+            "LuaScriptPath": "NormalGhost.lua",
+            "RootComponentID": "USphereComp_702"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_704",
+            "ActorLabel": "OBJ_SPHERE_704",
+            "ActorTag": "Coin",
+            "Components": [
+                {
+                    "AttachParentID": "SphereComponent",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "SphereComponent",
+                    "Properties": {
+                        "AABB_max": "X=0.035 Y=0.200 Z=0.200",
+                        "AABB_min": "X=-0.035 Y=-0.200 Z=-0.200",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "SphereComponent",
+                        "ComponentOwner": "AActor_704",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=20.353 Y=19.553 Z=3.142",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=5.000 Y=5.000 Z=5.000",
+                        "StaticMeshPath": "Contents/Coin.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                },
+                {
+                    "AttachParentID": "SphereComponent",
+                    "ComponentClass": "UBoxComponent",
+                    "ComponentID": "UBoxComponent_2",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "BoxExtent": "X=1.000 Y=1.000 Z=1.000",
+                        "ComponentClass": "UBoxComponent",
+                        "ComponentName": "UBoxComponent_2",
+                        "ComponentOwner": "AActor_704",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                }
+            ],
+            "LuaScriptPath": "Coin.lua",
+            "RootComponentID": "SphereComponent"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_787",
+            "ActorLabel": "AActor787",
+            "ActorTag": "Coin",
+            "Components": [
+                {
+                    "AttachParentID": "USphereComp_788",
+                    "ComponentClass": "UBoxComponent",
+                    "ComponentID": "UBoxComponent_789",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "BoxExtent": "X=1.000 Y=1.000 Z=1.000",
+                        "ComponentClass": "UBoxComponent",
+                        "ComponentName": "UBoxComponent_789",
+                        "ComponentOwner": "AActor_787",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                },
+                {
+                    "AttachParentID": "USphereComp_788",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "USphereComp_788",
+                    "Properties": {
+                        "AABB_max": "X=0.035 Y=0.200 Z=0.200",
+                        "AABB_min": "X=-0.035 Y=-0.200 Z=-0.200",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "USphereComp_788",
+                        "ComponentOwner": "AActor_787",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=20.353 Y=43.659 Z=3.142",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=5.000 Y=5.000 Z=5.000",
+                        "StaticMeshPath": "Contents/Coin.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                }
+            ],
+            "LuaScriptPath": "Coin.lua",
+            "RootComponentID": "USphereComp_788"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_790",
+            "ActorLabel": "AActor790",
+            "ActorTag": "Coin",
+            "Components": [
+                {
+                    "AttachParentID": "USphereComp_792",
+                    "ComponentClass": "UBoxComponent",
+                    "ComponentID": "UBoxComponent_791",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "BoxExtent": "X=1.000 Y=1.000 Z=1.000",
+                        "ComponentClass": "UBoxComponent",
+                        "ComponentName": "UBoxComponent_791",
+                        "ComponentOwner": "AActor_790",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                },
+                {
+                    "AttachParentID": "USphereComp_792",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "USphereComp_792",
+                    "Properties": {
+                        "AABB_max": "X=0.035 Y=0.200 Z=0.200",
+                        "AABB_min": "X=-0.035 Y=-0.200 Z=-0.200",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "USphereComp_792",
+                        "ComponentOwner": "AActor_790",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=42.921 Y=43.659 Z=3.142",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=5.000 Y=5.000 Z=5.000",
+                        "StaticMeshPath": "Contents/Coin.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                }
+            ],
+            "LuaScriptPath": "Coin.lua",
+            "RootComponentID": "USphereComp_792"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_793",
+            "ActorLabel": "AActor793",
+            "ActorTag": "Coin",
+            "Components": [
+                {
+                    "AttachParentID": "USphereComp_795",
+                    "ComponentClass": "UBoxComponent",
+                    "ComponentID": "UBoxComponent_794",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "BoxExtent": "X=1.000 Y=1.000 Z=1.000",
+                        "ComponentClass": "UBoxComponent",
+                        "ComponentName": "UBoxComponent_794",
+                        "ComponentOwner": "AActor_793",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                },
+                {
+                    "AttachParentID": "USphereComp_795",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "USphereComp_795",
+                    "Properties": {
+                        "AABB_max": "X=0.035 Y=0.200 Z=0.200",
+                        "AABB_min": "X=-0.035 Y=-0.200 Z=-0.200",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "USphereComp_795",
+                        "ComponentOwner": "AActor_793",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=39.849 Y=20.249 Z=3.142",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=5.000 Y=5.000 Z=5.000",
+                        "StaticMeshPath": "Contents/Coin.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                }
+            ],
+            "LuaScriptPath": "Coin.lua",
+            "RootComponentID": "USphereComp_795"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_885",
+            "ActorLabel": "AActor885",
+            "ActorTag": "Coin",
+            "Components": [
+                {
+                    "AttachParentID": "USphereComp_887",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "USphereComp_887",
+                    "Properties": {
+                        "AABB_max": "X=0.035 Y=0.200 Z=0.200",
+                        "AABB_min": "X=-0.035 Y=-0.200 Z=-0.200",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "USphereComp_887",
+                        "ComponentOwner": "AActor_885",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=30.080 Y=30.654 Z=3.142",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=5.000 Y=5.000 Z=5.000",
+                        "StaticMeshPath": "Contents/Coin.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                },
+                {
+                    "AttachParentID": "USphereComp_887",
+                    "ComponentClass": "UBoxComponent",
+                    "ComponentID": "UBoxComponent_886",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "BoxExtent": "X=1.000 Y=1.000 Z=1.000",
+                        "ComponentClass": "UBoxComponent",
+                        "ComponentName": "UBoxComponent_886",
+                        "ComponentOwner": "AActor_885",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                }
+            ],
+            "LuaScriptPath": "Coin.lua",
+            "RootComponentID": "USphereComp_887"
+        }
+    ],
+    "NextUUID": 0,
+    "Version": 1
+}

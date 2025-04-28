@@ -3,10 +3,12 @@
 #include "World/World.h"
 #include "Classes/Components/SceneComponent.h"
 #include "GameFramework/Actor.h"
+#include "Engine/Engine.h"
+#include "Engine/EditorEngine.h"
 
 FLuaCompiler::FLuaCompiler()
 {
-    Lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::table, sol::lib::string);
+    Lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::table, sol::lib::string, sol::lib::os);
 
     Lua.new_usertype<USceneComponent>("GameObject",
         "UUID", sol::property(&USceneComponent::GetUUID),
@@ -33,6 +35,15 @@ FLuaCompiler::FLuaCompiler()
 
         FString LuaLog = oss.str().c_str();
         UE_LOG(ELogLevel::Display, TEXT("%s"), *LuaLog);
+        });
+
+    //멤버 함수는 람다로
+    Lua.set_function("AddScore", [this](float Score) {
+        AddScore(Score);
+        });
+
+    Lua.set_function("GameOver", [this]() {
+        GameOver();
         });
 
     Input = Lua.create_table();
@@ -205,4 +216,18 @@ void FLuaCompiler::UpdateInput()
     Input.set("S", S);
     Input.set("D", D);
     Input.set("W", W);
+}
+
+void FLuaCompiler::AddScore(float score)
+{
+    UEditorEngine* Engine = Cast<UEditorEngine>(GEngine);
+    AGameMode* GameMode = Engine->ActiveWorld->GetGameMode();
+    GameMode->AddScore(score);
+}
+
+void FLuaCompiler::GameOver()
+{
+    UEditorEngine* Engine = Cast<UEditorEngine>(GEngine);
+    AGameMode* GameMode = Engine->ActiveWorld->GetGameMode();
+    GameMode->GameOver();
 }

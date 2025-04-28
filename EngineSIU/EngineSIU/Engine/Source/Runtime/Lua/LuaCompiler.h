@@ -21,9 +21,13 @@ public:
     void Tick(float DeltaTime);
 
     void UpdateInput();
-    
+
 private:
     sol::state Lua;
     sol::table Input;
     std::unordered_map<uint32, std::unique_ptr<FLuaInstance>> LuaInstances;
+    std::filesystem::file_time_type LastWriteTime;
+
+    void AddScore(float score);
+    void GameOver();
 };

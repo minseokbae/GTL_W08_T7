@@ -1,4 +1,4 @@
-﻿#include "GameMode.h"
+#include "GameMode.h"
 
 #include "Engine/EditorEngine.h"
 #include "Engine/Engine.h"
@@ -40,6 +40,8 @@ void AGameMode::StartGame()
 void AGameMode::GameOver()
 {
     //TODO : GameOver UI 띄우기 
+    bGameOver = true;
+    UE_LOG(ELogLevel::Display, "GameOver");
 }
 
 void AGameMode::Win()
@@ -61,4 +63,5 @@ void AGameMode::RestartGame()
 void AGameMode::AddScore(float InScore)
 {
     Score += InScore;
+    UE_LOG(ELogLevel::Display, "Add %f", Score);
 }

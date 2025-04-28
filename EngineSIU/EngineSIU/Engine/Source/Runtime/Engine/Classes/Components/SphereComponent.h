@@ -9,6 +9,10 @@ public:
 
     virtual UObject* Duplicate(UObject* InOuter) override;
 
+    void GetProperties(TMap<FString, FString>& OutProperties) const override;
+
+    void SetProperties(const TMap<FString, FString>& InProperties) override;
+
     float GetScaledSphereRadius() const;
     float GetUnscaledSphereRadius() const;
     float GetShapeScale() const;

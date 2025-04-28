@@ -171,7 +171,8 @@ void UEditorEngine::StartPIE()
     // 여기서 Actor들의 BeginPlay를 해줄지 안에서 해줄 지 고민.
     WorldList.Add(GetWorldContextFromWorld(PIEWorld));
 
-    CurrentPlayer = GameInstance->GetLocalPlayer()->GetPlayerController();
+    if (GameInstance->GetLocalPlayer()->GetPlayerController())
+        CurrentPlayer = GameInstance->GetLocalPlayer()->GetPlayerController();
 }
 
 void UEditorEngine::EndPIE()

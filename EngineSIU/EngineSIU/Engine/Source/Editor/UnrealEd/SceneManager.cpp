@@ -111,6 +111,7 @@ struct FSceneData
 void SceneManager::LoadSceneFromJsonFile(const std::filesystem::path& FilePath, UWorld& OutWorld)
 {
     std::ifstream JsonFile(FilePath);
+    
     if (!JsonFile.is_open())
     {
         UE_LOG(ELogLevel::Error, "Failed to open file for reading: %s", FilePath.c_str());

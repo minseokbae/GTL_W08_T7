@@ -34,7 +34,6 @@ void UMapManager::InitMapManager(const FString& MapFilePath)
 void UMapManager::ParseMap(const TArray<FString>& Lines)
 {
     MapInfo.MapData.Empty();
-    MapInfo.GhostStarts.Empty();
     MapInfo.Height = Lines.Num();
     MapInfo.Width = (MapInfo.Height > 0) ? Lines[0].Len() : 0;
 
@@ -46,8 +45,6 @@ void UMapManager::ParseMap(const TArray<FString>& Lines)
             TCHAR C = Lines[Y][X];
             ETileType Tile = ETileType::Empty;
             if (C == '1') Tile = ETileType::Wall;
-            else if (C == '9') { Tile = ETileType::PlayerStart; MapInfo.PlayerStart = FVector2D(X, Y); }
-            else if (C == '8') { Tile = ETileType::GhostStart; MapInfo.GhostStarts.Add(FVector2D(X, Y)); }
             Row.Add(Tile);
         }
         MapInfo.MapData.Add(Row);
