@@ -83,7 +83,7 @@ void PlayerInEditorPanel::Render()
 
     // 메인 메뉴
     if (gameState == GameState::MainMenu) {
-        ImVec2 windowSize(300, 120);
+        ImVec2 windowSize(400, 120);
         ImVec2 center(io.DisplaySize.x * 0.5f, io.DisplaySize.y * 0.5f);
         ImGui::SetNextWindowPos(ImVec2(center.x - windowSize.x * 0.5f, center.y - windowSize.y * 0.5f), ImGuiCond_Always);
         ImGui::SetNextWindowSize(windowSize, ImGuiCond_Always);
@@ -115,7 +115,7 @@ void PlayerInEditorPanel::Render()
     // 인게임 HUD
     else if (gameState == GameState::Playing) {
         ImGui::Begin("게임 진행 중", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
-        ImGui::Text("여기에 점수, 체력 등 표시");
+        ImGui::Text("코인 : %.0f/5", Cast<UEditorEngine>(GEngine)->ActiveWorld->GetGameMode()->GetScore());
         ImGui::End();
     }
 }

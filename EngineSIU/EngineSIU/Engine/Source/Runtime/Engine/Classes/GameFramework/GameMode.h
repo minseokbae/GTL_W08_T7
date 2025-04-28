@@ -29,6 +29,7 @@ public:
     void SetControlloer(UClass* NewController) { Controller = NewController; }
     UClass* GetDefaultPawn() { return DefaultPawn; }
     void SetDefaultPawn(UClass* pawn) { DefaultPawn = pawn; }
+    float GetScore() { return Score; }
     void GameOver();
     void Win();
     void RestartGame();
