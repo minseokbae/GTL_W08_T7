@@ -51,7 +51,7 @@
                         "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
                         "Direction": "X=-0.000 Y=-0.000 Z=-1.000",
                         "Intensity": "5.900000",
-                        "LightColor": "R=1.000 G=1.000 B=1.000 A=1.000",
+                        "LightColor": "R=0.754 G=0.063 B=0.063 A=1.000",
                         "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
                         "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
@@ -443,6 +443,45 @@
             ],
             "LuaScriptPath": "Coin.lua",
             "RootComponentID": "USphereComp_272"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_1577",
+            "ActorLabel": "OBJ_TEXT_1577",
+            "ActorTag": "",
+            "Components": [
+                {
+                    "AttachParentID": "TextComponent",
+                    "ComponentClass": "UTextComponent",
+                    "ComponentID": "TextComponent",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "BufferKey": "Assets/Texture/font.png",
+                        "ColumnCount": "106",
+                        "ComponentClass": "UTextComponent",
+                        "ComponentName": "TextComponent",
+                        "ComponentOwner": "AActor_1577",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "FinalIndexU": "0.000000",
+                        "FinalIndexV": "0.000000",
+                        "QuadHeight": "2.000000",
+                        "QuadSize": "2",
+                        "QuadWidth": "2.000000",
+                        "RelativeLocation": "X=6.545 Y=-2.608 Z=12.161",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "RowCount": "106",
+                        "Text": "풉",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "UTextComponent"
+                    }
+                }
+            ],
+            "LuaScriptPath": "Coin.lua",
+            "RootComponentID": "TextComponent"
         }
     ],
     "NextUUID": 0,

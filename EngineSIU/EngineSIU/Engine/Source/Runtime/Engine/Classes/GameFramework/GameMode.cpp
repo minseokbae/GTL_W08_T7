@@ -46,6 +46,7 @@ void AGameMode::GameOver()
 
 void AGameMode::Win()
 {
+    bWin = true;
     //TODO : Game Clear UI 띄우기
     UE_LOG(ELogLevel::Display, "Win");
 }

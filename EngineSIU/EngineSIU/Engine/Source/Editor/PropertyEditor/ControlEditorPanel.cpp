@@ -31,6 +31,7 @@
 #include "Actors/AmbientLightActor.h"
 
 #include "Game/Sound/SoundManager.h"
+#include "Engine/Classes/Engine/GameInstance.h"
 
 void ControlEditorPanel::Render()
 {

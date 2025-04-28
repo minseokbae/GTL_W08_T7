@@ -11,6 +11,28 @@ void PlayerInEditorPanel::Render()
 {
     ImGuiIO& io = ImGui::GetIO();
     UEditorEngine* Engine = Cast<UEditorEngine>(GEngine);
+    AGameMode* GameMode = Engine->ActiveWorld->GetGameMode();
+
+    if (GameMode->bGameOver)
+    {
+           if (Engine) {
+            Engine->EndPIE();
+            Engine->NewWorld();
+            Engine->LoadWorld("Saved/GameOver.scene");
+            Engine->StartPIE();
+            gameState = GameState::MainMenu;
+        }
+    }
+    else if (GameMode->bWin)
+    {
+        if (Engine) {
+            Engine->EndPIE();
+            Engine->NewWorld();
+            Engine->LoadWorld("Saved/GameClear.scene");
+            Engine->StartPIE();
+            gameState = GameState::MainMenu;
+        }
+    }
 
     // 게임 중 ESC로 일시정지 메뉴(PauseMenu) 띄우기
     if (gameState == GameState::Playing && (GetAsyncKeyState(VK_ESCAPE) & 0x1)) {

@@ -13,14 +13,14 @@ public:
     AGameMode();
     virtual void Tick(float DeltaTime) override;
     void StartGame();
+    bool bGameOver = false;
+    bool bWin = false;
 private:
     UClass* Controller = APlayerController::StaticClass();
     UClass* DefaultPawn = ADefaultPawn::StaticClass();
 
     float Score = 0.0f;
     float WinScore = 5.0f;
-    bool bGameOver = false;
-    bool bWin = false;
 
 protected:
     USceneComponent* TransformComponent = nullptr;

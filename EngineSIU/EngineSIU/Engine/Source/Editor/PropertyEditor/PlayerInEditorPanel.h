@@ -14,4 +14,5 @@ public:
 
 private:
     float Width = 0, Height = 0;
+    ImFont* bigFont = nullptr;
 };
