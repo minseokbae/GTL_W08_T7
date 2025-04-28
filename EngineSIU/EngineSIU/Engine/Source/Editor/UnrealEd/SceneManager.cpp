@@ -69,10 +69,11 @@ struct FComponentSaveData
 {
     FString ComponentID;    // 컴포넌트의 고유 ID (액터 내에서 유일해야 함, FName) 
     FString ComponentClass; // 컴포넌트 클래스 이름 (예: "UStaticMeshComponent", "UPointLightComponent")
+    FString AttachParentID;
 
     TMap<FString, FString> Properties;
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(FComponentSaveData, ComponentID, ComponentClass, Properties)
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(FComponentSaveData, ComponentID, ComponentClass, AttachParentID, Properties)
 };
 
 // 액터 하나의 저장 정보를 담는 구조체
@@ -210,6 +211,7 @@ FSceneData SceneManager::WorldToSceneData(const UWorld& InWorld)
             FComponentSaveData componentData;
             componentData.ComponentID = Component->GetName();
             componentData.ComponentClass = Component->GetClass()->GetName();
+            componentData.AttachParentID = Actor->GetRootComponent()->GetName();
             
             //TMap<FString, FString> InProperties;
             Component->GetProperties(componentData.Properties);
@@ -382,7 +384,7 @@ bool SceneManager::LoadWorldFromData(const FSceneData& sceneData, UWorld* target
             else { /* 루트 컴포넌트 못 찾음 경고 */ }
         }
 
-        // 컴포넌트 부착 및 상대 트랜스폼 설정
+        //// 컴포넌트 부착 및 상대 트랜스폼 설정
         for (const FComponentSaveData& componentData : actorData.Components) // 다시 컴포넌트 데이터 순회
         {
             UActorComponent** FoundCompPtr = ActorComponentsMap.Find(componentData.ComponentID);
@@ -391,27 +393,43 @@ bool SceneManager::LoadWorldFromData(const FSceneData& sceneData, UWorld* target
             USceneComponent* CurrentSceneComp = Cast<USceneComponent>(*FoundCompPtr);
             if (CurrentSceneComp == nullptr) continue; // SceneComponent만 부착/트랜스폼 가능
 
-            // 부착 정보 찾기 (Properties 맵 사용)
-            const FString* ParentIDPtr = componentData.Properties.Find(TEXT("AttachParentID"));
-            if (ParentIDPtr && !ParentIDPtr->IsEmpty() && *ParentIDPtr != TEXT("nullptr"))
+            UActorComponent** FoundParentCompPtr = ActorComponentsMap.Find(componentData.AttachParentID);
+            if (FoundParentCompPtr && *FoundParentCompPtr)
             {
-                // !!! 부모 검색 범위를 ActorComponentsMap (현재 액터의 컴포넌트)으로 한정 !!!
-                UActorComponent** FoundParentCompPtr = ActorComponentsMap.Find(*ParentIDPtr);
-                if (FoundParentCompPtr && *FoundParentCompPtr)
-                {
-                    USceneComponent* ParentSceneComp = Cast<USceneComponent>(*FoundParentCompPtr);
-                    if (ParentSceneComp) {
-                        // 부착 실행 (SetupAttachment 대신 AttachToComponent 권장 - 규칙 명시 가능)
-                        CurrentSceneComp->SetupAttachment(ParentSceneComp);
-                        UE_LOG(ELogLevel::Display, TEXT("Attached Component '%s' to Parent '%s' in Actor '%s'"), *componentData.ComponentID, *(*ParentIDPtr), *actorData.ActorID);
-                    }
-                    else { /* 부모가 SceneComponent 아님 경고 */ }
+                USceneComponent* ParentSceneComp = Cast<USceneComponent>(*FoundParentCompPtr);
+                if (ParentSceneComp) {
+                    // 부착 실행 (SetupAttachment 대신 AttachToComponent 권장 - 규칙 명시 가능)
+                    CurrentSceneComp->SetupAttachment(ParentSceneComp);
+                    //UE_LOG(ELogLevel::Display, TEXT("Attached Component '%s' to Parent '%s' in Actor '%s'"), *componentData.ComponentID, *(*ParentIDPtr), *actorData.ActorID);
                 }
-                else {
-                    // 부모 컴포넌트를 이 액터 내에서 찾지 못함 (오류 가능성 높음)
-                    UE_LOG(ELogLevel::Warning, TEXT("Could not find Parent component '%s' within Actor '%s' for '%s'."), *(*ParentIDPtr), *actorData.ActorID, *componentData.ComponentID);
-                }
+                else { /* 부모가 SceneComponent 아님 경고 */ }
             }
+            else {
+                // 부모 컴포넌트를 이 액터 내에서 찾지 못함 (오류 가능성 높음)
+                //UE_LOG(ELogLevel::Warning, TEXT("Could not find Parent component '%s' within Actor '%s' for '%s'."), *(*ParentIDPtr), *actorData.ActorID, *componentData.ComponentID);
+            }
+
+            // 부착 정보 찾기 (Properties 맵 사용)
+            //const FString* ParentIDPtr = componentData.Properties.Find(TEXT("AttachParentID"));
+            //if (ParentIDPtr && !ParentIDPtr->IsEmpty() && *ParentIDPtr != TEXT("nullptr"))
+            //{
+            //    // !!! 부모 검색 범위를 ActorComponentsMap (현재 액터의 컴포넌트)으로 한정 !!!
+            //    UActorComponent** FoundParentCompPtr = ActorComponentsMap.Find(*ParentIDPtr);
+            //    if (FoundParentCompPtr && *FoundParentCompPtr)
+            //    {
+            //        USceneComponent* ParentSceneComp = Cast<USceneComponent>(*FoundParentCompPtr);
+            //        if (ParentSceneComp) {
+            //            // 부착 실행 (SetupAttachment 대신 AttachToComponent 권장 - 규칙 명시 가능)
+            //            CurrentSceneComp->SetupAttachment(ParentSceneComp);
+            //            UE_LOG(ELogLevel::Display, TEXT("Attached Component '%s' to Parent '%s' in Actor '%s'"), *componentData.ComponentID, *(*ParentIDPtr), *actorData.ActorID);
+            //        }
+            //        else { /* 부모가 SceneComponent 아님 경고 */ }
+            //    }
+            //    else {
+            //        // 부모 컴포넌트를 이 액터 내에서 찾지 못함 (오류 가능성 높음)
+            //        UE_LOG(ELogLevel::Warning, TEXT("Could not find Parent component '%s' within Actor '%s' for '%s'."), *(*ParentIDPtr), *actorData.ActorID, *componentData.ComponentID);
+            //    }
+            //}
 
             FVector RelativeLocation = FVector::ZeroVector;
             const FString* LocStr = componentData.Properties.Find(TEXT("RelativeLocation"));
