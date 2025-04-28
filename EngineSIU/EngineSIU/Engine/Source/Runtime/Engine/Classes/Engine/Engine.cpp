@@ -37,6 +37,9 @@ FWorldContext& UEngine::CreateNewWorldContext(EWorldType InWorldType)
 void UEngine::LoadWorld(const FString& FileName) const
 {
     SceneManager::LoadSceneFromJsonFile(*FileName, *ActiveWorld);
+    ActiveWorld->SetWorldName(FileName);
+    FString temp = ActiveWorld->GetWorldName();
+    UE_LOG(ELogLevel::Error, TEXT("%s"), *temp);
 }
 
 void UEngine::SaveWorld(const FString& FileName) const

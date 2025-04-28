@@ -11,7 +11,7 @@ public:
     UPlayer() = default;
 
 protected:
-    APlayerController* PlayerController;
+    APlayerController* PlayerController = nullptr;
 public:
     APlayerController* GetPlayerController() { return PlayerController; }
     void SwitchController(APlayerController* PC);
