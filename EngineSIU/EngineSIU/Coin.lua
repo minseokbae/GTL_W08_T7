@@ -14,7 +14,7 @@ end
 function OnOverlap(overlapObj)
     --충돌 처리 overlapObj는 충돌한 액터의 루트 컴포넌트를 가리킴
     print(overlapObj.Tag)
-    if(overlapObj.Tag == String.new("Player")) then
+    if(overlapObj.Tag:Equals("Player")) then
         print("overlap player")
         destroy = true
     end

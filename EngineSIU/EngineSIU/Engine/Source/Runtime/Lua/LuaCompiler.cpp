@@ -139,7 +139,8 @@ FLuaCompiler::FLuaCompiler()
         },
         sol::meta_function::equal_to, [](const FString& a, const FString& b) {
             return a.Equals(b, ESearchCase::IgnoreCase);  // 또는 CaseSensitive
-        }
+        },
+        "Equals", &FString::LuaEquals
     );
 }
 

@@ -12,6 +12,12 @@ UShapeComponent::~UShapeComponent()
     
 }
 
+UObject* UShapeComponent::Duplicate(UObject* InOuter)
+{
+    ThisClass* NewComponent = Cast<ThisClass>(Super::Duplicate(InOuter));
+    return NewComponent;
+}
+
 void UShapeComponent::BeginPlay()
 {
     Super::BeginPlay();
