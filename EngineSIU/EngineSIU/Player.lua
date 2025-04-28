@@ -9,7 +9,9 @@ end
 function OnOverlap(overlapObj)
     --충돌 처리 overlapObj는 충돌한 액터의 루트 컴포넌트를 가리킴
     print(overlapObj.Tag)
-    if not(overlapObj.Tag:Equals("Coin")) then
+    if (overlapObj.Tag:Equals("Coin")) then
+        AddScore(1)
+    else
         local repulsion = Vector.new(0,0,0)
         if obj.Velocity.X>0 then
             repulsion = repulsion + Vector.new(-0.7,0,0)

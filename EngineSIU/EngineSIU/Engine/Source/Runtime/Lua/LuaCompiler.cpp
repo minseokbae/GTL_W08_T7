@@ -3,6 +3,8 @@
 #include "World/World.h"
 #include "Classes/Components/SceneComponent.h"
 #include "GameFramework/Actor.h"
+#include "Engine/Engine.h"
+#include "Engine/EditorEngine.h"
 
 FLuaCompiler::FLuaCompiler()
 {
@@ -33,6 +35,11 @@ FLuaCompiler::FLuaCompiler()
 
         FString LuaLog = oss.str().c_str();
         UE_LOG(ELogLevel::Display, TEXT("%s"), *LuaLog);
+        });
+
+    //멤버 함수는 람다로
+    Lua.set_function("AddScore", [this](float Score) {
+        AddScore(Score);
         });
 
     Input = Lua.create_table();
@@ -142,6 +149,9 @@ FLuaCompiler::FLuaCompiler()
         },
         "Equals", &FString::LuaEquals
     );
+
+    Lua.script_file("Global.lua");
+    LastWriteTime = std::filesystem::last_write_time("Global.lua");
 }
 
 void FLuaCompiler::Bind(AActor* Actor)
@@ -183,6 +193,7 @@ void FLuaCompiler::EndPlay()
 
 void FLuaCompiler::Tick(float DeltaTime)
 {
+    Reload();
     UpdateInput();
     for (auto& Instance : LuaInstances)
     {
@@ -205,4 +216,21 @@ void FLuaCompiler::UpdateInput()
     Input.set("S", S);
     Input.set("D", D);
     Input.set("W", W);
+}
+
+void FLuaCompiler::Reload()
+{
+    auto curTime = std::filesystem::last_write_time("Global.lua");
+    if (curTime != LastWriteTime)
+    {
+        Lua.script_file("Global.lua");
+        LastWriteTime = std::filesystem::last_write_time("Global.lua");
+    }
+}
+
+void FLuaCompiler::AddScore(float score)
+{
+    UEditorEngine* Engine = Cast<UEditorEngine>(GEngine);
+    AGameMode* GameMode = Engine->ActiveWorld->GetGameMode();
+    GameMode->AddScore(score);
 }

@@ -1,4 +1,4 @@
-﻿#include "GameMode.h"
+#include "GameMode.h"
 
 #include "Engine/EditorEngine.h"
 #include "Engine/Engine.h"
@@ -61,4 +61,5 @@ void AGameMode::RestartGame()
 void AGameMode::AddScore(float InScore)
 {
     Score += InScore;
+    UE_LOG(ELogLevel::Display, "Add %f", Score);
 }
