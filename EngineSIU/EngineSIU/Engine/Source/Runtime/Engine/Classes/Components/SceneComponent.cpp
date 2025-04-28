@@ -22,6 +22,7 @@ UObject* USceneComponent::Duplicate(UObject* InOuter)
     NewComponent->RelativeRotation = RelativeRotation;
     NewComponent->RelativeScale3D = RelativeScale3D;
     NewComponent->ComponentVelocity = ComponentVelocity;
+    NewComponent->Tag = Tag;
     return NewComponent;
 }
 
@@ -251,4 +252,9 @@ void USceneComponent::SetupAttachment(USceneComponent* InParent)
         // TODO: .AddUnique의 실행 위치를 RegisterComponent로 바꾸거나 해야할 듯
         InParent->AttachChildren.AddUnique(this);
     }
+}
+
+void USceneComponent::DestroyOwner()
+{
+    GetOwner()->Destroy();
 }

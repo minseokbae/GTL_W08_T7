@@ -114,6 +114,8 @@ private:
 
     FString LuaScriptPath;
 
+    FString Tag;
+
 #if 1 // TODO: WITH_EDITOR 추가
 public:
     /** Actor의 기본 Label을 가져옵니다. */
@@ -134,6 +136,10 @@ public:
     FString GetLuaScriptPath() { return LuaScriptPath; }
 
     void SetLuaScriptPath(FString FilePath);
+
+    void SetActorTag(const FString& NewTag);
+
+    FString GetActorTag();
 
 private:
     /** 에디터상에 보이는 Actor의 이름 */

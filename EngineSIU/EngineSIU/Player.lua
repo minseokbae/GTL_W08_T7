@@ -7,23 +7,28 @@ function EndPlay()
 end
 
 function OnOverlap(overlapObj)
-    --충돌 처리 overlapObj는 충돌한 액터의 루트 컴포넌트를 가리킴\
+    --충돌 처리 overlapObj는 충돌한 액터의 루트 컴포넌트를 가리킴
+    print(overlapObj.Tag)
     local repulsion = Vector.new(0,0,0)
     if obj.Velocity.X>0 then
-        repulsion = Vector.new(-1,0,0)
+        repulsion = Vector.new(-0.7,0,0)
     elseif obj.Velocity.X<0 then
-        repulsion = Vector.new(1,0,0)
+        repulsion = Vector.new(0.7,0,0)
     end
     if obj.Velocity.Y>0 then
-        repulsion = Vector.new(0,-1,0)
+        repulsion = Vector.new(0,-0.7,0)
     elseif obj.Velocity.Y<0 then
-        repulsion = Vector.new(0,1,0)
+        repulsion = Vector.new(0,0.7,0)
     end
     obj.Location = obj.Location + repulsion
 end
 
 function OnEndOverlap(overlapObj)
     --충돌 끝 처리 overlapObj는 충돌한 액터의 루트 컴포넌트를 가리킴
+    print(overlapObj.Tag)
+    if overlapObj.Tag == String.new("Coin") then
+        print("Overlap Coin")
+    end
 end
 
 function Tick(dt)

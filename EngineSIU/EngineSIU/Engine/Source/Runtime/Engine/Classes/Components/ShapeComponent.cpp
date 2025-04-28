@@ -9,6 +9,7 @@ UShapeComponent::UShapeComponent()
 
 UShapeComponent::~UShapeComponent()
 {
+    
 }
 
 void UShapeComponent::BeginPlay()

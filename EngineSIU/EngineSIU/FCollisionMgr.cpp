@@ -137,6 +137,9 @@ bool FCollisionMgr::IsOverlapping(UShapeComponent* CompA, UShapeComponent* CompB
         return false;
     }
 
+    if (ShapeA->GetWorld() != ShapeB->GetWorld())
+        return false;
+
     if (auto* SphereA = Cast<USphereComponent>(CompA))
     {
         //if (auto* CapsuleB = Cast<UCapsuleComponent>(CompB))
