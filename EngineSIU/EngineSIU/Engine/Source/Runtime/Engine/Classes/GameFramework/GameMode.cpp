@@ -40,6 +40,8 @@ void AGameMode::StartGame()
 void AGameMode::GameOver()
 {
     //TODO : GameOver UI 띄우기 
+    bGameOver = true;
+    UE_LOG(ELogLevel::Display, "GameOver");
 }
 
 void AGameMode::Win()

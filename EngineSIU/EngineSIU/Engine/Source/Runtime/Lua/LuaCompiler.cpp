@@ -42,6 +42,10 @@ FLuaCompiler::FLuaCompiler()
         AddScore(Score);
         });
 
+    Lua.set_function("GameOver", [this]() {
+        GameOver();
+        });
+
     Input = Lua.create_table();
     Lua["Input"] = Input;
 
@@ -219,4 +223,11 @@ void FLuaCompiler::AddScore(float score)
     UEditorEngine* Engine = Cast<UEditorEngine>(GEngine);
     AGameMode* GameMode = Engine->ActiveWorld->GetGameMode();
     GameMode->AddScore(score);
+}
+
+void FLuaCompiler::GameOver()
+{
+    UEditorEngine* Engine = Cast<UEditorEngine>(GEngine);
+    AGameMode* GameMode = Engine->ActiveWorld->GetGameMode();
+    GameMode->GameOver();
 }

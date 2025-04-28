@@ -12,6 +12,9 @@ function OnOverlap(overlapObj)
     if (overlapObj.Tag:Equals("Coin")) then
         PlaySound("score", 1.0, false) -- AddScore
         AddScore(1)
+    elseif overlapObj.Tag:Equals("Ghost") then
+        print("GameOver")
+        GameOver()
     else
         local repulsion = Vector.new(0,0,0)
         obj.Location = obj.Location - obj.Velocity * 5
