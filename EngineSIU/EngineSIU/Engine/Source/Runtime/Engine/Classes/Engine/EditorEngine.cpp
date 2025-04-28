@@ -11,6 +11,7 @@
 #include "Components/Light/DirectionalLightComponent.h"
 #include "GameFramework/PlayerController.h"
 #include "GameInstance.h"
+#include "WindowsCursor.h"
 
 #include "Engine/Source/Runtime/Game/Data/MapManager.h"
 #include "Engine/Source/Runtime/Game/Sound/SoundManager.h"
@@ -46,9 +47,7 @@ void UEditorEngine::Init()
         assert(AssetManager);
         AssetManager->InitAssetManager();
     }
-#pragma region GameMode
-    GameMode = FObjectFactory::ConstructObject<AGameMode>(this);
-#pragma endregion
+
 
     if (MapManager == nullptr)
     {
@@ -132,11 +131,12 @@ void UEditorEngine::Input()
         {
             if (bF8Clicked == false)
             {
+                
                 bF8Clicked = true;
                 if (ActiveWorld->WorldType == EWorldType::PIE)
                 {
                     if (CurrentPlayer == EditorPlayer)
-                        CurrentPlayer = PlayerController;
+                        CurrentPlayer = GameInstance->GetLocalPlayer()->GetPlayerController();
                     else
                     {
                         CurrentPlayer = EditorPlayer;
@@ -165,26 +165,13 @@ void UEditorEngine::StartPIE()
 
     PIEWorldContext.SetCurrentWorld(PIEWorld);
     ActiveWorld = PIEWorld;
+    InitGame();
     
     PIEWorld->BeginPlay();
     // 여기서 Actor들의 BeginPlay를 해줄지 안에서 해줄 지 고민.
     WorldList.Add(GetWorldContextFromWorld(PIEWorld));
 
-    TArray<AActor*> Actors = PIEWorld->GetActiveLevel()->Actors;
-    for (auto iter = Actors.begin(); iter != Actors.end(); iter++)
-    {
-        if (Cast<ADefaultPawn>(*iter))
-        {
-            UE_LOG(ELogLevel::Error, TEXT("Actor Test"));
-            APawn* Pawn = Cast<APawn>(*iter);
-            APlayerController* Controller = PIEWorld->SpawnActor<APlayerController>();
-            Pawn->SetPossessedController(Controller);
-            Controller->AttachtoPawn(Pawn);
-            PlayerController = Controller;
-            CurrentPlayer = PlayerController;
-            break;
-        }
-    }
+    CurrentPlayer = GameInstance->GetLocalPlayer()->GetPlayerController();
 }
 
 void UEditorEngine::EndPIE()
