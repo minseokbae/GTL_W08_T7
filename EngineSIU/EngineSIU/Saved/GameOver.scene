@@ -162,7 +162,7 @@
                     }
                 }
             ],
-            "LuaScriptPath": "",
+            "LuaScriptPath": "Loser.lua",
             "RootComponentID": "StaticMeshComponent_0"
         },
         {

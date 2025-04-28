@@ -47,6 +47,11 @@ public:
         FMOD::System_Create(&FmodSystem);
         FmodSystem->init(512, FMOD_INIT_NORMAL, nullptr);
         LoadSound("piano", "Assets/Sounds/piano_loop.wav");
+
+        LoadSound("score", "Assets/Sounds/mixkit-arcade-bonus-alert-767.wav");
+        LoadSound("lose", "Assets/Sounds/mixkit-player-losing-or-failing-2042.wav");
+        //LoadSound("lose", "Assets/Sounds/mixkit-arcade-retro-game-over-213.wav");
+        LoadSound("win", "Assets/Sounds/mixkit-video-game-win-2016.wav");
     }
 
     bool LoadSound(const std::string& Name, const std::string& FilePath)
