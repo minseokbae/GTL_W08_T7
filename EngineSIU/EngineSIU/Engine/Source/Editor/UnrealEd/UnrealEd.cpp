@@ -23,7 +23,7 @@ void UnrealEd::Initialize()
 
 void UnrealEd::Render() const
 {
-    for (const auto& Panel : Panels)
+    for (const auto& Panel : Panels) 
     {
         Panel.Value->Render();
     }

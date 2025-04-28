@@ -518,6 +518,8 @@ void ControlEditorPanel::CreatePIEButton(ImVec2 ButtonSize, ImFont* IconFont) co
     {
         UE_LOG(ELogLevel::Display, TEXT("PIE Button Clicked"));
         USoundManager::Get().InitSoundManager();
+        Engine->NewWorld();
+        Engine->LoadWorld("Saved/MainMenu.scene");
         Engine->StartPIE();
     }
 

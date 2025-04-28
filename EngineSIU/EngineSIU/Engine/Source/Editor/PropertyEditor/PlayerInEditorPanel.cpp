@@ -2,42 +2,120 @@
 
 #include "Engine/EditorEngine.h"
 #include "World/World.h"
-enum class GameState { MainMenu, Playing, GameOver };
+#include "Engine/Classes/Engine/GameInstance.h"
+
+enum class GameState { MainMenu, Playing, PauseMenu, GameOver };
 GameState gameState = GameState::MainMenu;
 
 void PlayerInEditorPanel::Render()
 {
-    /* Pre Setup */
     ImGuiIO& io = ImGui::GetIO();
+    UEditorEngine* Engine = Cast<UEditorEngine>(GEngine);
 
-    if (gameState == GameState::MainMenu) {
-        ImGui::Begin("게임 메뉴", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
-
-
-        if (ImGui::Button("게임 시작")) {
-            // 게임 시작 로직
-            gameState = GameState::Playing;
-            if (UEditorEngine* EditorEngine = Cast<UEditorEngine>(GEngine))
-            {
-                EditorEngine->NewWorld();
-                EditorEngine->LoadWorld("Saved/FINAL2.scene");
-                EditorEngine->ActiveWorld->BeginPlay();
-            }
-            // 초기화 등 필요한 코드
+    // 게임 중 ESC로 일시정지 메뉴(PauseMenu) 띄우기
+    if (gameState == GameState::Playing && (GetAsyncKeyState(VK_ESCAPE) & 0x1)) {
+        gameState = GameState::PauseMenu;
+        if (Engine->GetCurrentController() == Engine->GetEditorPlayer())
+            Engine->SetCurrentController(Engine->GetGameInstance()->GetLocalPlayer()->GetPlayerController());
+        else
+        {
+            Engine->SetCurrentController(Engine->GetEditorPlayer());
         }
-        if (ImGui::Button("처음으로 돌아가기")) {
-            // 메인 메뉴로 복귀
-            // 필요한 상태 초기화
+    }
+
+    // PauseMenu ESC로 닫기
+    if (gameState == GameState::PauseMenu && (GetAsyncKeyState(VK_ESCAPE) & 0x1)) {
+        gameState = GameState::Playing;
+        if (Engine->GetCurrentController() == Engine->GetEditorPlayer())
+            Engine->SetCurrentController(Engine->GetGameInstance()->GetLocalPlayer()->GetPlayerController());
+        else
+        {
+            Engine->SetCurrentController(Engine->GetEditorPlayer());
+        }
+    }
+
+    // PauseMenu
+    if (gameState == GameState::PauseMenu) {
+        ImVec2 windowSize(300, 120);
+        ImVec2 center(io.DisplaySize.x * 0.5f, io.DisplaySize.y * 0.5f);
+        ImGui::SetNextWindowPos(ImVec2(center.x - windowSize.x * 0.5f, center.y - windowSize.y * 0.5f), ImGuiCond_Always);
+        ImGui::SetNextWindowSize(windowSize, ImGuiCond_Always);
+
+        ImGuiWindowFlags flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize |
+            ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse |
+            ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoBackground;
+
+        ImGui::Begin("PauseMenu", nullptr, flags);
+
+        ImGui::Spacing(); ImGui::Spacing();
+
+        float buttonWidth = 200.0f;
+        float avail = ImGui::GetContentRegionAvail().x;
+        float offset = (avail - buttonWidth) * 0.5f;
+
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX() + offset);
+        if (ImGui::Button("재시작", ImVec2(buttonWidth, 0))) {
+            if (Engine) {
+                Engine->EndPIE();
+                Engine->NewWorld();
+                Engine->LoadWorld("Saved/FINAL2.scene");
+                Engine->StartPIE();
+                gameState = GameState::Playing;
+            }
+        }
+
+        ImGui::Spacing();
+
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX() + offset);
+        if (ImGui::Button("처음으로 돌아가기", ImVec2(buttonWidth, 0))) {
+            if (Engine) {
+                Engine->EndPIE();
+                Engine->NewWorld();
+                Engine->LoadWorld("Saved/MainMenu.scene");
+                Engine->StartPIE();
+                gameState = GameState::MainMenu;
+            }
+        }
+
+        ImGui::End();
+        return; // PauseMenu가 뜨면 아래 UI는 그리지 않음
+    }
+
+    // 메인 메뉴
+    if (gameState == GameState::MainMenu) {
+        ImVec2 windowSize(300, 120);
+        ImVec2 center(io.DisplaySize.x * 0.5f, io.DisplaySize.y * 0.5f);
+        ImGui::SetNextWindowPos(ImVec2(center.x - windowSize.x * 0.5f, center.y - windowSize.y * 0.5f), ImGuiCond_Always);
+        ImGui::SetNextWindowSize(windowSize, ImGuiCond_Always);
+
+        ImGuiWindowFlags flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize |
+            ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse |
+            ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoBackground;
+
+        ImGui::Begin("게임 메뉴", nullptr, flags);
+
+        ImGui::Spacing(); ImGui::Spacing();
+
+        float buttonWidth = 200.0f;
+        float avail = ImGui::GetContentRegionAvail().x;
+        float offset = (avail - buttonWidth) * 0.5f;
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX() + offset);
+
+        if (ImGui::Button("게임 시작", ImVec2(buttonWidth, 0))) {
+            if (Engine) {
+                Engine->EndPIE();
+                Engine->NewWorld();
+                Engine->LoadWorld("Saved/FINAL2.scene");
+                Engine->StartPIE();
+                gameState = GameState::Playing;
+            }
         }
         ImGui::End();
     }
+    // 인게임 HUD
     else if (gameState == GameState::Playing) {
-        // 인게임 HUD, 점수, 체력 등 표시
         ImGui::Begin("게임 진행 중", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
         ImGui::Text("여기에 점수, 체력 등 표시");
-        if (ImGui::Button("처음으로 돌아가기")) {
-            gameState = GameState::MainMenu;
-        }
         ImGui::End();
     }
 }
