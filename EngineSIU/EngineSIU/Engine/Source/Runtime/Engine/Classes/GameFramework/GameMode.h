@@ -17,10 +17,10 @@ private:
     UClass* Controller = APlayerController::StaticClass();
     UClass* DefaultPawn = ADefaultPawn::StaticClass();
 
+    float Score =0.0f;
 public:
     UClass* GetController() { return Controller; }
     void SetControlloer(UClass* NewController) { Controller = NewController; }
     UClass* GetDefaultPawn() { return DefaultPawn; }
     void SetDefaultPawn(UClass* pawn) { DefaultPawn = pawn; }
-    
 };
