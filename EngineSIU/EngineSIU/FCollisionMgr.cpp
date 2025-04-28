@@ -231,9 +231,9 @@ namespace CollisionChecks
     bool CheckSphereSphereOverlap(const USphereComponent* SphereA, const USphereComponent* SphereB)
     {
         FVector PosA = SphereA->GetWorldLocation();
-        float RadiusA = SphereA->GetScaledSphereRadius();
+        float RadiusA = SphereA->GetUnscaledSphereRadius();
         FVector PosB = SphereB->GetWorldLocation();
-        float RadiusB = SphereB->GetScaledSphereRadius();
+        float RadiusB = SphereB->GetUnscaledSphereRadius();
         float DistSq = FVector::DistanceSquared(PosA, PosB);
         float RadiiSum = RadiusA + RadiusB;
 
@@ -321,11 +321,11 @@ namespace CollisionChecks
         }
 
         const FVector SphereCenter = Sphere->GetWorldLocation();
-        const float SphereRadius = Sphere->GetScaledSphereRadius();
+        const float SphereRadius = Sphere->GetUnscaledSphereRadius();
         const float SphereRadiusSq = SphereRadius * SphereRadius;
 
         const FVector BoxCenter = Box->GetWorldLocation();
-        const FVector BoxExtent = Box->GetScaledBoxExtent();
+        const FVector BoxExtent = Box->GetUnscaledBoxExtent();
         const FMatrix BoxRotMat = Box->GetRotationMatrix(); 
 
         const FVector SphereCenterRelativeToBox = SphereCenter - BoxCenter;
