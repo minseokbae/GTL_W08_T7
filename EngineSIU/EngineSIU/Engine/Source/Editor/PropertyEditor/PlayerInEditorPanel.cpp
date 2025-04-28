@@ -3,6 +3,7 @@
 #include "Engine/EditorEngine.h"
 #include "World/World.h"
 #include "Engine/Classes/Engine/GameInstance.h"
+#include "Game/Sound/SoundManager.h"
 
 enum class GameState { MainMenu, Playing, PauseMenu, GameOver };
 GameState gameState = GameState::MainMenu;
@@ -16,7 +17,9 @@ void PlayerInEditorPanel::Render()
     if (GameMode->bGameOver)
     {
            if (Engine) {
+            USoundManager::Get().ReleaseAll();
             Engine->EndPIE();
+            USoundManager::Get().InitSoundManager();
             Engine->NewWorld();
             Engine->LoadWorld("Saved/GameOver.scene");
             Engine->StartPIE();
@@ -26,7 +29,9 @@ void PlayerInEditorPanel::Render()
     else if (GameMode->bWin)
     {
         if (Engine) {
+            USoundManager::Get().ReleaseAll();
             Engine->EndPIE();
+            USoundManager::Get().InitSoundManager();
             Engine->NewWorld();
             Engine->LoadWorld("Saved/GameClear.scene");
             Engine->StartPIE();
@@ -78,7 +83,9 @@ void PlayerInEditorPanel::Render()
         ImGui::SetCursorPosX(ImGui::GetCursorPosX() + offset);
         if (ImGui::Button("재시작", ImVec2(buttonWidth, 0))) {
             if (Engine) {
+                USoundManager::Get().ReleaseAll();
                 Engine->EndPIE();
+                USoundManager::Get().InitSoundManager();
                 Engine->NewWorld();
                 Engine->LoadWorld("Saved/FINAL2.scene");
                 Engine->StartPIE();
@@ -91,7 +98,9 @@ void PlayerInEditorPanel::Render()
         ImGui::SetCursorPosX(ImGui::GetCursorPosX() + offset);
         if (ImGui::Button("처음으로 돌아가기", ImVec2(buttonWidth, 0))) {
             if (Engine) {
+                USoundManager::Get().ReleaseAll();
                 Engine->EndPIE();
+                USoundManager::Get().InitSoundManager();
                 Engine->NewWorld();
                 Engine->LoadWorld("Saved/MainMenu.scene");
                 Engine->StartPIE();
@@ -125,7 +134,9 @@ void PlayerInEditorPanel::Render()
 
         if (ImGui::Button("게임 시작", ImVec2(buttonWidth, 0))) {
             if (Engine) {
+                USoundManager::Get().ReleaseAll();
                 Engine->EndPIE();
+                USoundManager::Get().InitSoundManager();
                 Engine->NewWorld();
                 Engine->LoadWorld("Saved/FINAL2.scene");
                 Engine->StartPIE();

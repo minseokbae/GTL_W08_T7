@@ -162,7 +162,7 @@
                     }
                 }
             ],
-            "LuaScriptPath": "",
+            "LuaScriptPath": "Winner.lua",
             "RootComponentID": "StaticMeshComponent_0"
         },
         {
