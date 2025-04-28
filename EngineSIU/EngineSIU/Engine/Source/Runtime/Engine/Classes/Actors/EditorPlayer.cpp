@@ -1,6 +1,7 @@
 #include "EditorPlayer.h"
 
 #include "UnrealClient.h"
+#include "WindowsCursor.h"
 #include "World/World.h"
 #include "BaseGizmos/GizmoArrowComponent.h"
 #include "BaseGizmos/GizmoCircleComponent.h"
@@ -27,7 +28,7 @@ void AEditorPlayer::Input()
     ImGuiIO& io = ImGui::GetIO();
     if (io.WantCaptureMouse) return;
     if (io.WantCaptureKeyboard) return;
-
+    FWindowsCursor::SetShowMouseCursor(true);
     if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
     {
         if (!bLeftMouseDown)

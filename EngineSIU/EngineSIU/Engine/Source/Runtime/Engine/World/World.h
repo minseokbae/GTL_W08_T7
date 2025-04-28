@@ -5,6 +5,7 @@
 #include "UObject/ObjectMacros.h"
 #include "WorldType.h"
 #include "Level.h"
+#include "GameFramework/GameMode.h"
 
 class FObjectFactory;
 class AActor;
@@ -62,7 +63,7 @@ private:
     FString WorldName = "DefaultWorld";
 
     ULevel* ActiveLevel;
-
+    AGameMode* GameMode = nullptr;
     /** Actor가 Spawn되었고, 아직 BeginPlay가 호출되지 않은 Actor들 */
     TArray<AActor*> PendingBeginPlayActors;
 

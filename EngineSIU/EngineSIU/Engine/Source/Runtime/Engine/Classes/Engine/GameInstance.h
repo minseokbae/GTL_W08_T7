@@ -1,4 +1,6 @@
 ﻿#pragma once
+#include "LocalPlayer.h"
+#include "GameFramework/GameMode.h"
 #include "UObject/Object.h"
 #include "UObject/ObjectMacros.h"
 
@@ -9,4 +11,11 @@ public:
     UGameInstance();
 
     void Init();
+    void StartGameInstance();
+private:
+    ULocalPlayer* CurrentPlayer;
+    AGameMode* GameMode;
+public:
+    ULocalPlayer* GetLocalPlayer(){ return CurrentPlayer; }
+    
 };
