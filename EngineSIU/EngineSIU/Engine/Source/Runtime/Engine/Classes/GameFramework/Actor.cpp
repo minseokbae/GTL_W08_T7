@@ -171,10 +171,10 @@ UActorComponent* AActor::AddComponent(UClass* InClass, FName InName, bool bTryRo
                     RootComponent = SceneComp;
                 }
             // TODO: 나중에 RegisterComponent() 생기면 주석 해제
-                // else
-                // {
-                //     SceneComp->SetupAttachment(RootComponent);
-                // }
+                //else
+                //{
+                //    SceneComp->SetupAttachment(RootComponent);
+                //}
             }
         }
 

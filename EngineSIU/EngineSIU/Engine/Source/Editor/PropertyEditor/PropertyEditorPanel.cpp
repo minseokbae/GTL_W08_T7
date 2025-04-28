@@ -100,6 +100,16 @@ void PropertyEditorPanel::Render()
             }
             ImGui::TreePop(); // 트리 닫기
         }
+
+        FString ActorTag = PickedActor->GetActorTag();
+        char Tag[256];
+        strcpy_s(Tag, *ActorTag);
+        if (ImGui::InputText("##Actor Tag", Tag, sizeof(Tag)))
+        {
+            PickedActor->SetActorTag(Tag);
+        }
+        ImGui::SameLine();
+        ImGui::Text("Actor Tag");
         ImGui::PopStyleColor();
     }
 
@@ -159,6 +169,7 @@ void PropertyEditorPanel::Render()
         }
         else
         {
+            PickedActor->SetLuaBindState(false);
             if (ImGui::Button("Create Script"))
             {
                 // 템플릿 복사

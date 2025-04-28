@@ -54,6 +54,8 @@ void UWorld::Tick(float DeltaTime)
 
 void UWorld::BeginPlay()
 {
+    GameMode = SpawnActor<AGameMode>();
+    GameMode->StartGame();
     for (AActor* Actor : ActiveLevel->Actors)
     {
         if (Actor->GetWorld() == this)

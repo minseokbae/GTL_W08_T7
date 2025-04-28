@@ -23,15 +23,6 @@ FLuaInstance::FLuaInstance(sol::state& Lua, USceneComponent* Comp, FString FileP
     // Load script
     ScriptFile = *FilePath;
 
-    Lua.script_file(ScriptFile, Env);
-
-    TickFunc = Env["Tick"];
-    BeginPlayFunc = Env["BeginPlay"];
-    EndPlayFunc = Env["EndPlay"];
-    OnOverlapFunc = Env["OnOverlap"];
-    OnEndOverlapFunc = Env["OnEndOverlap"];
-    LastWriteTime = std::filesystem::last_write_time(ScriptFile);
-
     const auto& MapData = UMapManager::Get().GetMapData();
     sol::table luaMap = Lua.create_table();
     for (int y = 0; y < MapData.Num(); ++y)
@@ -52,6 +43,15 @@ FLuaInstance::FLuaInstance(sol::state& Lua, USceneComponent* Comp, FString FileP
     Lua.set_function("SetVolume", [](const std::string& name, float volume) {
         USoundManager::Get().SetVolume(name, volume);
         });
+
+    Lua.script_file(ScriptFile, Env);
+
+    TickFunc = Env["Tick"];
+    BeginPlayFunc = Env["BeginPlay"];
+    EndPlayFunc = Env["EndPlay"];
+    OnOverlapFunc = Env["OnOverlap"];
+    OnEndOverlapFunc = Env["OnEndOverlap"];
+    LastWriteTime = std::filesystem::last_write_time(ScriptFile);
 }
 
 void FLuaInstance::Tick(float DeltaTime)
@@ -128,7 +128,10 @@ void FLuaInstance::OnComponentBeginOverlap(UShapeComponent* OverlappedComponent,
     {
         if (OnOverlapFunc.valid())
         {
-            OnOverlapFunc(OtherActor->GetRootComponent());
+            if (OtherActor == BindedActor)
+                OnOverlapFunc(OverlappedComponent->GetOwner()->GetRootComponent());
+            else
+                OnOverlapFunc(OtherActor->GetRootComponent());
         }
     }
 }
@@ -139,7 +142,10 @@ void FLuaInstance::OnComponentEndOverlap(UShapeComponent* OverlappedComponent, A
     {
         if (OnEndOverlapFunc.valid())
         {
-            OnEndOverlapFunc(OtherActor->GetRootComponent());
+            if (OtherActor == BindedActor)
+                OnEndOverlapFunc(OverlappedComponent->GetOwner()->GetRootComponent());
+            else
+                OnEndOverlapFunc(OtherActor->GetRootComponent());
         }
     }
 }

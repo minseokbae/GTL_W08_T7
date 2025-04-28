@@ -57,11 +57,10 @@ public:
 public:
     AEditorPlayer* GetEditorPlayer() const;
     AController* GetCurrentController() {return CurrentPlayer;}
+    UGameInstance* GetGameInstance() {return GameInstance;}
 private:
     AEditorPlayer* EditorPlayer = nullptr;
     AController* CurrentPlayer = nullptr;
-    APlayerController* PlayerController = nullptr;
-    AGameMode* GameMode = nullptr;
     UGameInstance* GameInstance = nullptr;
 };
 

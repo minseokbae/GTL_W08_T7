@@ -1,6 +1,7 @@
 ﻿#include "PlayerController.h"
 
 #include "Pawn.h"
+#include "WindowsCursor.h"
 #include "Camera/CameraComponent.h"
 #include "Engine/EditorEngine.h"
 #include "Engine/Engine.h"
@@ -20,7 +21,7 @@ void APlayerController::Tick(float DeltaTime)
 void APlayerController::Input()
 {
     AController::Input();
-
+    FWindowsCursor::SetShowMouseCursor(false);
     if (GetAsyncKeyState('W') & 0x8000)
     {
         Pawn->SetActorLocation(Pawn->GetActorLocation() + Pawn->GetActorForwardVector() * 0.1f);
@@ -40,40 +41,17 @@ void APlayerController::Input()
     POINT cur;
     GetCursorPos(&cur);
     
-    // 4) 중앙 대비 델타 계산
     float dx = (cur.x - MouseCenterPos.x) * MouseSens;
     float dy = (cur.y - MouseCenterPos.y) * MouseSens;
-
-    // 5) 커서 중앙으로 리셋 (끝에 화면 경계 문제 방지)
+    
     SetCursorPos(MouseCenterPos.x, MouseCenterPos.y);
-
-    // ─────────────────────────────────────────────────
-    // 6) 컨트롤러 회전 업데이트
+    
     FRotator ControlRot = Pawn->GetActorRotation();
     ControlRot.Yaw   = std::fmod(ControlRot.Yaw + dx, 360.f);
     // ControlRot.Pitch = FMath::Clamp(ControlRot.Pitch + dy, -45.f, +45.f);
-    // TSet<UActorComponent*> Components = Pawn->GetComponents();
-    // for (auto Component : Components)
-    // {
-    //     UCameraComponent* CamComp = dynamic_cast<UCameraComponent*>(Component);
-    //     if (CamComp)
-    //     {
-    //         FRotator CamRot =CamComp->GetRelativeRotation();
-    //         // CamRot.Yaw += std::fmod(CamRot.Yaw + dx, 360.f);;
-    //         // CamRot.Pitch = FMath::Clamp(CamRot.Pitch + dy, -45.f, +45.f);
-    //         CamComp->SetRelativeRotation(CamRot);
-    //     }
-    // }
-    // ControlRot.Pitch = FMath::Clamp(ControlRot.Pitch + dy, -45.f, +45.f);
-    Pawn->GetRootComponent()->SetRelativeRotation(ControlRot);
 
-    // 7) 폰은 Yaw만 따라 돌리기 (3인칭용)
-    // if (APawn* P = GetPawn())
-    // {
-    //     FRotator PawnRot = P->GetActorRotation();
-    //     PawnRot.Yaw = ControlRot.Yaw;
-    //     P->SetActorRotation(PawnRot);
-    // }
+    Pawn->GetRootComponent()->SetRelativeRotation(ControlRot);
+    
 }
 
 void APlayerController::BeginPlay()
@@ -85,8 +63,7 @@ void APlayerController::BeginPlay()
 
 void APlayerController::InitMouseLook()
 {
-    // ShowCursor(false);
-    SetCursor(NULL);
+    FWindowsCursor::SetShowMouseCursor(false);
 
     // 2) 화면 중앙 계산 (클라이언트 영역)
     

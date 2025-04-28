@@ -133,6 +133,9 @@ bool FCollisionMgr::IsOverlapping(UShapeComponent* CompA, UShapeComponent* CompB
         return false;
     }
 
+    if (ShapeA->GetWorld() != ShapeB->GetWorld())
+        return false;
+
     if (auto* SphereA = Cast<USphereComponent>(CompA))
     {
         //if (auto* CapsuleB = Cast<UCapsuleComponent>(CompB))
@@ -218,11 +221,11 @@ namespace CollisionChecks
     {
         if (!BoxA || !BoxB) return false; // Null check
 
-        FVector ExtentA = BoxA->GetScaledBoxExtent();
+        FVector ExtentA = BoxA->GetUnscaledBoxExtent();
         FVector CenterA = BoxA->GetWorldLocation();
         FMatrix RotMatA = BoxA->GetRotationMatrix();
 
-        FVector ExtentB = BoxB->GetScaledBoxExtent();
+        FVector ExtentB = BoxB->GetUnscaledBoxExtent();
         FVector CenterB = BoxB->GetWorldLocation();
         FMatrix RotMatB = BoxB->GetRotationMatrix();
         // --- 분리 축 정리 (Separating Axis Theorem) ---
@@ -258,7 +261,7 @@ namespace CollisionChecks
         {
             for (int j = 0; j < 3; ++j)
             {
-                FVector CrossProduct = FVector::CrossProduct(AxesToTest[i], AxesToTest[j]);
+                FVector CrossProduct = FVector::CrossProduct(AxesA[i], AxesB[j]);
                 // 외적이 0벡터에 가까우면 (두 모서리가 평행하면) 유효한 축이 아님
                 if (!CrossProduct.IsNearlyZero())
                 {

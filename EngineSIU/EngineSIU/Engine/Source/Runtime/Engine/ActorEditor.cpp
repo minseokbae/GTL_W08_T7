@@ -53,4 +53,18 @@ void AActor::SetLuaScriptPath(FString FilePath)
     LuaScriptPath = FilePath;
 }
 
+void AActor::SetActorTag(const FString& NewTag)
+{
+    if (!RootComponent)
+        return;
+    RootComponent->SetTag(NewTag);
+}
+
+FString AActor::GetActorTag()
+{
+    if (!RootComponent)
+        return "";
+    return RootComponent->GetTag();
+}
+
 #endif

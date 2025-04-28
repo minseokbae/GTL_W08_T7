@@ -11,6 +11,8 @@ public:
     UShapeComponent();
     ~UShapeComponent();
 
+    virtual UObject* Duplicate(UObject* InOuter) override;
+
     virtual void BeginPlay() override;
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason);
 

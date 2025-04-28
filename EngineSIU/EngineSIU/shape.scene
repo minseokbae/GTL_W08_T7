@@ -1,0 +1,56 @@
+{
+    "Actors": [
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_125",
+            "ActorLabel": "OBJ_SPHERE_125",
+            "Components": [
+                {
+                    "AttachParentID": "SphereComponent",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "SphereComponent",
+                    "Properties": {
+                        "AABB_max": "X=1.000 Y=1.000 Z=1.000",
+                        "AABB_min": "X=-1.000 Y=-1.000 Z=-1.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "SphereComponent",
+                        "ComponentOwner": "AActor_125",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=4.703",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "StaticMeshPath": "Contents/Sphere.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                },
+                {
+                    "AttachParentID": "SphereComponent",
+                    "ComponentClass": "USphereComponent",
+                    "ComponentID": "USphereComponent_0",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "ComponentClass": "USphereComponent",
+                        "ComponentName": "USphereComponent_0",
+                        "ComponentOwner": "AActor_125",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": ""
+                    }
+                }
+            ],
+            "LuaScriptPath": "",
+            "RootComponentID": "SphereComponent"
+        }
+    ],
+    "NextUUID": 0,
+    "Version": 1
+}

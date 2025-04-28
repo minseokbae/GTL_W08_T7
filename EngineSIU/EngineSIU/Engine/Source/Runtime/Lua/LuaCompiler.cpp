@@ -9,11 +9,13 @@ FLuaCompiler::FLuaCompiler()
     Lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::table, sol::lib::string);
 
     Lua.new_usertype<USceneComponent>("GameObject",
-        "UUID", &USceneComponent::GetUUID,
+        "UUID", sol::property(&USceneComponent::GetUUID),
         "Location", sol::property(&USceneComponent::GetRelativeLocation, &USceneComponent::SetRelativeLocation),
         "Rotation", sol::property(&USceneComponent::GetRelativeRotation, &USceneComponent::SetRelativeRotation),
         "Scale", sol::property(&USceneComponent::GetRelativeScale3D, &USceneComponent::SetRelativeScale3D),
-        "Velocity", &USceneComponent::ComponentVelocity
+        "Velocity", &USceneComponent::ComponentVelocity,
+        "Tag", sol::property(&USceneComponent::GetTag),
+        "Destroy", &USceneComponent::DestroyOwner
     );
 
     Lua.set_function("print", [&Lua = this->Lua](sol::variadic_args args) {
@@ -120,6 +122,26 @@ FLuaCompiler::FLuaCompiler()
         "Equals", &FRotator::Equals,
         "Add", &FRotator::Add
         );
+
+    //FString 바인딩
+    Lua.new_usertype<FString>("String",
+        sol::constructors<
+        FString(),                      // 기본 생성자
+        FString(const char*),            // const char* 생성자
+        FString(const std::string&)      // std::string 생성자
+        >(),
+
+        "ToAnsiString", & FString::ToAnsiString,   // Lua에서 문자열 변환할 때
+        "Len", & FString::Len,
+        "IsEmpty", & FString::IsEmpty,
+        sol::meta_function::to_string, [](const FString& str) {
+            return str.ToAnsiString();            // Lua에서 tostring() 호출할 때
+        },
+        sol::meta_function::equal_to, [](const FString& a, const FString& b) {
+            return a.Equals(b, ESearchCase::IgnoreCase);  // 또는 CaseSensitive
+        },
+        "Equals", &FString::LuaEquals
+    );
 }
 
 void FLuaCompiler::Bind(AActor* Actor)
