@@ -1,11 +1,22 @@
 math.randomseed(os.time())
 local tileSize = 5
 
+local dirToYaw = {
+    ["1,0"]   = 180,
+    ["0,1"]   = 270,
+    ["-1,0"]  = 0,
+    ["0,-1"]  = 90
+}
+
 if not ghost then
     ghost = {
         dir = {dx=1, dy=0},
-        speed = 20
+        speed = 5
     }
+end
+
+local function getYawByDir(dir)
+    return dirToYaw[tostring(dir.dx)..","..tostring(dir.dy)] or 0
 end
 
 function chooseRandomDirection(x, y, prevDir)
@@ -57,6 +68,9 @@ function isIntersection(x, y)
     return count >= 3
 end
 
+--회전
+obj.Rotation = Vector.new(0, getYawByDir(ghost.dir), 0)
+
 function Tick(dt)
     if obj == nil then
         print("[Lua] obj is nil")
@@ -83,8 +97,12 @@ function Tick(dt)
         local nextGridY = curGridY + ghost.dir.dy
         if nextGridX < 1 or nextGridX > mapWidth or nextGridY < 1 or nextGridY > mapHeight or gameMap[nextGridY][nextGridX] == 1 then
             ghost.dir = chooseRandomDirection(curGridX, curGridY, ghost.dir)
+            --회전
+            obj.Rotation = Vector.new(0, getYawByDir(ghost.dir), 0)
         elseif isIntersection(curGridX, curGridY) and math.random() < 0.5 then -- 교차로에서 방향 전환할 확률
             ghost.dir = chooseRandomDirection(curGridX, curGridY, ghost.dir)
+            --회전
+            obj.Rotation = Vector.new(0, getYawByDir(ghost.dir), 0)
         end
         -- 중심에 정확히 스냅 (한 번만!)
         obj.Location = Vector.new(centerX, centerY, obj.Location.Z)
