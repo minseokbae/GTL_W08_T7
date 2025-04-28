@@ -288,7 +288,8 @@ void ControlEditorPanel::CreateModifyButton(ImVec2 ButtonSize, ImFont* IconFont)
             { .label= "Particle",  .obj= OBJ_PARTICLE },
             { .label= "Text",      .obj= OBJ_TEXT },
             { .label= "Fireball",  .obj = OBJ_FIREBALL},
-            { .label= "Fog",       .obj= OBJ_FOG }
+            { .label= "Fog",       .obj= OBJ_FOG },
+{ .label= "DefaultPawn",       .obj= OBJ_DefaultPawn }
         };
 
         for (const auto& primitive : primitives)
@@ -376,6 +377,12 @@ void ControlEditorPanel::CreateModifyButton(ImVec2 ButtonSize, ImFont* IconFont)
                     SpawnedActor->SetActorLabel(TEXT("OBJ_FOG"));
                     break;
                 }
+                case OBJ_DefaultPawn:
+                    {
+                        SpawnedActor = World->SpawnActor<ADefaultPawn>();
+                        SpawnedActor->SetActorLabel(TEXT("DefaultPawn"));
+                        break;
+                    }
                 case OBJ_TRIANGLE:
                 case OBJ_CAMERA:
                 case OBJ_PLAYER:

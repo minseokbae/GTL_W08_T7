@@ -13,17 +13,8 @@ function OnOverlap(overlapObj)
         AddScore(1)
     else
         local repulsion = Vector.new(0,0,0)
-        if obj.Velocity.X>0 then
-            repulsion = repulsion + Vector.new(-0.7,0,0)
-        elseif obj.Velocity.X<0 then
-            repulsion = repulsion + Vector.new(0.7,0,0)
-        end
-        if obj.Velocity.Y>0 then
-            repulsion = repulsion + Vector.new(0,-0.7,0)
-        elseif obj.Velocity.Y<0 then
-            repulsion = repulsion + Vector.new(0,0.7,0)
-        end
-        obj.Location = obj.Location + repulsion
+        obj.Location = obj.Location - obj.Velocity * 5
+        print(obj.Velocity)
     end
 end
 

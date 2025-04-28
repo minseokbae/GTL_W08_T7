@@ -25,18 +25,24 @@ void APlayerController::Input()
     if (GetAsyncKeyState('W') & 0x8000)
     {
         Pawn->SetActorLocation(Pawn->GetActorLocation() + Pawn->GetActorForwardVector() * 0.1f);
+        Pawn->GetRootComponent()->ComponentVelocity =Pawn->GetActorForwardVector() * 0.1f;
     }
     if (GetAsyncKeyState('S') & 0x8000)
     {
         Pawn->SetActorLocation(Pawn->GetActorLocation() - Pawn->GetActorForwardVector() * 0.1f);
+        Pawn->GetRootComponent()->ComponentVelocity = -Pawn->GetActorForwardVector() * 0.1f;
+
     }
     if (GetAsyncKeyState('A') & 0x8000)
     {
         Pawn->SetActorLocation(Pawn->GetActorLocation() - Pawn->GetActorRightVector() * 0.1f);
+        Pawn->GetRootComponent()->ComponentVelocity = -Pawn->GetActorRightVector() * 0.1f;
+
     }
     if (GetAsyncKeyState('D') & 0x8000)
     {
         Pawn->SetActorLocation(Pawn->GetActorLocation() + Pawn->GetActorRightVector() * 0.1f);
+        Pawn->GetRootComponent()->ComponentVelocity = Pawn->GetActorRightVector() * 0.1f;
     }
     POINT cur;
     GetCursorPos(&cur);
@@ -51,7 +57,6 @@ void APlayerController::Input()
     // ControlRot.Pitch = FMath::Clamp(ControlRot.Pitch + dy, -45.f, +45.f);
 
     Pawn->GetRootComponent()->SetRelativeRotation(ControlRot);
-    
 }
 
 void APlayerController::BeginPlay()
