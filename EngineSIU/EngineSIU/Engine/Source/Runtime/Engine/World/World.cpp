@@ -35,6 +35,7 @@ UObject* UWorld::Duplicate(UObject* InOuter)
 {
     // TODO: UWorld의 Duplicate는 역할 분리후 만드는것이 좋을듯
     UWorld* NewWorld = Cast<UWorld>(Super::Duplicate(InOuter));
+    NewWorld->WorldName = Cast<UEditorEngine>(InOuter)->EditorWorld->WorldName;
     NewWorld->ActiveLevel = Cast<ULevel>(ActiveLevel->Duplicate(NewWorld));
     NewWorld->ActiveLevel->InitLevel(NewWorld);
     

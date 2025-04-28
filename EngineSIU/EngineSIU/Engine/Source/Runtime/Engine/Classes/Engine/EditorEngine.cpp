@@ -148,6 +148,18 @@ void UEditorEngine::Input()
         {
             bF8Clicked = false; 
         }
+    if (GetAsyncKeyState('L') & 0x8000)
+    {
+        if (bLClicked == false)
+        {
+            bLClicked = true;
+            ActiveWorld->GetGameMode()->RestartGame();
+        }
+    }
+    else
+    {
+        bLClicked = false;
+    }
 }
 
 void UEditorEngine::StartPIE()

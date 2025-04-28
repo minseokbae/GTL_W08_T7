@@ -25,6 +25,8 @@ public:
     virtual void Tick(float DeltaTime) override;
     void Input();
     bool bF8Clicked = false;
+    bool bLClicked = false;
+    
     UWorld* PIEWorld = nullptr;
     UWorld* EditorWorld = nullptr;
 

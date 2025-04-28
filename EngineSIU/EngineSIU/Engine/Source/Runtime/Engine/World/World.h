@@ -60,6 +60,7 @@ public:
     
     FString GetWorldName() const { return WorldName; }
     void SetWorldName(const FString& InWorldName) { WorldName = InWorldName; }
+    AGameMode* GetGameMode() const { return GameMode; }
 private:
     FString WorldName = "DefaultWorld";
 

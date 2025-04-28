@@ -53,8 +53,9 @@ void AGameMode::RestartGame()
     UEditorEngine* EditorEngine = Cast<UEditorEngine>(GEngine);
     if (EditorEngine != nullptr)
     {
-        EditorEngine->EndPIE();
-        EditorEngine->StartPIE();
+        EditorEngine->NewWorld();
+        EditorEngine->LoadWorld(EditorEngine->ActiveWorld->GetWorldName());
+        EditorEngine->ActiveWorld->BeginPlay();
     }
 }
 
