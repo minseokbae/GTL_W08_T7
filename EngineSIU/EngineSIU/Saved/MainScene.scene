@@ -1,0 +1,123 @@
+{
+    "Actors": [
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_120",
+            "ActorLabel": "OBJ_SPHERE_120",
+            "ActorTag": "",
+            "Components": [
+                {
+                    "AttachParentID": "SphereComponent",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "SphereComponent",
+                    "Properties": {
+                        "AABB_max": "X=47.500 Y=47.500 Z=0.250",
+                        "AABB_min": "X=-2.500 Y=-2.500 Z=-0.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "SphereComponent",
+                        "ComponentOwner": "AActor_120",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=5.000 Y=5.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "StaticMeshPath": "Contents/FinalFloor.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                }
+            ],
+            "LuaScriptPath": "",
+            "RootComponentID": "SphereComponent"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_122",
+            "ActorLabel": "OBJ_SPHERE_122",
+            "ActorTag": "",
+            "Components": [
+                {
+                    "AttachParentID": "SphereComponent",
+                    "ComponentClass": "USphereComp",
+                    "ComponentID": "SphereComponent",
+                    "Properties": {
+                        "AABB_max": "X=47.500 Y=47.500 Z=5.500",
+                        "AABB_min": "X=-2.500 Y=-2.500 Z=-0.000",
+                        "ComponentClass": "USphereComp",
+                        "ComponentName": "SphereComponent",
+                        "ComponentOwner": "AActor_122",
+                        "ComponentOwnerClass": "AActor",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=5.000 Y=5.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "StaticMeshPath": "Contents/FinalField.obj",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "USphereComp"
+                    }
+                }
+            ],
+            "LuaScriptPath": "",
+            "RootComponentID": "SphereComponent"
+        },
+        {
+            "ActorClass": "ADirectionalLight",
+            "ActorID": "ADirectionalLight_124",
+            "ActorLabel": "OBJ_DIRECTIONALLGIHT_124",
+            "ActorTag": "",
+            "Components": [
+                {
+                    "AttachParentID": "BillboardComponent",
+                    "ComponentClass": "UDirectionalLightComponent",
+                    "ComponentID": "DirectionalLightComponent",
+                    "Properties": {
+                        "AABB_Max": "X=1.000 Y=1.000 Z=0.100",
+                        "AABB_Min": "X=-1.000 Y=-1.000 Z=-0.100",
+                        "ComponentClass": "UDirectionalLightComponent",
+                        "ComponentName": "DirectionalLightComponent",
+                        "ComponentOwner": "ADirectionalLight_124",
+                        "ComponentOwnerClass": "ADirectionalLight",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "Direction": "X=-0.000 Y=-0.000 Z=-1.000",
+                        "Intensity": "1.500000",
+                        "LightColor": "R=1.000 G=1.000 B=1.000 A=1.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "AttachParentID": "BillboardComponent",
+                    "ComponentClass": "UBillboardComponent",
+                    "ComponentID": "BillboardComponent",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "BufferKey": "Assets/Editor/Icon/DirectionalLight_64x.png",
+                        "ComponentClass": "UBillboardComponent",
+                        "ComponentName": "BillboardComponent",
+                        "ComponentOwner": "ADirectionalLight_124",
+                        "ComponentOwnerClass": "ADirectionalLight",
+                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
+                        "FinalIndexU": "0.000000",
+                        "FinalIndexV": "0.000000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "m_Type": "UBillboardComponent"
+                    }
+                }
+            ],
+            "LuaScriptPath": "",
+            "RootComponentID": "BillboardComponent"
+        }
+    ],
+    "NextUUID": 0,
+    "Version": 1
+}
