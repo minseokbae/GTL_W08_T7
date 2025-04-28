@@ -6,7 +6,7 @@
 
 FLuaCompiler::FLuaCompiler()
 {
-    Lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::table, sol::lib::string);
+    Lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::table, sol::lib::string, sol::lib::os);
 
     Lua.new_usertype<USceneComponent>("GameObject",
         "UUID", sol::property(&USceneComponent::GetUUID),

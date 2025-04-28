@@ -6,9 +6,7 @@
 enum class ETileType : uint8
 {
     Empty = 0,
-    Wall = 1,
-    PlayerStart = 9,
-    GhostStart = 8
+    Wall = 1
 };
 
 struct FMapInfo

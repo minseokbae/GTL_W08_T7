@@ -41,7 +41,6 @@ public:
     {
         if (FmodSystem != nullptr)
         {
-            UE_LOG(ELogLevel::Warning, TEXT("PIEWorld already exists!"));
             return;
         }
 
