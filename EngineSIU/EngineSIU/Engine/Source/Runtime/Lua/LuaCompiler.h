@@ -29,4 +29,5 @@ private:
     std::filesystem::file_time_type LastWriteTime;
 
     void AddScore(float score);
+    void GameOver();
 };
