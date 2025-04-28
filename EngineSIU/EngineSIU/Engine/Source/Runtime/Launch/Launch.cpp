@@ -10,7 +10,7 @@ void RedirectIOToConsole() {
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
-#ifdef _DEBUG 
+#ifdef _DEBUG  
     RedirectIOToConsole();
 #endif
 

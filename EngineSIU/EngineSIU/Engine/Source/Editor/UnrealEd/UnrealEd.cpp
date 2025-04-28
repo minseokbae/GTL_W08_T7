@@ -1,9 +1,11 @@
-﻿#include "UnrealEd.h"
+#include "UnrealEd.h"
 #include "EditorPanel.h"
+#include "Engine/EditorEngine.h"
 
 #include "PropertyEditor/ControlEditorPanel.h"
 #include "PropertyEditor/OutlinerEditorPanel.h"
 #include "PropertyEditor/PropertyEditorPanel.h"
+#include "PropertyEditor/PlayerInEditorPanel.h"
 
 void UnrealEd::Initialize()
 {
@@ -15,6 +17,8 @@ void UnrealEd::Initialize()
     
     auto PropertyPanel = std::make_shared<PropertyEditorPanel>();
     Panels["PropertyPanel"] = PropertyPanel;
+
+    PIEPanel = std::make_shared<PlayerInEditorPanel>();
 }
 
 void UnrealEd::Render() const
@@ -22,6 +26,12 @@ void UnrealEd::Render() const
     for (const auto& Panel : Panels)
     {
         Panel.Value->Render();
+    }
+
+    UEditorEngine* EditorEngine = Cast<UEditorEngine>(GEngine);
+    if (EditorEngine->PIEWorld)
+    {
+        PIEPanel->Render();
     }
 }
 

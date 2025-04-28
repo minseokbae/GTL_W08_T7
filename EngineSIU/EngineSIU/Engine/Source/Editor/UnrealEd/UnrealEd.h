@@ -1,7 +1,8 @@
-﻿#pragma once
+#pragma once
 #include "Container/Map.h"
 #include "Container/String.h"
 
+class PlayerInEditorPanel;
 class UEditorPanel;
 
 class UnrealEd
@@ -19,4 +20,5 @@ public:
 
 private:
     TMap<FString, std::shared_ptr<UEditorPanel>> Panels;
+    std::shared_ptr<PlayerInEditorPanel> PIEPanel;
 };
