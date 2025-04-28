@@ -46,7 +46,8 @@ void AGameMode::GameOver()
 
 void AGameMode::Win()
 {
-    //TODO : Game Clear UI 띄우기 
+    //TODO : Game Clear UI 띄우기
+    UE_LOG(ELogLevel::Display, "Win");
 }
 
 void AGameMode::RestartGame()
@@ -63,5 +64,7 @@ void AGameMode::RestartGame()
 void AGameMode::AddScore(float InScore)
 {
     Score += InScore;
-    UE_LOG(ELogLevel::Display, "Add %f", Score);
+    if (Score >= WinScore)
+        Win();
+    // UE_LOG(ELogLevel::Display, "Add %f", Score);
 }

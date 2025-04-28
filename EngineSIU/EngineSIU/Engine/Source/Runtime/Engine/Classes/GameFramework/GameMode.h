@@ -18,6 +18,7 @@ private:
     UClass* DefaultPawn = ADefaultPawn::StaticClass();
 
     float Score = 0.0f;
+    float WinScore = 5.0f;
     bool bGameOver = false;
     bool bWin = false;
 

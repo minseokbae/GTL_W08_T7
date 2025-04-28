@@ -44,12 +44,12 @@ void UShapeComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 // primitive에 대해서 하는게 맞는거 같긴 한데
 void UShapeComponent::NotifyBeginOverlap(UShapeComponent* OverlappedComponent, AActor* OtherActor, UShapeComponent* OtherComp)
 {
-    UE_LOG(ELogLevel::Display, "Begin Overlap");
+    // UE_LOG(ELogLevel::Display, "Begin Overlap");
     OnComponentBeginOverlap.Broadcast(OverlappedComponent, OtherActor, OtherComp);
 }
 
 void UShapeComponent::NotifyEndOverlap(UShapeComponent* OverlappedComponent, AActor* OtherActor, UShapeComponent* OtherComp)
 {
-    UE_LOG(ELogLevel::Display, "End Overlap");
+    // UE_LOG(ELogLevel::Display, "End Overlap");
     OnComponentEndOverlap.Broadcast(OverlappedComponent, OtherActor, OtherComp);
 }
