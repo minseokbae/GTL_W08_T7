@@ -34,7 +34,6 @@ void UMapManager::InitMapManager(const FString& MapFilePath)
 void UMapManager::ParseMap(const TArray<FString>& Lines)
 {
     MapInfo.MapData.Empty();
-    MapInfo.GhostStarts.Empty();
     MapInfo.Height = Lines.Num();
     MapInfo.Width = (MapInfo.Height > 0) ? Lines[0].Len() : 0;
 

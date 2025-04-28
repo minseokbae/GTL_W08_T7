@@ -14,8 +14,6 @@ struct FMapInfo
     int32 Width = 0;
     int32 Height = 0;
     TArray<TArray<ETileType>> MapData;
-    FVector2D PlayerStart;
-    TArray<FVector2D> GhostStarts;
 };
 
 class UMapManager : public UObject
@@ -40,8 +38,6 @@ public:
     bool IsValid(int32 X, int32 Y) const;
     int32 GetWidth() const { return MapInfo.Width; }
     int32 GetHeight() const { return MapInfo.Height; }
-    FVector2D GetPlayerStart() const { return MapInfo.PlayerStart; }
-    const TArray<FVector2D>& GetGhostStarts() const { return MapInfo.GhostStarts; }
     const TArray<TArray<ETileType>>& GetMapData() const { return MapInfo.MapData; }
 
 private:
