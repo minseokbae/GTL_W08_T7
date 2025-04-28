@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "Camera/CameraComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/Pawn.h"

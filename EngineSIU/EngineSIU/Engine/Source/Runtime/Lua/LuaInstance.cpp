@@ -4,6 +4,7 @@
 #include "Classes/Components/ShapeComponent.h"
 #include "Game/Data/MapManager.h"
 #include "Game/Sound/SoundManager.h"
+#include "GameFramework/Pawn.h"
 
 FLuaInstance::FLuaInstance(sol::state& Lua, USceneComponent* Comp, FString FilePath)
     : Env(Lua, sol::create, Lua.globals())
@@ -51,6 +52,10 @@ FLuaInstance::FLuaInstance(sol::state& Lua, USceneComponent* Comp, FString FileP
     EndPlayFunc = Env["EndPlay"];
     OnOverlapFunc = Env["OnOverlap"];
     OnEndOverlapFunc = Env["OnEndOverlap"];
+    if (APawn* Pawn = Cast<APawn>(BindedActor))
+    {
+        bPlayerWallOverlap = Env["wallOverlap"];
+    }
     LastWriteTime = std::filesystem::last_write_time(ScriptFile);
 }
 
@@ -59,6 +64,10 @@ void FLuaInstance::Tick(float DeltaTime)
     if (TickFunc.valid()) 
     {
         TickFunc(DeltaTime);
+    }
+    if (APawn* Pawn = Cast<APawn>(BindedActor))
+    {
+        Pawn->SetOverlapWall(bPlayerWallOverlap);
     }
 }
 
@@ -95,6 +104,10 @@ void FLuaInstance::Reload(sol::state& Lua) {
     EndPlayFunc = Env["EndPlay"];
     OnOverlapFunc = Env["OnOverlap"];
     OnEndOverlapFunc = Env["OnEndOverlap"];
+    if (APawn* Pawn = Cast<APawn>(BindedActor))
+    {
+        bPlayerWallOverlap = Env["wallOverlap"];
+    }
     LastWriteTime = std::filesystem::last_write_time(ScriptFile);
 }
 

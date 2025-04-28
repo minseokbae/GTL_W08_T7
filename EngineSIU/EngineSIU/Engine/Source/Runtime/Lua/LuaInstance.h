@@ -26,6 +26,8 @@ private:
     AActor* BindedActor = nullptr;
     UShapeComponent* ShapeComp = nullptr;
 
+    bool bPlayerWallOverlap = false;
+
     FDelegateHandle BeginOverlapHandle;
     FDelegateHandle EndOverlapHandle;
 public:

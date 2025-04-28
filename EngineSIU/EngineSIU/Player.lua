@@ -1,3 +1,5 @@
+local wallOverlap = false;
+
 function BeginPlay()
     print("[BeginPlay] " .. obj.UUID)
 end
@@ -11,17 +13,9 @@ function OnOverlap(overlapObj)
     print(overlapObj.Tag)
     if not(overlapObj.Tag:Equals("Coin")) then
         local repulsion = Vector.new(0,0,0)
-        if obj.Velocity.X>0 then
-            repulsion = repulsion + Vector.new(-0.7,0,0)
-        elseif obj.Velocity.X<0 then
-            repulsion = repulsion + Vector.new(0.7,0,0)
-        end
-        if obj.Velocity.Y>0 then
-            repulsion = repulsion + Vector.new(0,-0.7,0)
-        elseif obj.Velocity.Y<0 then
-            repulsion = repulsion + Vector.new(0,0.7,0)
-        end
-        obj.Location = obj.Location + repulsion
+        obj.Location = obj.Location - obj.Velocity
+        wallOverlap = true
+        print(obj.Velocity)
     end
 end
 
@@ -30,6 +24,9 @@ function OnEndOverlap(overlapObj)
     print(overlapObj.Tag)
     if overlapObj.Tag:Equals("Coin") then
         print("Overlap Coin")
+    end
+    if overlapObj.Tag:Equals("Wall") then
+        wallOverlap = false;
     end
 end
 

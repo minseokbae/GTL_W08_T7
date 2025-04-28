@@ -1,4 +1,4 @@
-﻿#include "PlayerController.h"
+#include "PlayerController.h"
 
 #include "Pawn.h"
 #include "WindowsCursor.h"
@@ -22,21 +22,30 @@ void APlayerController::Input()
 {
     AController::Input();
     FWindowsCursor::SetShowMouseCursor(false);
-    if (GetAsyncKeyState('W') & 0x8000)
+    if (!Pawn->IsOverlapWall())
     {
-        Pawn->SetActorLocation(Pawn->GetActorLocation() + Pawn->GetActorForwardVector() * 0.1f);
-    }
-    if (GetAsyncKeyState('S') & 0x8000)
-    {
-        Pawn->SetActorLocation(Pawn->GetActorLocation() - Pawn->GetActorForwardVector() * 0.1f);
-    }
-    if (GetAsyncKeyState('A') & 0x8000)
-    {
-        Pawn->SetActorLocation(Pawn->GetActorLocation() - Pawn->GetActorRightVector() * 0.1f);
-    }
-    if (GetAsyncKeyState('D') & 0x8000)
-    {
-        Pawn->SetActorLocation(Pawn->GetActorLocation() + Pawn->GetActorRightVector() * 0.1f);
+        if (GetAsyncKeyState('W') & 0x8000)
+        {
+            Pawn->SetActorLocation(Pawn->GetActorLocation() + Pawn->GetActorForwardVector() * 0.1f);
+            Pawn->GetRootComponent()->ComponentVelocity = Pawn->GetActorForwardVector() * 0.1f;
+        }
+        if (GetAsyncKeyState('S') & 0x8000)
+        {
+            Pawn->SetActorLocation(Pawn->GetActorLocation() - Pawn->GetActorForwardVector() * 0.1f);
+            Pawn->GetRootComponent()->ComponentVelocity = -Pawn->GetActorForwardVector() * 0.1f;
+
+        }
+        if (GetAsyncKeyState('A') & 0x8000)
+        {
+            Pawn->SetActorLocation(Pawn->GetActorLocation() - Pawn->GetActorRightVector() * 0.1f);
+            Pawn->GetRootComponent()->ComponentVelocity = -Pawn->GetActorRightVector() * 0.1f;
+
+        }
+        if (GetAsyncKeyState('D') & 0x8000)
+        {
+            Pawn->SetActorLocation(Pawn->GetActorLocation() + Pawn->GetActorRightVector() * 0.1f);
+            Pawn->GetRootComponent()->ComponentVelocity = Pawn->GetActorRightVector() * 0.1f;
+        }
     }
     POINT cur;
     GetCursorPos(&cur);
