@@ -14,3 +14,7 @@ void AController::Tick(float DeltaTime)
 void AController::Input()
 {
 }
+
+void AController::Initialize()
+{
+}

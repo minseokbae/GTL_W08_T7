@@ -28,6 +28,7 @@ void AGameMode::StartGame()
             UE_LOG(ELogLevel::Error, TEXT("Actor Test"));
             APawn* Pawn = Cast<APawn>(*iter);
             APlayerController* Controller = EditorEngine->PIEWorld->SpawnActor<APlayerController>();
+            Controller->Initialize();
             Pawn->SetPossessedController(Controller);
             Controller->AttachtoPawn(Pawn);
             EditorEngine->GetGameInstance()->GetLocalPlayer()->SwitchController(Controller);
