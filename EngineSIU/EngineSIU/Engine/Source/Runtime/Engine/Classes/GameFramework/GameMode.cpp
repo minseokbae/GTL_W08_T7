@@ -30,6 +30,7 @@ void AGameMode::StartGame()
             APlayerController* Controller = EditorEngine->PIEWorld->SpawnActor<APlayerController>();
             Pawn->SetPossessedController(Controller);
             Controller->AttachtoPawn(Pawn);
+            Controller->Initialize();
             EditorEngine->GetGameInstance()->GetLocalPlayer()->SwitchController(Controller);
             // CurrentPlayer = PlayerController;
             break;

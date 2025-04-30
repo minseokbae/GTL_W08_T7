@@ -7,7 +7,9 @@
 #include "Engine/Engine.h"
 #include "LevelEditor/SLevelEditor.h"
 #include "UnrealEd/EditorViewportClient.h"
-
+#include "World/World.h"
+#include "Camera/PlayerCameraManager.h"
+#include "Camera/CameraModifier.h"
 APlayerController::APlayerController()
 {
 
@@ -67,6 +69,11 @@ void APlayerController::BeginPlay()
     InitMouseLook();
 }
 
+void APlayerController::Initialize()
+{
+    SpawnPlayerCameraManager();
+}
+
 void APlayerController::InitMouseLook()
 {
     FWindowsCursor::SetShowMouseCursor(false);
@@ -80,4 +87,18 @@ void APlayerController::InitMouseLook()
 
     // 3) 커서를 중앙으로 옮기기
     SetCursorPos(MouseCenterPos.x, MouseCenterPos.y);
+}
+
+void APlayerController::SpawnPlayerCameraManager()
+{
+    PlayerCameraManager = GetWorld()->SpawnActor<APlayerCameraManager>();
+    PlayerCameraManager->InitializeFor(this);
+    if (Pawn)
+        PlayerCameraManager->SetViewTarget(Pawn);
+    else
+    {
+        UE_LOG(ELogLevel::Error, "PlayerController dont have any Posses pawn");
+    }
+    UCameraModifier* CameraModifier = FObjectFactory::ConstructObject<UCameraModifier>(this);
+    PlayerCameraManager->AddCameraModifier(CameraModifier);
 }

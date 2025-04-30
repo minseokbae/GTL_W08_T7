@@ -10,8 +10,8 @@ public:
     UCameraComponent() = default;
 
 private:
-    float FieldOfView;
-    float AspectRatio;
+    float FieldOfView = 60.0f;
+    float AspectRatio = 1.0f;
 
 public:
     float GetFieldOfView() const { return FieldOfView; }

@@ -2,7 +2,6 @@
 
 #include "World/World.h"
 #include "Level.h"
-#include "Actors/Cube.h"
 #include "Actors/DirectionalLightActor.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/GameMode.h"
@@ -64,7 +63,6 @@ void UEditorEngine::Init()
     }
 
 #ifdef _DEBUG
-    AActor* Actor = EditorWorld->SpawnActor<ACube>();
     
     ADirectionalLight* DirLight = EditorWorld->SpawnActor<ADirectionalLight>();
     DirLight->SetActorRotation(FRotator(20, -61, 11));
@@ -189,6 +187,7 @@ void UEditorEngine::EndPIE()
         SelectActor(nullptr);
         SelectComponent(nullptr);
     }
+    GUObjectArray.MarkRemoveObject(GameInstance);
     // 다시 EditorWorld로 돌아옴.
     ActiveWorld = EditorWorld;
     CurrentPlayer = EditorPlayer;
