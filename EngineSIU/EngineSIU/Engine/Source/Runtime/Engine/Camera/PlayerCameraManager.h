@@ -47,6 +47,7 @@ public:
     
 protected:
     TArray<UCameraModifier*> ModifierList;
+    TArray<UCameraModifier*> FinishedModifier;
     APlayerController* PCOwner;
 
     UCameraComponent* CachedCamera = nullptr;
@@ -56,6 +57,7 @@ private:
 public:
     UCameraComponent* GetCachedCamera() { return CachedCamera; }
     void SetCachedCamera(UCameraComponent* NewCachedCamera) { CachedCamera = NewCachedCamera; }
+    void RemoveModifier(UCameraModifier* Modifier);
 };
 
 

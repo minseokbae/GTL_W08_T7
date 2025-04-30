@@ -26,7 +26,7 @@ public:
     bool IsDisabled() {return bDisabled;}
     void DisableModifier();
     void EnableModifier();
-    virtual void ModifyCamera(float DeltaTime, APlayerCameraManager* NewCameraManager);
+    virtual bool ModifyCamera(float DeltaTime, APlayerCameraManager* NewCameraManager);
 };
 
 

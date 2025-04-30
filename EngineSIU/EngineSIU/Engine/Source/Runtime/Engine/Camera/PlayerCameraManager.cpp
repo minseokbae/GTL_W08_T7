@@ -50,22 +50,24 @@ void APlayerCameraManager::Tick(float DeltaTime)
 
     FadeAmount = FMath::Sin(CameraFadeTime) * .5f + 0.5f;
     
-    FVector NewLocation = CachedCamera->GetRelativeLocation();
-    FRotator NewRotation = CachedCamera->GetRelativeRotation();
-    float NewFOV = CachedCamera->GetFieldOfView();
     for (auto modifier : ModifierList)
     {
-        
         if (!modifier->IsDisabled())
         {
-            modifier->ModifyCamera(DeltaTime, this);
-            CachedCamera->SetRelativeLocation(NewLocation);
-            CachedCamera->SetRelativeRotation(NewRotation);
-            CachedCamera->SetFieldOfView(NewFOV);
+            if (modifier->ModifyCamera(DeltaTime, this))
+            {
+                RemoveModifier(modifier);   
+            }
         }
     }
+
+    for (auto finishedmodifier : FinishedModifier)
+    {
+        ModifierList.Remove(finishedmodifier);
+    }
+    FinishedModifier.Empty();
 }
-inline void APlayerCameraManager::EndPlay(const EEndPlayReason::Type EndPlayReason)
+void APlayerCameraManager::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
     for (auto modifier : ModifierList)
     {
@@ -75,4 +77,10 @@ inline void APlayerCameraManager::EndPlay(const EEndPlayReason::Type EndPlayReas
 void APlayerCameraManager::AddCameraModifier(UCameraModifier* CameraModifier)
 {
     ModifierList.AddUnique(CameraModifier);
+}
+
+void APlayerCameraManager::RemoveModifier(UCameraModifier* Modifier)
+{
+    GUObjectArray.MarkRemoveObject(Modifier);
+    FinishedModifier.AddUnique(Modifier);
 }
