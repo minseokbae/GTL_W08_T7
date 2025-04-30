@@ -236,8 +236,8 @@ void PropertyEditorPanel::Render()
         }
     }
 
-    if(PickedActor)
-        if (UPointLightComponent* pointlightObj = PickedActor->GetComponentByClass<UPointLightComponent>())
+    if(SelectedComponent)
+        if (UPointLightComponent* pointlightObj = Cast<UPointLightComponent>(SelectedComponent))
         {
             int pointNum = 0;
             for (const auto iter : TObjectRange<UPointLightComponent>())
@@ -296,8 +296,8 @@ void PropertyEditorPanel::Render()
             ImGui::PopStyleColor();
         }
 
-    if (PickedActor)
-        if (USpotLightComponent* SpotLightComp = PickedActor->GetComponentByClass<USpotLightComponent>())
+    if (SelectedComponent)
+        if (USpotLightComponent* SpotLightComp = Cast<USpotLightComponent>(SelectedComponent))
         {
             int spotNum = 0;
             for (const auto iter : TObjectRange<USpotLightComponent>())
@@ -376,8 +376,8 @@ void PropertyEditorPanel::Render()
             ImGui::PopStyleColor();
         }
 
-    if (PickedActor)
-        if (UDirectionalLightComponent* dirlightObj = PickedActor->GetComponentByClass<UDirectionalLightComponent>())
+    if (SelectedComponent)
+        if (UDirectionalLightComponent* dirlightObj = Cast<UDirectionalLightComponent>(SelectedComponent))
         {
             ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
 
@@ -426,8 +426,8 @@ void PropertyEditorPanel::Render()
             ImGui::PopStyleColor();
         }
 
-    if(PickedActor)
-        if (UAmbientLightComponent* ambientLightObj = PickedActor->GetComponentByClass<UAmbientLightComponent>())
+    if(SelectedComponent)
+        if (UAmbientLightComponent* ambientLightObj = Cast<UAmbientLightComponent>(SelectedComponent))
         {
             ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
 
@@ -442,8 +442,8 @@ void PropertyEditorPanel::Render()
             ImGui::PopStyleColor();
         }
 
-    if (PickedActor)
-        if (UProjectileMovementComponent* ProjectileComp = (PickedActor->GetComponentByClass<UProjectileMovementComponent>()))
+    if (SelectedComponent)
+        if (UProjectileMovementComponent* ProjectileComp = Cast<UProjectileMovementComponent>(SelectedComponent))
         {
             ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
 
@@ -479,8 +479,8 @@ void PropertyEditorPanel::Render()
             ImGui::PopStyleColor();
         }
     // TODO: 추후에 RTTI를 이용해서 프로퍼티 출력하기
-    if (PickedActor)
-        if (UTextComponent* textOBj = Cast<UTextComponent>(PickedActor->GetRootComponent()))
+    if (SelectedComponent)
+        if (UTextComponent* textOBj = Cast<UTextComponent>(SelectedComponent))
         {
             ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
             if (ImGui::TreeNodeEx("Text Component", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) // 트리 노드 생성
@@ -515,15 +515,15 @@ void PropertyEditorPanel::Render()
         }
 
     // TODO: 추후에 RTTI를 이용해서 프로퍼티 출력하기
-    if (PickedActor)
+    if (SelectedComponent)
         if (UStaticMeshComponent* StaticMeshComponent = Cast<UStaticMeshComponent>(SelectedComponent))
         {
             RenderForStaticMesh(StaticMeshComponent);
             RenderForMaterial(StaticMeshComponent);
         }
 
-    if (PickedActor)
-        if (UHeightFogComponent* FogComponent = Cast<UHeightFogComponent>(PickedActor->GetRootComponent()))
+    if (SelectedComponent)
+        if (UHeightFogComponent* FogComponent = Cast<UHeightFogComponent>(SelectedComponent))
         {
             ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
             if (ImGui::TreeNodeEx("Exponential Height Fog", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) // 트리 노드 생성
@@ -623,8 +623,8 @@ void PropertyEditorPanel::Render()
             ImGui::PopStyleColor();
         }
 
-    if(PickedActor)
-        if (USphereComponent* SphereComponent = Cast<USphereComponent>(PickedActor->GetComponentByClass<USphereComponent>()))
+    if(SelectedComponent)
+        if (USphereComponent* SphereComponent = Cast<USphereComponent>(SelectedComponent))
         {
             ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
 
@@ -638,8 +638,8 @@ void PropertyEditorPanel::Render()
             }
             ImGui::PopStyleColor();
         }    
-    if(PickedActor)
-        if (UBoxComponent* BoxComponent = Cast<UBoxComponent>(PickedActor->GetComponentByClass<UBoxComponent>()))
+    if(SelectedComponent)
+        if (UBoxComponent* BoxComponent = Cast<UBoxComponent>(SelectedComponent))
         {
             ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
 
