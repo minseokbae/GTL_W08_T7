@@ -37,7 +37,18 @@ void APlayerController::Input()
     {
         Pawn->SetActorLocation(Pawn->GetActorLocation() + Pawn->GetActorForwardVector() * 0.1f);
         Pawn->GetRootComponent()->ComponentVelocity +=Pawn->GetActorForwardVector() * 0.1f;
+        // if (!bWKeyClicked)
+        // {
+        //     bWKeyClicked = true;
+        //     CameraShakeModifier->PlayShake();
+        //     UE_LOG(ELogLevel::Display, "PlayShake");
+        // }
     }
+    // else
+    // {
+    //     bWKeyClicked = false;
+    //     CameraShakeModifier->StopShake();
+    // }
     if (GetAsyncKeyState('S') & 0x8000)
     {
         Pawn->SetActorLocation(Pawn->GetActorLocation() - Pawn->GetActorForwardVector() * 0.1f);
@@ -75,6 +86,14 @@ void APlayerController::BeginPlay()
     AController::BeginPlay();
 
     InitMouseLook();
+}
+
+void APlayerController::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+    AController::EndPlay(EndPlayReason);
+
+    MyMessageHandler->OnKeyDownDelegate.RemoveAllForObject(this);
+    MyMessageHandler->OnKeyUpDelegate.RemoveAllForObject(this);
 }
 
 void APlayerController::Initialize()
@@ -137,9 +156,10 @@ void APlayerController::HandleKeyDown(const FKeyEvent& InKeyEvent)
         switch (character)
         {
         case 'W':
-            if (CameraShakeModifier != nullptr) // 혹은 간단히 if (CameraShakeModifier)
+            if (this->CameraShakeModifier != nullptr) // 혹은 간단히 if (CameraShakeModifier)
             {
-                CameraShakeModifier->PlayShake();
+                this->CameraShakeModifier->PlayShake();
+                
                 UE_LOG(ELogLevel::Display, "PlayShake");
             }
             else
@@ -171,7 +191,7 @@ void APlayerController::HandleKeyUp(const FKeyEvent& InKeyEvent)
         {
         case 'W':
             UE_LOG(ELogLevel::Display, "StopShake");
-            CameraShakeModifier->StopShake();
+            this->CameraShakeModifier->StopShake();
             break;
         case 'A':
             break;

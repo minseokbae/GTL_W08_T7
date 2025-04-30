@@ -15,12 +15,15 @@ public:
     virtual void Tick(float DeltaTime) override;
     virtual void Input() override;
     virtual void BeginPlay() override;
+    virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
     virtual void Initialize() override;
     void InitMouseLook();
     void SpawnPlayerCameraManager();
 public:
     UPlayer* Player;
     POINT MouseCenterPos;
+
+    bool bWKeyClicked =false;
     
     float MouseSens = 0.01f;
 
