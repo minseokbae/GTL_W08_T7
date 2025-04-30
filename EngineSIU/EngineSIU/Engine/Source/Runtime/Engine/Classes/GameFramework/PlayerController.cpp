@@ -94,8 +94,4 @@ void APlayerController::SpawnPlayerCameraManager()
 {
     PlayerCameraManager = GetWorld()->SpawnActor<APlayerCameraManager>();
     PlayerCameraManager->InitializeFor(this);
-
-    UCameraFadeInModifier* CameraModifier = FObjectFactory::ConstructObject<UCameraFadeInModifier>(this);
-    CameraModifier->Initialize(FLinearColor::Red, 5.0f);
-    PlayerCameraManager->AddCameraModifier(CameraModifier);
 }

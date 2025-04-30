@@ -148,6 +148,7 @@ void PlayerInEditorPanel::Render()
     // 인게임 HUD
     else if (gameState == GameState::Playing) {
         ImGui::Begin("게임 진행 중", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+        ImGui::Text("HP : %d", Cast<UEditorEngine>(GEngine)->ActiveWorld->GetGameMode()->GetHP());
         ImGui::Text("코인 : %.0f/5", Cast<UEditorEngine>(GEngine)->ActiveWorld->GetGameMode()->GetScore());
         ImGui::End();
     }
