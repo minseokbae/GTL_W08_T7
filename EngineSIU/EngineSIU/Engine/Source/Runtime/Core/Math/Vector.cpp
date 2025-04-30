@@ -1,4 +1,4 @@
-﻿#include "Vector.h"
+#include "Vector.h"
 #include "Misc/Parse.h"
 
 const FVector2D FVector2D::ZeroVector = FVector2D(0, 0);
@@ -34,6 +34,25 @@ bool FVector2D::InitFromString(const FString& InSourceString)
     return bSuccessful;
 }
 
+
+FVector FVector::GetClampedToMaxSize(float MaxSize) const
+{
+    if (MaxSize < DBL_EPSILON)
+    {
+        return ZeroVector;
+    }
+
+    const float VSq = LengthSquared();
+    if (VSq > FMath::Square(MaxSize))
+    {
+        const float Scale = MaxSize * FMath::InvSqrt(VSq);
+        return FVector(X * Scale, Y * Scale, Z * Scale);
+    }
+    else
+    {
+        return *this;
+    }
+}
 
 FString FVector::ToString() const
 {

@@ -183,7 +183,7 @@ public:
     bool IsNearlyZero(float Tolerance = SMALL_NUMBER) const;
     bool IsZero() const;
 
-    
+    FVector GetClampedToMaxSize(float MaxSize) const;
     FString ToString() const;
     bool InitFromString(const FString& InSourceString);
 };
