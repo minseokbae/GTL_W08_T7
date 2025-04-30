@@ -765,12 +765,6 @@
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Actors\AmbientLightActor.h">
       <Filter>EngineSIU\Engine\Source\Runtime\Engine\Classes\Actors</Filter>
     </ClInclude>
-    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Actors\Cube.cpp">
-      <Filter>EngineSIU\Engine\Source\Runtime\Engine\Classes\Actors</Filter>
-    </ClCompile>
-    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Actors\Cube.h">
-      <Filter>EngineSIU\Engine\Source\Runtime\Engine\Classes\Actors</Filter>
-    </ClInclude>
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Actors\DirectionalLightActor.cpp">
       <Filter>EngineSIU\Engine\Source\Runtime\Engine\Classes\Actors</Filter>
     </ClCompile>
@@ -1382,6 +1376,7 @@
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraShakeBase.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraModifier.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\PlayerCameraManager.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\GameFramework\SpringArmComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="EngineSIU\EngineSIU.natvis" />
@@ -1481,6 +1476,7 @@
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraModifier.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\PlayerCameraManager.h" />
     <ClInclude Include="EngineSIU\Engine\Source\ThirdParty\FastNoiseLite\FastNoiseLite.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\GameFramework\SpringArmComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="EngineSIU\Engine\Source\Runtime\Core\Delegates\JungleDelegate.h" />

@@ -271,6 +271,7 @@
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\GameFramework\GameMode.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\GameFramework\Pawn.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\GameFramework\PlayerController.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\GameFramework\SpringArmComponent.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Level.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\UnrealClient.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\UserInterface\Console.cpp" />
@@ -454,6 +455,7 @@
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\GameFramework\GameMode.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\GameFramework\Pawn.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\GameFramework\PlayerController.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\GameFramework\SpringArmComponent.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Level.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\OverlapInfo.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\UnrealClient.h" />

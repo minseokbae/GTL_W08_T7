@@ -48,7 +48,7 @@ struct FQuat
     static FQuat CreateRotation(float roll, float pitch, float yaw);
 
     //회전 용 lerp
-    static FQuat Slerp(const FQuat& A, const FQuat& B, float Alpha);
+    //static FQuat Slerp(const FQuat& A, const FQuat& B, float Alpha);
 
     // 쿼터니언을 회전 행렬로 변환
     FMatrix ToMatrix() const;
