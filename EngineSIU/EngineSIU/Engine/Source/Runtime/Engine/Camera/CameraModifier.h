@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "UObject/Object.h"
 #include "UObject/ObjectMacros.h"
 
@@ -9,7 +9,6 @@ class UCameraModifier : public UObject
     DECLARE_CLASS(UCameraModifier, UObject)
 public:
     UCameraModifier();
-
     
     uint8 Priority;
 protected:
@@ -19,6 +18,7 @@ protected:
     float AlphaOutTime;
     float Alpha;
     bool bDisabled = false;
+    float* BezierCurve;
 
 public:
     APlayerCameraManager* GetCameraManager() { return CameraOwner; }

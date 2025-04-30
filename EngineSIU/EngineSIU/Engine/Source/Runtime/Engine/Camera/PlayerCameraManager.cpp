@@ -1,9 +1,10 @@
-ï»¿#include "PlayerCameraManager.h"
+#include "PlayerCameraManager.h"
 
 #include "CameraComponent.h"
 #include "CameraModifier.h"
 #include "WindowsPlatformTime.h"
 #include "GameFramework/PlayerController.h"
+#include "GameFramework/Pawn.h"
 
 APlayerCameraManager::APlayerCameraManager()
 {
@@ -29,7 +30,7 @@ void APlayerCameraManager::InitializeFor(APlayerController* PC)
     for (auto Comp : TargetActor->GetComponents())
     {
         UCameraComponent* Cam =Cast<UCameraComponent>(Comp);
-        if ( Cam)
+        if (Cam)
         {
             CachedCamera = Cam;
             break;
@@ -45,7 +46,7 @@ void APlayerCameraManager::Tick(float DeltaTime)
 {
     AActor::Tick(DeltaTime);
 
-    // ë°˜ë³µ ë„ì¤‘ ì¶”ê°€ì— ë¶ˆì•ˆì „í•œ ë°˜ë³µë¬¸
+    // ¹İº¹ µµÁß Ãß°¡¿¡ ºÒ¾ÈÀüÇÑ ¹İº¹¹®
     // for (auto modifier : ModifierList)
     // {
     //     if (!modifier->IsDisabled())
@@ -57,7 +58,7 @@ void APlayerCameraManager::Tick(float DeltaTime)
     //     }
     // }
 
-    // ì¤‘ê°„ ì¶”ê°€ì— ì•ˆì „í•œ ë°˜ë³µë¬¸
+    // Áß°£ Ãß°¡¿¡ ¾ÈÀüÇÑ ¹İº¹¹®
     for (size_t ModifierNum = 0; ModifierNum < ModifierList.Num(); ModifierNum++)
     {
         if (!ModifierList[ModifierNum]->IsDisabled())

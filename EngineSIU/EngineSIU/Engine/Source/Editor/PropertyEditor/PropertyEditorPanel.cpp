@@ -17,6 +17,7 @@
 #include "Engine/EditorEngine.h"
 #include "Engine/FLoaderOBJ.h"
 #include "UnrealEd/ImGuiWidget.h"
+#include "UnrealEd/ImGuiBezierWidget.h"
 #include "UObject/Casts.h"
 #include "UObject/ObjectFactory.h"
 #include "Engine/Engine.h"
@@ -65,6 +66,13 @@ void PropertyEditorPanel::Render()
     AEditorPlayer* player = Engine->GetEditorPlayer();
     AActor* PickedActor = Engine->GetSelectedActor();
     USceneComponent* SelectedComponent = Engine->GetSelectedComponent();
+
+    static float CurveParams[5] = { 0.39f, 0.575f, 0.565f, 1.0f, 0 }; // x1, y1, x2, y2, presetIndex
+
+    ImGui::Text("Bezier Curve Editor");
+    ImGui::Bezier("MyCurve", CurveParams);
+    GEngine->BezierCurve = CurveParams;
+    ImGui::Checkbox("Use Bezier", &GEngine->bUseBezier);
 
     if (SelectedComponent)
     {

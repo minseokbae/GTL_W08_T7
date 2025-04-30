@@ -1,7 +1,9 @@
-﻿#include "CameraModifier.h"
+#include "CameraModifier.h"
+#include <Engine/Engine.h>
 
 UCameraModifier::UCameraModifier()
 {
+    BezierCurve = GEngine->BezierCurve;
 }
 
 void UCameraModifier::AddedToCamera(APlayerCameraManager* Camera)

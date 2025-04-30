@@ -23,6 +23,9 @@ public:
     UAssetManager* AssetManager = nullptr;
     UMapManager* MapManager = nullptr;
     USoundManager* SoundManager = nullptr;
+    //TODO: 베지에 곡선 정보 어디에 둘까
+    float* BezierCurve;
+    bool bUseBezier = false;
 protected:
     TArray<FWorldContext*> WorldList;
     int32 NextWorldContextHandle = 0;
