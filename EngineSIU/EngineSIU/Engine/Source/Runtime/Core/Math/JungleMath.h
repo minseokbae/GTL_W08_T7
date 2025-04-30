@@ -21,6 +21,7 @@ public:
     static FQuat EulerToQuaternion(const FVector& eulerDegrees);
     static FVector QuaternionToEuler(const FQuat& quat);
 
+    static float FInterpTo(const float& CurrentLoc, const float& TargetLoc, float DeltaTime, float Speed);
     static FVector FInterpTo(const FVector& CurrentLoc, const FVector& TargetLoc, float DeltaTime, float Speed);
     static FRotator RInterpTo(const FRotator& CurrentRot, const FRotator& TargetRot, float DeltaTime, float Speed);
 };

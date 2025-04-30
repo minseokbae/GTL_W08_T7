@@ -34,8 +34,8 @@ public:
     float FadeTimeRemaining;
 
     FLinearColor LetterBoxColor = FLinearColor::Black;
-    float LetterBoxHeight = 0.05;
-    float LetterBoxWidth = 0.05f;
+    float LetterBoxHeight = 0.4;
+    float LetterBoxWidth = 0.4f;
 
     FLinearColor VignetteColor = FLinearColor::Red;
     float  VignetteIntensity = 0.9f; // 비네팅 강도 (0 = 없음, 1 = 최대)

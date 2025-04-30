@@ -176,6 +176,8 @@
     <ClCompile Include="EngineSIU\Engine\Source\Editor\UnrealEd\ImGuiBezierWidget.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraFadeInModifier.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraFadeOutModifier.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraLetterBoxIn.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraLetterBoxOut.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraModifier.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraTransitionModifier.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\PlayerCameraManager.cpp" />
@@ -336,6 +338,8 @@
     <None Include="EngineSIU\Engine\Source\Runtime\Core\Delegates\JungleDelegateCombination.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraFadeInModifier.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraFadeOutModifier.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraLetterBoxIn.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraLetterBoxOut.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraModifier.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraTransitionModifier.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\PlayerCameraManager.h" />
