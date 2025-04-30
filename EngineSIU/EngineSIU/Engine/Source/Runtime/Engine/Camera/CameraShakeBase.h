@@ -15,15 +15,15 @@ struct FCameraShakePattern
 
     // 일단 Perlin Noise Camera Shake Pattern을 기본으로 잡고 한다.
     float NoiseFrequency = 0.2f;
-    int NoiseSeed = 1337;       
+    int NoiseSeed = 1337;
     FastNoiseLite::NoiseType NoiseType = FastNoiseLite::NoiseType_Perlin;
     FastNoiseLite::FractalType NoiseFractalType = FastNoiseLite::FractalType_FBm;
-    int NoiseOctaves = 3;        
+    int NoiseOctaves = 3;
     float NoiseLacunarity = 2.0f;
-    float NoiseGain = 0.3f;      
+    float NoiseGain = 0.3f;
 
     //FVector MaxLocationOffsetClamp = FVector(0.05f, 0.05f, 0.05f); 
-    FVector MaxRotationOffsetClamp = FVector(1.0f, 1.0f, 1.0f); 
+    FVector MaxRotationOffsetClamp = FVector(1.0f, 1.0f, 1.0f);
 };
 
 class UCameraShakeBase : public UCameraModifier
@@ -34,7 +34,7 @@ public:
     UCameraShakeBase();
 
     FCameraShakePattern ShakePattern;
-    float Duration = -1.0f;     
+    float Duration = -1.0f;
     float BlendInTime = 0.1f;
     float BlendOutTime = 0.2f;
 

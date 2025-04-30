@@ -24,19 +24,21 @@ public:
     UPlayer* Player;
     POINT MouseCenterPos;
     
+    bool btest = false;
+
     float MouseSens = 0.01f;
 
     APlayerCameraManager* PlayerCameraManager;
     UCameraShakeBase* CameraShakeModifier;
 
 private:
+    // Just for game-jam
+    bool bIsRunning;
+
     void HandleKeyDown(const FKeyEvent& InKeyEvent);
     void HandleKeyUp(const FKeyEvent& InKeyEvent);
 
     //void HandleMouseMove(const FPointerEvent& InMouseEvent);
 
     FSlateAppMessageHandler* MyMessageHandler;
-
-    // Just for game-jam
-    bool bIsRunning;
 };

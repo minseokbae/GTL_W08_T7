@@ -29,7 +29,6 @@ APlayerController::~APlayerController()
 {
     MyMessageHandler->OnKeyDownDelegate.RemoveAllForObject(this);
     MyMessageHandler->OnKeyUpDelegate.RemoveAllForObject(this);
-
 }
 
 void APlayerController::Tick(float DeltaTime)
@@ -44,27 +43,54 @@ void APlayerController::Input()
     Pawn->GetRootComponent()->ComponentVelocity = FVector(0.f, 0.f, 0.f);
     if (GetAsyncKeyState('W') & 0x8000)
     {
-        ///
         Pawn->SetActorLocation(Pawn->GetActorLocation() + Pawn->GetActorForwardVector() * 0.1f);
         Pawn->GetRootComponent()->ComponentVelocity += Pawn->GetActorForwardVector() * 0.1f;
+        //if (!btest)
+        //{
+        //    btest = true;
+        //    CameraShakeModifier->PlayShake();
+
+        //}
+        //bIsRunning = true;
     }
+    //else {
+    //    if(btest){
+    //    btest = false;
+    //    CameraShakeModifier->StopShake();
+    //    }
+    //}
     if (GetAsyncKeyState('S') & 0x8000)
     {
         Pawn->SetActorLocation(Pawn->GetActorLocation() - Pawn->GetActorForwardVector() * 0.1f);
         Pawn->GetRootComponent()->ComponentVelocity += -Pawn->GetActorForwardVector() * 0.1f;
+        bIsRunning = true;
 
     }
     if (GetAsyncKeyState('A') & 0x8000)
     {
         Pawn->SetActorLocation(Pawn->GetActorLocation() - Pawn->GetActorRightVector() * 0.1f);
         Pawn->GetRootComponent()->ComponentVelocity += -Pawn->GetActorRightVector() * 0.1f;
+        bIsRunning = true;
 
     }
     if (GetAsyncKeyState('D') & 0x8000)
     {
         Pawn->SetActorLocation(Pawn->GetActorLocation() + Pawn->GetActorRightVector() * 0.1f);
         Pawn->GetRootComponent()->ComponentVelocity += Pawn->GetActorRightVector() * 0.1f;
+        bIsRunning = true;
     }
+
+    if (CameraShakeModifier != nullptr && bIsRunning)
+    {
+        CameraShakeModifier->PlayShake();
+
+        UE_LOG(ELogLevel::Error, "PlayShake");
+    }
+    else
+    {
+        UE_LOG(ELogLevel::Error, TEXT("CameraShakeModifier is NULL when trying to PlayShake!"));
+    }
+
     POINT cur;
     GetCursorPos(&cur);
 
@@ -91,10 +117,10 @@ void APlayerController::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
     AController::EndPlay(EndPlayReason);
 
-    //MyMessageHandler->OnKeyDownDelegate.RemoveAllForObject(this);
-    //MyMessageHandler->OnKeyUpDelegate.RemoveAllForObject(this);
+    MyMessageHandler->OnKeyDownDelegate.RemoveAllForObject(this);
+    MyMessageHandler->OnKeyUpDelegate.RemoveAllForObject(this);
 
-    //MyMessageHandler->OnMouseMoveDelegate.RemoveAllForObject(this);
+    MyMessageHandler->OnMouseMoveDelegate.RemoveAllForObject(this);
 }
 
 void APlayerController::Initialize()
@@ -140,6 +166,7 @@ void APlayerController::SpawnPlayerCameraManager()
     CameraShakeModifier = FObjectFactory::ConstructObject<UCameraShakeBase>(this);
     if (CameraShakeModifier)
     {
+        UE_LOG(ELogLevel::Error, TEXT("CameraShakeModifier 생성 성공. 주소: %p"), CameraShakeModifier);
         PlayerCameraManager->AddCameraModifier(CameraShakeModifier);
     }
     else
@@ -150,6 +177,8 @@ void APlayerController::SpawnPlayerCameraManager()
 
 void APlayerController::HandleKeyDown(const FKeyEvent& InKeyEvent)
 {
+    UE_LOG(ELogLevel::Error, TEXT("CameraShakeModifier Down 사용 시도. 현재 주소: %p"), this->CameraShakeModifier); // 사용 시 주소 로깅
+
     EInputEvent InputEvent = InKeyEvent.GetInputEvent();
     if (InputEvent == IE_Pressed)
     {
@@ -175,12 +204,13 @@ void APlayerController::HandleKeyDown(const FKeyEvent& InKeyEvent)
         }
     }
     if (!bIsRunning) return;
-
+    
+    
     if (this->CameraShakeModifier != nullptr)
     {
         this->CameraShakeModifier->PlayShake();
 
-        UE_LOG(ELogLevel::Display, "PlayShake");
+        UE_LOG(ELogLevel::Error, "PlayShake");
     }
     else
     {
@@ -190,6 +220,8 @@ void APlayerController::HandleKeyDown(const FKeyEvent& InKeyEvent)
 
 void APlayerController::HandleKeyUp(const FKeyEvent& InKeyEvent)
 {
+    UE_LOG(ELogLevel::Error, TEXT("CameraShakeModifier Up 사용 시도. 현재 주소: %p"), this->CameraShakeModifier); // 사용 시 주소 로깅
+
     EInputEvent InputEvent = InKeyEvent.GetInputEvent();
     if (InputEvent == IE_Released)
     {
@@ -218,7 +250,7 @@ void APlayerController::HandleKeyUp(const FKeyEvent& InKeyEvent)
     if (this->CameraShakeModifier != nullptr)
     {
         this->CameraShakeModifier->StopShake();
-        UE_LOG(ELogLevel::Display, "StopShake");
+        UE_LOG(ELogLevel::Error, "StopShake");
     }
     else
     {

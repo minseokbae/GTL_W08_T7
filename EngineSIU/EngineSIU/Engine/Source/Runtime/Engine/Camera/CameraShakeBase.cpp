@@ -92,61 +92,8 @@ bool UCameraShakeBase::ModifyCamera(float DeltaTime, APlayerCameraManager* NewCa
 
     NewCameraManager->GetCachedCamera()->SetRelativeLocation(CachedLocation);
     NewCameraManager->GetCachedCamera()->SetRelativeRotation(CachedRotation);
-    return true;
+    return false;
 }
-
-//void UCameraShakeBase::ModifyCamera(float DeltaTime, FVector ViewLocation, FRotator ViewRotation, float FOV, FVector& NewViewLocation, FRotator& NewViewRotation, float& NewFOV)
-//{
-//    NewViewLocation = ViewLocation;
-//    NewViewRotation = ViewRotation;
-//    NewFOV = FOV;
-//
-//    //bIsActive 이게 true가 아님.
-//    if (!bIsActive || bIsFinished || IsDisabled())
-//    {
-//         return;
-//    }
-//
-//    ElapsedTime += DeltaTime;
-//
-//    const float CurrentBlendWeight = GetBlendWeight();
-//
-//    if (CurrentBlendWeight <= 0.0f && Duration > 0.0f) 
-//    {
-//        if (ElapsedTime >= Duration)
-//        {
-//            bIsFinished = true;
-//            bIsActive = false;
-//            // 필요 시 DisableModifier() 호출 혹은 Manager에게 완료 알림
-//            return;
-//        }
-//        // BlendOut 중 가중치가 0이 된 경우 아직 Finished는 아님 (Duration 끝까지 기다림)
-//        // 하지만 더 이상 계산할 필요 없으므로 return 가능
-//        if (ElapsedTime >= Duration - BlendOutTime + KINDA_SMALL_NUMBER) // BlendOut 구간이고 가중치가 0이면 끝난 것으로 간주 가능
-//        {
-//            // 혹은 return; 만 해서 끝날 때까지 유지
-//            // 여기서는 일단 return
-//            return;
-//        }
-//
-//    }
-//
-//    // 현재 시간 기준 셰이크 오프셋 계산
-//    FVector RawLocationOffset = FVector::ZeroVector;
-//    FRotator RawRotationOffset = FRotator::ZeroRotator; 
-//    CalculateShakeOffsets(ElapsedTime, RawLocationOffset, RawRotationOffset);
-//
-//    const FVector LocalLocationOffset = RawLocationOffset * CurrentBlendWeight; 
-//    const FRotator LocalRotationOffset = RawRotationOffset * CurrentBlendWeight;
-//
-//    FQuat BaseRelativeQuat = ViewRotation.ToQuaternion();
-//    FVector OffsetInPawnSpace = BaseRelativeQuat.RotateVector(LocalLocationOffset);
-//    NewViewLocation += OffsetInPawnSpace;
-//
-//    FQuat ShakeQuat = LocalRotationOffset.ToQuaternion();
-//    FQuat ResultQuat = BaseRelativeQuat * ShakeQuat;
-//    NewViewRotation = ResultQuat.ToRotator();
-//}
 
 float UCameraShakeBase::GetBlendWeight() const
 {
@@ -205,12 +152,15 @@ void UCameraShakeBase::CalculateShakeOffsets(float CurrentTime, FVector& OutLoca
     float RawYaw = NoiseGenerator.GetNoise(RotTime, 50.0f) * ShakePattern.RotationAmplitude.Y * RotAmplMultiplier;
     float RawRoll = NoiseGenerator.GetNoise(RotTime, 60.0f) * ShakePattern.RotationAmplitude.Z * RotAmplMultiplier;
 
-    // 회전 오프셋 제한 (Clamping) - FRotator가 Pitch, Yaw, Roll 순서라고 가정
-    float ClampedPitch = FMath::Clamp(RawPitch, -ShakePattern.MaxRotationOffsetClamp.X, ShakePattern.MaxRotationOffsetClamp.X);
-    float ClampedYaw = FMath::Clamp(RawYaw, -ShakePattern.MaxRotationOffsetClamp.Y, ShakePattern.MaxRotationOffsetClamp.Y);
-    float ClampedRoll = FMath::Clamp(RawRoll, -ShakePattern.MaxRotationOffsetClamp.Z, ShakePattern.MaxRotationOffsetClamp.Z);
+    OutRotationOffset = FRotator(RawPitch, RawYaw, RawRoll);
 
-    OutRotationOffset = FRotator(ClampedPitch, ClampedYaw, ClampedRoll);
+
+    //// 회전 오프셋 제한 (Clamping) - FRotator가 Pitch, Yaw, Roll 순서라고 가정
+    //float ClampedPitch = FMath::Clamp(RawPitch, -ShakePattern.MaxRotationOffsetClamp.X, ShakePattern.MaxRotationOffsetClamp.X);
+    //float ClampedYaw = FMath::Clamp(RawYaw, -ShakePattern.MaxRotationOffsetClamp.Y, ShakePattern.MaxRotationOffsetClamp.Y);
+    //float ClampedRoll = FMath::Clamp(RawRoll, -ShakePattern.MaxRotationOffsetClamp.Z, ShakePattern.MaxRotationOffsetClamp.Z);
+
+    //OutRotationOffset = FRotator(ClampedPitch, ClampedYaw, ClampedRoll);
 }
 
 void UCameraShakeBase::InitializeNoiseGenerator()
