@@ -736,23 +736,33 @@ void PropertyEditorPanel::RenderForStaticMesh(UStaticMeshComponent* StaticMeshCo
     
         const TMap<FName, FAssetInfo> Assets = UAssetManager::Get().GetAssetRegistry();
 
+        static char StaticMeshSearchBuffer[128] = ""; // 검색어 입력 버퍼
+
         if (ImGui::BeginCombo("##StaticMesh", GetData(PreviewName), ImGuiComboFlags_None))
         {
+            // 1. 검색어 입력창 추가
+            ImGui::InputText("Search", StaticMeshSearchBuffer, IM_ARRAYSIZE(StaticMeshSearchBuffer));
+
+            // 2. 검색어로 필터링
             for (const auto& Asset : Assets)
             {
-                if (ImGui::Selectable(GetData(Asset.Value.AssetName.ToString()), false))
+                FString AssetName = Asset.Value.AssetName.ToString();
+                // 검색어가 비어있거나, 검색어가 포함된 항목만 표시
+                if (strlen(StaticMeshSearchBuffer) == 0 || AssetName.Contains(StaticMeshSearchBuffer))
                 {
-                    FString MeshName = Asset.Value.PackagePath.ToString() + "/" + Asset.Value.AssetName.ToString();
-                    UStaticMesh* StaticMesh = FManagerOBJ::GetStaticMesh(MeshName.ToWideString());
-                    if (StaticMesh)
+                    if (ImGui::Selectable(GetData(AssetName), false))
                     {
-                        StaticMeshComp->SetStaticMesh(StaticMesh);
+                        FString MeshName = Asset.Value.PackagePath.ToString() + "/" + AssetName;
+                        UStaticMesh* StaticMesh = FManagerOBJ::GetStaticMesh(MeshName.ToWideString());
+                        if (StaticMesh)
+                        {
+                            StaticMeshComp->SetStaticMesh(StaticMesh);
+                        }
                     }
                 }
             }
             ImGui::EndCombo();
         }
-
         ImGui::TreePop();
     }
     ImGui::PopStyleColor();

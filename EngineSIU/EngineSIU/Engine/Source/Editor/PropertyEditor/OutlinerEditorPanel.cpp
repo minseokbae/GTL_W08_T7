@@ -44,7 +44,7 @@ void OutlinerEditorPanel::Render()
             FString Name;
             Name = InComp->GetName();
 
-            ImGuiTreeNodeFlags Flags = ImGuiTreeNodeFlags_None;
+            ImGuiTreeNodeFlags Flags = ImGuiTreeNodeFlags_None | ImGuiTreeNodeFlags_OpenOnArrow;
             if (InComp->GetAttachChildren().Num() == 0)
                 Flags |= ImGuiTreeNodeFlags_Leaf;
 
@@ -69,7 +69,7 @@ void OutlinerEditorPanel::Render()
     for (AActor* Actor : Engine->ActiveWorld->GetActiveLevel()->Actors)
     {
         FString ActorLabel = Actor->GetActorLabel();
-        ImGuiTreeNodeFlags ActorFlags = ImGuiTreeNodeFlags_None;
+        ImGuiTreeNodeFlags ActorFlags = ImGuiTreeNodeFlags_None | ImGuiTreeNodeFlags_OpenOnArrow;
 
         bool bActorOpen = ImGui::TreeNodeEx(*ActorLabel, ActorFlags);
         if (ImGui::IsItemClicked())
