@@ -86,7 +86,7 @@ void USpringArmComponent::SetProperties(const TMap<FString, FString>& InProperti
 
 USpringArmComponent::USpringArmComponent()
 {
-    TargetArmLength = 300.0f;
+    TargetArmLength = 5.0f;
     SocketOffset = FVector(0.f, 0.f, 0.f);
     TargetOffset = FVector(0.f, 0.f, 0.f);
     bDoCollisionTest = true;
@@ -98,7 +98,7 @@ USpringArmComponent::USpringArmComponent()
     CameraLagSpeed = 1.0f;
     CameraLagMaxDistance = 0.0f;
     bEnableCameraRotationLag = false;
-    CameraRotationLagSpeed = 10.0f;
+    CameraRotationLagSpeed = 1.0f;
     PreviousDesiredLoc = FVector::ZeroVector;
     PreviousArmOrigin = FVector::ZeroVector;
     PreviousDesiredRot = FRotator::ZeroRotator;
@@ -286,5 +286,16 @@ void USpringArmComponent::TickComponent(float DeltaTime)
 
 FVector USpringArmComponent::BlendLocations(const FVector& DesiredArmLocation, const FVector& TraceHitLocation, bool bHitSomething, float DeltaTime)
 {
-    return bHitSomething ? TraceHitLocation : DesiredArmLocation;
+    static FVector PreviousCameraLocation = DesiredArmLocation;
+    FVector Result;
+    if (bHitSomething)
+    {
+        Result = FMath::VInterpTo(PreviousCameraLocation, TraceHitLocation, DeltaTime, CameraLagSpeed);
+    }
+    else
+    {
+        Result = DesiredArmLocation;
+    }
+    PreviousCameraLocation = Result;
+    return Result;
 }
