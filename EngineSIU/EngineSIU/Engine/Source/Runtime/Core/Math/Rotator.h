@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "Container/String.h"
 
 struct FVector;
@@ -14,9 +14,12 @@ struct FRotator
     float Yaw;
     float Roll;
 
+    static const FRotator ZeroRotator;
+
     FRotator()
         : Pitch(0.0f), Yaw(0.0f), Roll(0.0f)
     {}
+
 
     FRotator(float InPitch, float InYaw, float InRoll)
         : Pitch(InPitch), Yaw(InYaw), Roll(InRoll)
@@ -63,7 +66,6 @@ struct FRotator
     FRotator GetNormalized() const;
     void Normalize();
 
-    
     FString ToString() const;
     bool InitFromString(const FString& InSourceString);
 };
