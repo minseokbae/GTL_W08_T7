@@ -60,25 +60,6 @@ struct FQuat
     // 단위 쿼터니언의 경우 역과 같음
     FQuat Conjugate() const;
 
-    /**
-     * 두 단위 쿼터니언 사이를 구면 선형 보간합니다.
-     * @param Quat1 시작 쿼터니언 (단위 쿼터니언이어야 함)
-     * @param Quat2 끝 쿼터니언 (단위 쿼터니언이어야 함)
-     * @param Slerp 알파 값 (0.0 ~ 1.0)
-     * @return 보간된 쿼터니언
-     */
-    static FQuat Slerp(const FQuat& Quat1, const FQuat& Quat2, float Slerp);
-
-    /**
-     * 두 단위 쿼터니언 사이를 최단 경로로 구면 선형 보간합니다.
-     * Slerp와 유사하지만, 180도 이상 회전하지 않도록 합니다.
-     * @param Quat1 시작 쿼터니언 (단위 쿼터니언이어야 함)
-     * @param Quat2 끝 쿼터니언 (단위 쿼터니언이어야 함)
-     * @param Slerp 알파 값 (0.0 ~ 1.0)
-     * @return 보간된 쿼터니언
-     */
-    static FQuat Slerp_NotNormalized(const FQuat& Quat1, const FQuat& Quat2, float Slerp); // UE 스타일 이름
-
     /** 단위 쿼터니언 (회전 없음)을 반환합니다. */
     static const FQuat& Identity();
     static float Dot(const FQuat& Q1, const FQuat& Q2);

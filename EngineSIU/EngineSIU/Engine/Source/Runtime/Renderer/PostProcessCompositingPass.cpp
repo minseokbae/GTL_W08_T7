@@ -137,7 +137,7 @@ void FPostProcessCompositingPass::UdpateCameraConstants()
     else
     {
         // tnwjd
-        APlayerCameraManager* PCM = EditorEngine->GetGameInstance()->GetLocalPlayer()->GetPlayerController()->PlayerCameraManager;
+        APlayerCameraManager* PCM = EditorEngine->GetGameInstance()->GetLocalPlayer()->GetPlayerController()->GetPlayerCameraManager();
     
         CameraFadeData.FadeColor = PCM->FadeColor;
         CameraFadeData.FadeAlpha = PCM->FadeAmount;

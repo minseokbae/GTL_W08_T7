@@ -9,6 +9,8 @@ class UCameraModifier;
 
 class UCameraTransitionModifier;
 
+class UCameraShakeBase;
+
 class APlayerCameraManager;
 
 class FLuaCompiler
@@ -42,5 +44,6 @@ private:
     void GameOver();
 
     UCameraTransitionModifier* CreateCameraTransitionModifier(USceneComponent* Comp);
+    UCameraShakeBase* CreateCameraShake(float Duration, float BlendInTime = 0.1f, float BlendOutTime = 0.2f);
     void ChangeViewMode(int ViewModeIndex);
 };

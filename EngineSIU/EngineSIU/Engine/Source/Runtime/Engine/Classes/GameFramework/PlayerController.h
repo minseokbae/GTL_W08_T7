@@ -28,8 +28,9 @@ public:
 
     float MouseSens = 0.01f;
 
-    APlayerCameraManager* PlayerCameraManager;
     UCameraShakeBase* CameraShakeModifier;
+    
+    APlayerCameraManager* GetPlayerCameraManager() { return PlayerCameraManager; }
 
 private:
     // Just for game-jam
@@ -41,4 +42,5 @@ private:
     //void HandleMouseMove(const FPointerEvent& InMouseEvent);
 
     FSlateAppMessageHandler* MyMessageHandler;
+    APlayerCameraManager* PlayerCameraManager;
 };

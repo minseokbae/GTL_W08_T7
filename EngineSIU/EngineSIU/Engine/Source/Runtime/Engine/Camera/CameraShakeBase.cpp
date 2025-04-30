@@ -91,7 +91,8 @@ bool UCameraShakeBase::ModifyCamera(float DeltaTime, APlayerCameraManager* NewCa
     CachedRotation = ResultQuat.ToRotator();
 
     NewCameraManager->GetCachedCamera()->SetRelativeLocation(CachedLocation);
-    NewCameraManager->GetCachedCamera()->SetRelativeRotation(CachedRotation);
+    //NewCameraManager->GetCachedCamera()->SetRelativeRotation(CachedRotation);
+    NewCameraManager->ViewTarget.Target->SetActorRotation(FRotator(0.f, CachedRotation.Yaw, CachedRotation.Roll));
     return false;
 }
 

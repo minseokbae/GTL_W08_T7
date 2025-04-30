@@ -73,7 +73,7 @@ void FEditorViewportClient::UpdateEditorCameraMovement(float DeltaTime)
     {
         AController* PlayerController =  EditorEngine->GetCurrentController(); 
         APawn* Pawn = PlayerController->GetPossessingPawn();
-        APlayerCameraManager* PCM = Cast<APlayerController>(PlayerController)->PlayerCameraManager;
+        APlayerCameraManager* PCM = Cast<APlayerController>(PlayerController)->GetPlayerCameraManager();
         if (UCameraComponent* Cam = PCM->GetCachedCamera())
         {
             FVector WorldLoc = Cam->GetWorldLocation();

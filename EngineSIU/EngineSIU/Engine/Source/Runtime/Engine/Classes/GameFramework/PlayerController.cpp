@@ -68,16 +68,6 @@ void APlayerController::Input()
         bIsRunning = true;
     }
 
-    if (CameraShakeModifier != nullptr && bIsRunning)
-    {
-        CameraShakeModifier->PlayShake();
-
-        UE_LOG(ELogLevel::Error, "PlayShake");
-    }
-    else
-    {
-        UE_LOG(ELogLevel::Error, TEXT("CameraShakeModifier is NULL when trying to PlayShake!"));
-    }
 
     POINT cur;
     GetCursorPos(&cur);
@@ -193,18 +183,6 @@ void APlayerController::HandleKeyDown(const FKeyEvent& InKeyEvent)
         }
     }
     if (!bIsRunning) return;
-    
-    
-    if (this->CameraShakeModifier != nullptr)
-    {
-        this->CameraShakeModifier->PlayShake();
-
-        UE_LOG(ELogLevel::Error, "PlayShake");
-    }
-    else
-    {
-        UE_LOG(ELogLevel::Error, TEXT("CameraShakeModifier is NULL when trying to PlayShake!"));
-    }
 }
 
 void APlayerController::HandleKeyUp(const FKeyEvent& InKeyEvent)
@@ -235,16 +213,6 @@ void APlayerController::HandleKeyUp(const FKeyEvent& InKeyEvent)
         }
     }
     if (bIsRunning) return;
-
-    if (this->CameraShakeModifier != nullptr)
-    {
-        this->CameraShakeModifier->StopShake();
-        UE_LOG(ELogLevel::Error, "StopShake");
-    }
-    else
-    {
-        UE_LOG(ELogLevel::Error, TEXT("CameraShakeModifier is NULL when trying to PlayShake!"));
-    }
 }
 
 //void APlayerController::HandleMouseMove(const FPointerEvent& InPointerEvent)
