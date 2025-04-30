@@ -28,11 +28,11 @@ void UnrealEd::Render() const
         Panel.Value->Render();
     }
 
-    UEditorEngine* EditorEngine = Cast<UEditorEngine>(GEngine);
-    if (EditorEngine->PIEWorld)
-    {
-        PIEPanel->Render();
-    }
+    //UEditorEngine* EditorEngine = Cast<UEditorEngine>(GEngine);
+    //if (EditorEngine->PIEWorld)
+    //{
+    //    PIEPanel->Render();
+    //}
 }
 
 void UnrealEd::AddEditorPanel(const FString& PanelId, const std::shared_ptr<UEditorPanel>& EditorPanel)

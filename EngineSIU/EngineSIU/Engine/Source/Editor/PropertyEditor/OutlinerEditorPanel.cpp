@@ -6,11 +6,13 @@
 
 void OutlinerEditorPanel::Render()
 {
-    /* Pre Setup */
-    ImGuiIO& io = ImGui::GetIO();
-    
-    float PanelWidth = (Width) * 0.2f - 6.0f;
-    float PanelHeight = (Height) * 0.3f;
+    //if (GEngine->ActiveWorld->WorldType == EWorldType::Editor)
+    //{
+        /* Pre Setup */
+        ImGuiIO& io = ImGui::GetIO();
+
+        float PanelWidth = (Width) * 0.2f - 6.0f;
+        float PanelHeight = (Height) * 0.3f;
 
     float PanelPosX = (Width) * 0.8f + 5.0f;
     float PanelPosY = 5.0f;
@@ -89,7 +91,8 @@ void OutlinerEditorPanel::Render()
 
     ImGui::EndChild();
 
-    ImGui::End();
+        ImGui::End();
+    //}
 }
     
 void OutlinerEditorPanel::OnResize(HWND hWnd)

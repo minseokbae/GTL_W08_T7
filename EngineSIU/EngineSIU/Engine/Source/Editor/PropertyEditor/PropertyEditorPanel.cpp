@@ -35,9 +35,11 @@
 #include "GameFramework/SpringArmComponent.h"
 void PropertyEditorPanel::Render()
 {
-    /* Pre Setup */
-    float PanelWidth = (Width) * 0.2f - 6.0f;
-    float PanelHeight = (Height) * 0.65f;
+    //if (GEngine->ActiveWorld->WorldType == EWorldType::Editor)
+    //{
+        /* Pre Setup */
+        float PanelWidth = (Width) * 0.2f - 6.0f;
+        float PanelHeight = (Height) * 0.65f;
 
     float PanelPosX = (Width) * 0.8f + 5.0f;
     float PanelPosY = (Height) * 0.3f + 15.0f;
@@ -693,13 +695,12 @@ void PropertyEditorPanel::Render()
                 ImGui::Checkbox("Inherit Yaw", &SpringArmComponent->bInheritYaw);
                 ImGui::Checkbox("Inherit Roll", &SpringArmComponent->bInheritRoll);
 
-                ImGui::TreePop();
+                    ImGui::TreePop();
+                }
+                ImGui::PopStyleColor();
             }
-            ImGui::PopStyleColor();
-        }
-
-
-    ImGui::End();
+        ImGui::End();
+    //}
 }
 
 void PropertyEditorPanel::RGBToHSV(float r, float g, float b, float& h, float& s, float& v) const

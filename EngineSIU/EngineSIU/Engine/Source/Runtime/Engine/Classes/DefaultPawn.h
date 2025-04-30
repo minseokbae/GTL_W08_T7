@@ -1,7 +1,8 @@
-﻿#pragma once
+#pragma once
 #include "Camera/CameraComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/Pawn.h"
+#include "GameFramework/SpringArmComponent.h"
 
 class ADefaultPawn : public APawn
 {
@@ -14,4 +15,5 @@ public:
 protected:
     UStaticMeshComponent* StaticMeshComponent = nullptr;
     UCameraComponent* CameraComponent = nullptr;
+    USpringArmComponent* SpringArmComponent = nullptr;
 };
