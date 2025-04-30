@@ -178,6 +178,35 @@ FVector JungleMath::QuaternionToEuler(const FQuat& quat)
     euler.X = FMath::RadiansToDegrees(atan2(sinRoll, cosRoll));
     return euler;
 }
+
+float JungleMath::FInterpTo(const float& CurrentLoc, const float& TargetLoc, float DeltaTime, float Speed)
+{
+    float Dist = FMath::Abs(TargetLoc - CurrentLoc);
+    if (Dist < 0.1f)
+        return TargetLoc;
+    float Alpha = FMath::Clamp(Speed * DeltaTime, 0.0f, 1.0f);
+    float  Result = CurrentLoc + (TargetLoc - CurrentLoc) * Alpha;
+    return Result;
+}
+
+FVector JungleMath::FInterpTo(const FVector& CurrentLoc, const FVector& TargetLoc, float DeltaTime, float Speed)
+{
+    float Dist = (TargetLoc - CurrentLoc).Length();
+    if (Dist < 0.1f)
+        return TargetLoc;
+    float Alpha = FMath::Clamp(Speed * DeltaTime, 0.0f, 1.0f);
+    FVector Result = CurrentLoc + (TargetLoc - CurrentLoc) * Alpha;
+    return Result;
+}
+FRotator JungleMath::RInterpTo(const FRotator& CurrentRot, const FRotator& TargetRot, float DeltaTime, float Speed)
+{
+    float Dist = (TargetRot - CurrentRot).ToVector().Length();
+    if (Dist < 0.01f)
+        return TargetRot;
+    float Alpha = FMath::Clamp(Speed * DeltaTime, 0.0f, 1.0f);
+    FQuat Result = FQuat::Slerp(CurrentRot.ToQuaternion(), TargetRot.ToQuaternion(), Alpha);
+    return FRotator(Result);
+}
 FVector JungleMath::FVectorRotate(FVector& origin, const FRotator& InRotation)
 {
     return InRotation.ToQuaternion().RotateVector(origin);

@@ -76,13 +76,16 @@ void FEditorViewportClient::UpdateEditorCameraMovement(float DeltaTime)
         APlayerCameraManager* PCM = Cast<APlayerController>(PlayerController)->PlayerCameraManager;
         if (UCameraComponent* Cam = PCM->GetCachedCamera())
         {
-            FVector LocalLoc = Cam->GetRelativeLocation();
-            FVector PawnWorldLoc = Pawn->GetActorLocation();
-            FRotator WorldRoc =Cam->GetWorldRotation();
-            // UE_LOG(ELogLevel::Warning, "Camera Comp Loc : %f %f %f", WorldLoc.X, WorldLoc.Y, WorldLoc.Z);
-            FVector RotLoc = JungleMath::FVectorRotate(LocalLoc, WorldRoc);
-            PerspectiveCamera.SetLocation(PawnWorldLoc + RotLoc);
-            
+            FVector WorldLoc = Cam->GetWorldLocation();
+            //3인칭 카메라용
+            //FVector LocalLoc = Cam->GetRelativeLocation();
+            //FVector PawnWorldLoc = Pawn->GetActorLocation();
+            //FRotator WorldRoc =Cam->GetWorldRotation();
+            //// UE_LOG(ELogLevel::Warning, "Camera Comp Loc : %f %f %f", WorldLoc.X, WorldLoc.Y, WorldLoc.Z);
+            //FVector RotLoc = JungleMath::FVectorRotate(LocalLoc, WorldRoc);
+            //PerspectiveCamera.SetLocation(PawnWorldLoc + RotLoc);
+            PerspectiveCamera.SetLocation(WorldLoc);
+
             FVector WorldRocVec = FVector(Cam->GetWorldRotation().Roll,Cam->GetWorldRotation().Pitch,Cam->GetWorldRotation().Yaw);
             PerspectiveCamera.SetRotation(WorldRocVec);
             ViewFOV = Cam->GetFieldOfView();

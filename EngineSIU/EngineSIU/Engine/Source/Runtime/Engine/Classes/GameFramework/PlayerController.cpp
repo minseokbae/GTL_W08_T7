@@ -45,20 +45,8 @@ void APlayerController::Input()
     {
         Pawn->SetActorLocation(Pawn->GetActorLocation() + Pawn->GetActorForwardVector() * 0.1f);
         Pawn->GetRootComponent()->ComponentVelocity += Pawn->GetActorForwardVector() * 0.1f;
-        //if (!btest)
-        //{
-        //    btest = true;
-        //    CameraShakeModifier->PlayShake();
-
-        //}
-        //bIsRunning = true;
+        bIsRunning=true;
     }
-    //else {
-    //    if(btest){
-    //    btest = false;
-    //    CameraShakeModifier->StopShake();
-    //    }
-    //}
     if (GetAsyncKeyState('S') & 0x8000)
     {
         Pawn->SetActorLocation(Pawn->GetActorLocation() - Pawn->GetActorForwardVector() * 0.1f);
@@ -155,6 +143,7 @@ void APlayerController::InitMouseLook()
 void APlayerController::SpawnPlayerCameraManager()
 {
     PlayerCameraManager = GetWorld()->SpawnActor<APlayerCameraManager>();
+    GEngineLoop.LuaCompiler.AddPlayerCameraMangerToLua(PlayerCameraManager);
     PlayerCameraManager->InitializeFor(this);
     if (Pawn)
         PlayerCameraManager->SetViewTarget(Pawn);

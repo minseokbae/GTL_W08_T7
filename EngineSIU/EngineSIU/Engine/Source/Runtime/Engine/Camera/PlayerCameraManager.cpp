@@ -4,6 +4,7 @@
 #include "CameraModifier.h"
 #include "WindowsPlatformTime.h"
 #include "GameFramework/PlayerController.h"
+#include "GameFramework/Pawn.h"
 
 APlayerCameraManager::APlayerCameraManager()
 {
@@ -29,7 +30,7 @@ void APlayerCameraManager::InitializeFor(APlayerController* PC)
     for (auto Comp : TargetActor->GetComponents())
     {
         UCameraComponent* Cam =Cast<UCameraComponent>(Comp);
-        if ( Cam)
+        if (Cam)
         {
             CachedCamera = Cam;
             break;

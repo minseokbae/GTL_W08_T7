@@ -42,4 +42,5 @@ public:
     void UnBindDelegates();
     void OnComponentBeginOverlap(UShapeComponent* OverlappedComponent, AActor* OtherActor, UShapeComponent* OtherComp);
     void OnComponentEndOverlap(UShapeComponent* OverlappedComponent, AActor* OtherActor, UShapeComponent* OtherComp);
+    void UpdateGlobal(sol::state& Lua);
 };

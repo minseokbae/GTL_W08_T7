@@ -88,6 +88,17 @@ FQuat FQuat::operator*(const FQuat& Other) const
         );
 }
 
+FQuat FQuat::operator^(float t) const
+{
+    float Angle = 0;
+    FVector Normal;
+
+    ToAxisAngle(Normal, Angle);
+
+    float TAngle = Angle * t;
+    return FQuat(Normal, TAngle);
+}
+
 FVector FQuat::RotateVector(const FVector& Vec) const
 {
     // 벡터를 쿼터니언으로 변환
@@ -117,6 +128,26 @@ FQuat FQuat::FromAxisAngle(const FVector& Axis, float Angle)
     return FQuat(cosf(halfAngle), Axis.X * sinHalfAngle, Axis.Y * sinHalfAngle, Axis.Z * sinHalfAngle);
 }
 
+void FQuat::ToAxisAngle(FVector OutAxis, float OutAngle) const
+{
+    if (W > 1.0f)
+        Normalize();
+
+    OutAngle = 2.0f * acosf(W);
+    float sinTheta = sqrtf(1.0f - W * W);
+
+    if (sinTheta < 0.001f)
+    {
+        OutAxis = FVector(0, 0, 1);
+    }
+    else
+    {
+        OutAxis.X = X / sinTheta;
+        OutAxis.Y = Y / sinTheta;
+        OutAxis.Z = Z / sinTheta;
+    }
+}
+
 FQuat FQuat::CreateRotation(float roll, float pitch, float yaw)
 {
     // 각도를 라디안으로 변환
@@ -131,6 +162,49 @@ FQuat FQuat::CreateRotation(float roll, float pitch, float yaw)
 
     // 회전 순서대로 쿼터니언 결합 (Y -> X -> Z)
     return qRoll * qPitch * qYaw;
+}
+
+FQuat FQuat::Slerp(const FQuat& A, const FQuat& B, float Alpha)
+{
+    FQuat NormalizedA = A.Normalize();
+    FQuat NormalizedB = B.Normalize();
+
+    float dot = NormalizedA.W * NormalizedB.W + NormalizedA.X * NormalizedB.X + NormalizedA.Y * NormalizedB.Y + NormalizedA.Z * NormalizedB.Z;
+
+    if (dot < 0.0f)
+    {
+        NormalizedB = FQuat(-NormalizedB.W, -NormalizedB.X, -NormalizedB.Y, -NormalizedB.Z);
+        dot = -dot;
+    }
+
+    const float DOT_THRESHOLD = 0.00095f;
+    if (dot > DOT_THRESHOLD)
+    {
+        FQuat result = FQuat(
+            FMath::Lerp(NormalizedA.W, NormalizedB.W, Alpha),
+            FMath::Lerp(NormalizedA.X, NormalizedB.X, Alpha),
+            FMath::Lerp(NormalizedA.Y, NormalizedB.Y, Alpha),
+            FMath::Lerp(NormalizedA.Z, NormalizedB.Z, Alpha)
+        );
+        return result.Normalize();
+    }
+
+    float theta_0 = acosf(dot);
+    float theta = theta_0 * Alpha;
+    float sin_theta = sinf(theta);
+    float sin_theta_0 = sinf(theta_0);
+
+    float s0 = cosf(theta) - dot * sin_theta / sin_theta_0;
+    float s1 = sin_theta / sin_theta_0;
+
+    FQuat result = FQuat(
+        s0 * NormalizedA.W + s1 * NormalizedB.W,
+        s0 * NormalizedA.X + s1 * NormalizedB.X,
+        s0 * NormalizedA.Y + s1 * NormalizedB.Y,
+        s0 * NormalizedA.Z + s1 * NormalizedB.Z
+    );
+
+    return result.Normalize();
 }
 
 FMatrix FQuat::ToMatrix() const

@@ -10,6 +10,8 @@ FLuaInstance::FLuaInstance(sol::state& Lua, USceneComponent* Comp, FString FileP
 {
     Env["obj"] = Comp;
 
+    Env["Global"] = Lua["Global"];
+
     BindedActor = Comp->GetOwner();
 
     for (const auto& Comp : BindedActor->GetComponents())
@@ -148,4 +150,9 @@ void FLuaInstance::OnComponentEndOverlap(UShapeComponent* OverlappedComponent, A
                 OnEndOverlapFunc(OtherActor->GetRootComponent());
         }
     }
+}
+
+void FLuaInstance::UpdateGlobal(sol::state& Lua)
+{
+    Env["Global"] = Lua["Global"];
 }

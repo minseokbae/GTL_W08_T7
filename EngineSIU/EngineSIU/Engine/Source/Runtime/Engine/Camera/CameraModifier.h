@@ -23,6 +23,8 @@ protected:
     float AlphaOutTime;
     float Alpha;
     bool bDisabled = false;
+    float BezierCurve[5];
+    bool bUseBezier = false;
 
     uint8 Priority;
 
@@ -33,6 +35,7 @@ public:
     virtual void AddedToCamera(APlayerCameraManager* Camera);
     bool IsDisabled() { return bDisabled; }
 
+    void LoadBezierInfo();
 };
 
 

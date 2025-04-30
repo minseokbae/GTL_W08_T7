@@ -29,6 +29,8 @@ struct FQuat
     // 쿼터니언의 곱셈 연산 (회전 결합)
     FQuat operator*(const FQuat& Other) const;
 
+    FQuat operator^(float t) const;
+
     // (쿼터니언) 벡터 회전
     FVector RotateVector(const FVector& Vec) const;
 
@@ -41,7 +43,12 @@ struct FQuat
     // 회전 각도와 축으로부터 쿼터니언 생성 (axis-angle 방식)
     static FQuat FromAxisAngle(const FVector& Axis, float Angle);
 
+    void ToAxisAngle(FVector OutAxis, float OutAngle) const;
+
     static FQuat CreateRotation(float roll, float pitch, float yaw);
+
+    //회전 용 lerp
+    static FQuat Slerp(const FQuat& A, const FQuat& B, float Alpha);
 
     // 쿼터니언을 회전 행렬로 변환
     FMatrix ToMatrix() const;
