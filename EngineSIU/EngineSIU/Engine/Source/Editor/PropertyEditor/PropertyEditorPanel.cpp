@@ -67,26 +67,29 @@ void PropertyEditorPanel::Render()
     AActor* PickedActor = Engine->GetSelectedActor();
     USceneComponent* SelectedComponent = Engine->GetSelectedComponent();
 
-    bool bShouldSave = false;
+    if (GEngine->ActiveWorld->WorldType == EWorldType::Editor)
+    {
+        bool bShouldSave = false;
 
-    if (!bInitialized)
-    {
-        LoadBezier(CurveParams, bUseBezier);
-    }
+        if (!bInitialized)
+        {
+            LoadBezier(CurveParams, bUseBezier);
+        }
 
-    ImGui::Text("Bezier Curve Editor");
-    if (ImGui::Bezier("MyCurve", CurveParams))
-    {
-        bShouldSave = true;
-    }
-    if (ImGui::Checkbox("Use Bezier", &bUseBezier))
-    {
-        bShouldSave = true;
-    }
+        ImGui::Text("Bezier Curve Editor");
+        if (ImGui::Bezier("MyCurve", CurveParams))
+        {
+            bShouldSave = true;
+        }
+        if (ImGui::Checkbox("Use Bezier", &bUseBezier))
+        {
+            bShouldSave = true;
+        }
 
-    if (bShouldSave)
-    {
-        SaveBezier(CurveParams, bUseBezier);
+        if (bShouldSave)
+        {
+            SaveBezier(CurveParams, bUseBezier);
+        }
     }
 
     if (SelectedComponent)

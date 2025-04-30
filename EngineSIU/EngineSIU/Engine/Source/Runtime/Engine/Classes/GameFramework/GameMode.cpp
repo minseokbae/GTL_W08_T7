@@ -44,7 +44,7 @@ void AGameMode::GameOver()
 {
     //TODO : GameOver UI 띄우기
     HP--;
-    if (HP<= 0)
+    if (HP< 0)
     {
         bGameOver = true;
         UE_LOG(ELogLevel::Display, "GameOver");

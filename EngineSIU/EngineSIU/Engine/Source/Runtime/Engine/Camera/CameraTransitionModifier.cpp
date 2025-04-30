@@ -39,7 +39,7 @@ bool UCameraTransitionModifier::ModifyCamera(float DeltaTime, APlayerCameraManag
     {
         CachedCamera->SetFieldOfView(FMath::Lerp(CachedCamera->GetFieldOfView(), TargetFOV, ElapsedTime / ModifyDuration));
         float LocationSpeed = (TargetLocation - CachedCamera->GetRelativeLocation()).Length() / ModifyDuration;
-        float RotationSpeed = FMath::RadiansToDegrees((TargetRotation - CachedCamera->GetRelativeLocation()).ToVector().Length()) / ModifyDuration;
+        float RotationSpeed = FMath::DegreesToRadians((TargetRotation - CachedCamera->GetRelativeLocation()).ToVector().Length()) / ModifyDuration;
         CachedCamera->SetRelativeLocation(JungleMath::FInterpTo(CachedCamera->GetRelativeLocation(), TargetLocation, DeltaTime, LocationSpeed));
         CachedCamera->SetRelativeRotation(JungleMath::RInterpTo(CachedCamera->GetRelativeLocation(), TargetRotation, DeltaTime, RotationSpeed));
     }
