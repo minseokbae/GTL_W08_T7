@@ -56,7 +56,6 @@ void APlayerCameraManager::Tick(float DeltaTime)
     FVector NewLocation;
     FRotator NewRotation;
     float NewFOV;
-    bool bCanControl = true;
     for (auto modifier : ModifierList)
     {
         if (!modifier->IsDisabled())
@@ -66,12 +65,8 @@ void APlayerCameraManager::Tick(float DeltaTime)
             CachedCamera->SetRelativeLocation(NewLocation);
             CachedCamera->SetRelativeRotation(NewRotation);
             CachedCamera->SetFieldOfView(NewFOV);
-            bCanControl = false;
         }
     }
-    APawn* Pawn = Cast<APawn>(ViewTarget.Target);
-    if (Pawn)
-        Pawn->SetCanControl(bCanControl);
 }
 
 void APlayerCameraManager::AddCameraModifier(UCameraModifier* CameraModifier)
