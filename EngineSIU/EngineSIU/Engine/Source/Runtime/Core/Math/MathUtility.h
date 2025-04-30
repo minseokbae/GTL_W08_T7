@@ -2,6 +2,7 @@
 #include <cmath>
 #include <numbers>
 #include "Core/HAL/PlatformType.h"
+#include "Math/Quat.h"
 
 
 #define PI                   (3.1415926535897932f)
@@ -185,4 +186,41 @@ struct FMath
 		}
 		return A;
 	}
+
+    template <typename T>
+    [[nodiscard]] static FORCEINLINE T QInterpTo(const T& Current, const T& Target, float DeltaTime, float InterpSpeed)
+    {
+        if (InterpSpeed <= 0.f)
+        {
+            return Target;
+        }
+
+        if (Current.Equals(Target, SMALL_NUMBER))
+        {
+            return Target;
+        }
+
+        return FQuat::Slerp(Current, Target, Clamp<float>(InterpSpeed * DeltaTime, 0.f, 1.f));
+    }
+
+    template <typename T>
+    [[nodiscard]] static FORCEINLINE T VInterpTo(const T& Current, const T& Target, float DeltaTime, float InterpSpeed)
+    {
+        if (InterpSpeed <= 0.f)
+        {
+            return Target;
+        }
+        const T Dist = Target - Current;
+
+        // LengthSquared()는 T에 정의되어 있어야 함
+        if (Dist.LengthSquared() < DBL_EPSILON)
+        {
+            return Target;
+        }
+
+        const float DeltaMoveAlpha = Clamp<float>(DeltaTime * InterpSpeed, 0.f, 1.f);
+        const T DeltaMove = Dist * DeltaMoveAlpha;
+
+        return Current + DeltaMove;
+    }
 };

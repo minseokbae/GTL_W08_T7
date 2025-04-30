@@ -10,7 +10,7 @@ USceneComponent::USceneComponent()
     : RelativeLocation(FVector(0.f, 0.f, 0.f))
     , RelativeRotation(FVector(0.f, 0.f, 0.f))
     , RelativeScale3D(FVector(1.f, 1.f, 1.f))
-    , ComponentVelocity(FVector(20.f, 0.f, 0.f))
+    , ComponentVelocity(FVector(0.f, 0.f, 0.f))
 {
 }
 
