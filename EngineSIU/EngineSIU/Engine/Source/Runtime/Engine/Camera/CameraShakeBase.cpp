@@ -26,7 +26,7 @@ void UCameraShakeBase::StopShake(bool bImmediate)
     {
         bIsActive = false;
         bIsFinished = true; 
-        ElapsedTime = Duration; // 강제로 시간 완료 (선택적)
+        ElapsedTime = Duration;
     }
     else
     {
@@ -86,11 +86,9 @@ void UCameraShakeBase::ModifyCamera(float DeltaTime, FVector ViewLocation, FRota
     FVector OffsetInPawnSpace = BaseRelativeQuat.RotateVector(LocalLocationOffset);
     NewViewLocation += OffsetInPawnSpace;
 
-    // --- 회전 오프셋 적용 ---
-    FQuat ShakeQuat = LocalRotationOffset.ToQuaternion(); // FRotator::Quaternion() 구현 필요
-    // 베이스 회전(BaseRelativeQuat) 이후에 로컬 셰이크 회전(ShakeQuat) 적용
+    FQuat ShakeQuat = LocalRotationOffset.ToQuaternion();
     FQuat ResultQuat = BaseRelativeQuat * ShakeQuat;
-    NewViewRotation = ResultQuat.ToRotator(); // FQuat::ToRotator 구현 필요
+    NewViewRotation = ResultQuat.ToRotator();
 }
 
 float UCameraShakeBase::GetBlendWeight() const
@@ -117,7 +115,6 @@ float UCameraShakeBase::GetBlendWeight() const
             BlendWeight = ElapsedTime / BlendInTime;
         }
 
-        // Blend Out
         // Blend Out은 Blend In보다 우선순위가 낮아야 겹칠 때 올바르게 처리됨
         if (BlendOutTime > 0.0f && ElapsedTime > Duration - BlendOutTime)
         {
@@ -131,21 +128,17 @@ float UCameraShakeBase::GetBlendWeight() const
 
 void UCameraShakeBase::CalculateShakeOffsets(float CurrentTime, FVector& OutLocationOffset, FRotator& OutRotationOffset)
 {
-    // 각 축에 대해 약간 다른 노이즈를 얻기 위해 2D 노이즈 사용
-    // GetNoise(x, y) -> x는 시간 기반, y는 고정된 오프셋 사용
+    //const float LocFreqMultiplier = ShakePattern.LocationFrequencyMultiplier;
+    //const float LocAmplMultiplier = ShakePattern.LocationAmplitudeMultiplier;
+    //const float LocTime = CurrentTime * LocFreqMultiplier;
 
-    const float LocFreqMultiplier = ShakePattern.LocationFrequencyMultiplier;
-    const float LocAmplMultiplier = ShakePattern.LocationAmplitudeMultiplier;
-    const float LocTime = CurrentTime * LocFreqMultiplier;
+    //float RawLocX = NoiseGenerator.GetNoise(LocTime, 10.0f) * ShakePattern.LocationAmplitude.X * LocAmplMultiplier;
+    //float RawLocY = NoiseGenerator.GetNoise(LocTime, 20.0f) * ShakePattern.LocationAmplitude.Y * LocAmplMultiplier;
+    //float RawLocZ = NoiseGenerator.GetNoise(LocTime, 30.0f) * ShakePattern.LocationAmplitude.Z * LocAmplMultiplier;
 
-    // NoiseGenerator.GetNoise는 보통 -1 ~ 1 범위의 값을 반환
-    float RawLocX = NoiseGenerator.GetNoise(LocTime, 10.0f) * ShakePattern.LocationAmplitude.X * LocAmplMultiplier;
-    float RawLocY = NoiseGenerator.GetNoise(LocTime, 20.0f) * ShakePattern.LocationAmplitude.Y * LocAmplMultiplier;
-    float RawLocZ = NoiseGenerator.GetNoise(LocTime, 30.0f) * ShakePattern.LocationAmplitude.Z * LocAmplMultiplier;
-
-    OutLocationOffset.X = FMath::Clamp(RawLocX, -ShakePattern.MaxLocationOffsetClamp.X, ShakePattern.MaxLocationOffsetClamp.X);
-    OutLocationOffset.Y = FMath::Clamp(RawLocY, -ShakePattern.MaxLocationOffsetClamp.Y, ShakePattern.MaxLocationOffsetClamp.Y);
-    OutLocationOffset.Z = FMath::Clamp(RawLocZ, -ShakePattern.MaxLocationOffsetClamp.Z, ShakePattern.MaxLocationOffsetClamp.Z);
+    //OutLocationOffset.X = FMath::Clamp(RawLocX, -ShakePattern.MaxLocationOffsetClamp.X, ShakePattern.MaxLocationOffsetClamp.X);
+    //OutLocationOffset.Y = FMath::Clamp(RawLocY, -ShakePattern.MaxLocationOffsetClamp.Y, ShakePattern.MaxLocationOffsetClamp.Y);
+    //OutLocationOffset.Z = FMath::Clamp(RawLocZ, -ShakePattern.MaxLocationOffsetClamp.Z, ShakePattern.MaxLocationOffsetClamp.Z);
 
     const float RotFreqMultiplier = ShakePattern.RotationFrequencyMultiplier;
     const float RotAmplMultiplier = ShakePattern.RotationAmplitudeMultiplier;

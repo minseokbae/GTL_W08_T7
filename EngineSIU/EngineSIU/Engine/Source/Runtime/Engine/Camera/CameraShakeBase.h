@@ -5,16 +5,15 @@
 
 struct FCameraShakePattern
 {
-    float LocationAmplitudeMultiplier = 0.5f;
-    float LocationFrequencyMultiplier = 0.5f;
-    FVector LocationAmplitude = FVector(0.05f, 0.05f, 0.05f);
+    //float LocationAmplitudeMultiplier = 0.5f;
+    //float LocationFrequencyMultiplier = 0.5f;
+    //FVector LocationAmplitude = FVector(0.05f, 0.05f, 0.05f);
 
-    float RotationAmplitudeMultiplier = 0.5f;
-    float RotationFrequencyMultiplier = 1.f;
+    float RotationAmplitudeMultiplier = 1.f;
+    float RotationFrequencyMultiplier = 10.f;
     FVector RotationAmplitude = FVector(1.f, 1.f, 1.f);
 
     // 일단 Perlin Noise Camera Shake Pattern을 기본으로 잡고 한다.
-    // 다른 패턴을 사용하면 다른 파라미터를 추가해야함. 아니면 structure를 분기하던가
     float NoiseFrequency = 0.2f;
     int NoiseSeed = 1337;       
     FastNoiseLite::NoiseType NoiseType = FastNoiseLite::NoiseType_Perlin;
@@ -23,9 +22,8 @@ struct FCameraShakePattern
     float NoiseLacunarity = 2.0f;
     float NoiseGain = 0.3f;      
 
-
-    FVector MaxLocationOffsetClamp = FVector(0.05f, 0.05f, 0.05f); // 최대 위치 오프셋 (단위)
-    FVector MaxRotationOffsetClamp = FVector(1.0f, 1.0f, 1.0f); // 최대 회전 오프셋 (Pitch, Yaw, Roll 순서, 단위: 도)
+    //FVector MaxLocationOffsetClamp = FVector(0.05f, 0.05f, 0.05f); 
+    FVector MaxRotationOffsetClamp = FVector(1.0f, 1.0f, 1.0f); 
 };
 
 class UCameraShakeBase : public UCameraModifier

@@ -19,6 +19,7 @@ APlayerController::APlayerController()
     , PlayerCameraManager(nullptr)
     , CameraShakeModifier(nullptr)
     , MyMessageHandler(nullptr)
+    , bIsRunning(false)
 {
     MouseCenterPos = { 0, 0 };
 }
@@ -36,19 +37,8 @@ void APlayerController::Input()
     if (GetAsyncKeyState('W') & 0x8000)
     {
         Pawn->SetActorLocation(Pawn->GetActorLocation() + Pawn->GetActorForwardVector() * 0.1f);
-        Pawn->GetRootComponent()->ComponentVelocity +=Pawn->GetActorForwardVector() * 0.1f;
-        // if (!bWKeyClicked)
-        // {
-        //     bWKeyClicked = true;
-        //     CameraShakeModifier->PlayShake();
-        //     UE_LOG(ELogLevel::Display, "PlayShake");
-        // }
+        Pawn->GetRootComponent()->ComponentVelocity += Pawn->GetActorForwardVector() * 0.1f;
     }
-    // else
-    // {
-    //     bWKeyClicked = false;
-    //     CameraShakeModifier->StopShake();
-    // }
     if (GetAsyncKeyState('S') & 0x8000)
     {
         Pawn->SetActorLocation(Pawn->GetActorLocation() - Pawn->GetActorForwardVector() * 0.1f);
@@ -68,14 +58,14 @@ void APlayerController::Input()
     }
     POINT cur;
     GetCursorPos(&cur);
-    
+
     float dx = (cur.x - MouseCenterPos.x) * MouseSens;
     float dy = (cur.y - MouseCenterPos.y) * MouseSens;
-    
+
     SetCursorPos(MouseCenterPos.x, MouseCenterPos.y);
-    
+
     FRotator ControlRot = Pawn->GetActorRotation();
-    ControlRot.Yaw   = std::fmod(ControlRot.Yaw + dx, 360.f);
+    ControlRot.Yaw = std::fmod(ControlRot.Yaw + dx, 360.f);
     // ControlRot.Pitch = FMath::Clamp(ControlRot.Pitch + dy, -45.f, +45.f);
 
     Pawn->GetRootComponent()->SetRelativeRotation(ControlRot);
@@ -94,6 +84,8 @@ void APlayerController::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
     MyMessageHandler->OnKeyDownDelegate.RemoveAllForObject(this);
     MyMessageHandler->OnKeyUpDelegate.RemoveAllForObject(this);
+
+    //MyMessageHandler->OnMouseMoveDelegate.RemoveAllForObject(this);
 }
 
 void APlayerController::Initialize()
@@ -105,6 +97,8 @@ void APlayerController::Initialize()
     {
         MyMessageHandler->OnKeyDownDelegate.AddDynamic(this, &APlayerController::HandleKeyDown);
         MyMessageHandler->OnKeyUpDelegate.AddDynamic(this, &APlayerController::HandleKeyUp);
+
+        //MyMessageHandler->OnMouseMoveDelegate.AddDynamic(this, &APlayerController::HandleMouseMove);
     }
 }
 
@@ -156,27 +150,32 @@ void APlayerController::HandleKeyDown(const FKeyEvent& InKeyEvent)
         switch (character)
         {
         case 'W':
-            if (this->CameraShakeModifier != nullptr) // 혹은 간단히 if (CameraShakeModifier)
-            {
-                this->CameraShakeModifier->PlayShake();
-                
-                UE_LOG(ELogLevel::Display, "PlayShake");
-            }
-            else
-            {
-                // 포인터가 null일 경우 에러 로그 출력
-                UE_LOG(ELogLevel::Error, TEXT("CameraShakeModifier is NULL when trying to PlayShake!"));
-            }
+            bIsRunning = true;
             break;
         case 'A':
+            bIsRunning = true;
             break;
         case 'S':
+            bIsRunning = true;
             break;
         case 'D':
+            bIsRunning = true;
             break;
         default:
             break;
         }
+    }
+    if (!bIsRunning) return;
+
+    if (this->CameraShakeModifier != nullptr)
+    {
+        this->CameraShakeModifier->PlayShake();
+
+        UE_LOG(ELogLevel::Display, "PlayShake");
+    }
+    else
+    {
+        UE_LOG(ELogLevel::Error, TEXT("CameraShakeModifier is NULL when trying to PlayShake!"));
     }
 }
 
@@ -190,18 +189,35 @@ void APlayerController::HandleKeyUp(const FKeyEvent& InKeyEvent)
         switch (character)
         {
         case 'W':
-            UE_LOG(ELogLevel::Display, "StopShake");
-            this->CameraShakeModifier->StopShake();
+            bIsRunning = false;
             break;
         case 'A':
+            bIsRunning = false;
             break;
         case 'S':
+            bIsRunning = false;
             break;
         case 'D':
+            bIsRunning = false;
             break;
         default:
             break;
         }
     }
+    if (bIsRunning) return;
+
+    if (this->CameraShakeModifier != nullptr)
+    {
+        this->CameraShakeModifier->StopShake();
+        UE_LOG(ELogLevel::Display, "StopShake");
+    }
+    else
+    {
+        UE_LOG(ELogLevel::Error, TEXT("CameraShakeModifier is NULL when trying to PlayShake!"));
+    }
 }
+
+//void APlayerController::HandleMouseMove(const FPointerEvent& InPointerEvent)
+//{
+//}
 

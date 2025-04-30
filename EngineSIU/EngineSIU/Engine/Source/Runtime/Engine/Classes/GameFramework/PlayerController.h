@@ -22,8 +22,6 @@ public:
 public:
     UPlayer* Player;
     POINT MouseCenterPos;
-
-    bool bWKeyClicked =false;
     
     float MouseSens = 0.01f;
 
@@ -34,5 +32,10 @@ private:
     void HandleKeyDown(const FKeyEvent& InKeyEvent);
     void HandleKeyUp(const FKeyEvent& InKeyEvent);
 
+    //void HandleMouseMove(const FPointerEvent& InMouseEvent);
+
     FSlateAppMessageHandler* MyMessageHandler;
+
+    // Just for game-jam
+    bool bIsRunning;
 };
