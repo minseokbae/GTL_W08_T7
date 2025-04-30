@@ -178,6 +178,17 @@ FVector JungleMath::QuaternionToEuler(const FQuat& quat)
     euler.X = FMath::RadiansToDegrees(atan2(sinRoll, cosRoll));
     return euler;
 }
+
+float JungleMath::FInterpTo(const float& CurrentLoc, const float& TargetLoc, float DeltaTime, float Speed)
+{
+    float Dist = FMath::Abs(TargetLoc - CurrentLoc);
+    if (Dist < 0.1f)
+        return TargetLoc;
+    float Alpha = FMath::Clamp(Speed * DeltaTime, 0.0f, 1.0f);
+    float  Result = CurrentLoc + (TargetLoc - CurrentLoc) * Alpha;
+    return Result;
+}
+
 FVector JungleMath::FInterpTo(const FVector& CurrentLoc, const FVector& TargetLoc, float DeltaTime, float Speed)
 {
     float Dist = (TargetLoc - CurrentLoc).Length();

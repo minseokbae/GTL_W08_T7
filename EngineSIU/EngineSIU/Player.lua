@@ -35,6 +35,7 @@ function OnOverlap(overlapObj)
                     Global.CameraManager:AddCameraModifier(modifier)
                     print("success AddModifier")
                     ChangeViewMode(3)
+                    GameOver()
                     gameOver = true
                 end
             end
