@@ -28,7 +28,7 @@ bool UCameraTransitionModifier::ModifyCamera(float DeltaTime, APlayerCameraManag
         StartRotation = CachedCamera->GetRelativeRotation();
         bInitialized = true;
     }
-    if (GEngine->bUseBezier)
+    if (bUseBezier)
     {
         float BezierValue = ImGui::BezierValue(ElapsedTime / ModifyDuration, BezierCurve);
         CachedCamera->SetFieldOfView(FMath::Lerp(CachedCamera->GetFieldOfView(), TargetFOV, BezierValue));

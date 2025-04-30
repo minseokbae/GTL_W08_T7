@@ -67,12 +67,27 @@ void PropertyEditorPanel::Render()
     AActor* PickedActor = Engine->GetSelectedActor();
     USceneComponent* SelectedComponent = Engine->GetSelectedComponent();
 
-    static float CurveParams[5] = { 0.39f, 0.575f, 0.565f, 1.0f, 0 }; // x1, y1, x2, y2, presetIndex
+    bool bShouldSave = false;
+
+    if (!bInitialized)
+    {
+        LoadBezier(CurveParams, bUseBezier);
+    }
 
     ImGui::Text("Bezier Curve Editor");
-    ImGui::Bezier("MyCurve", CurveParams);
-    GEngine->BezierCurve = CurveParams;
-    ImGui::Checkbox("Use Bezier", &GEngine->bUseBezier);
+    if (ImGui::Bezier("MyCurve", CurveParams))
+    {
+        bShouldSave = true;
+    }
+    if (ImGui::Checkbox("Use Bezier", &bUseBezier))
+    {
+        bShouldSave = true;
+    }
+
+    if (bShouldSave)
+    {
+        SaveBezier(CurveParams, bUseBezier);
+    }
 
     if (SelectedComponent)
     {
@@ -1050,6 +1065,57 @@ void PropertyEditorPanel::RenderCreateMaterialView()
     }
 
     ImGui::End();
+}
+
+void PropertyEditorPanel::LoadBezier(float OutCurveParams[5], bool& OutbUseBezier)
+{
+    FString FilePath = "Bezier.ini";
+    std::ifstream file(*FilePath);
+    if (file.is_open())
+    {
+        std::string line;
+        while (std::getline(file, line))
+        {
+            std::istringstream iss(line);
+            std::string key;
+            if (std::getline(iss, key, '='))
+            {
+                std::string valueStr;
+                if (std::getline(iss, valueStr))
+                {
+                    float value = std::stof(valueStr);
+
+                    if (key.find("BezierCurve") == 0)
+                    {
+                        int index = key.back() - '0'; // assumes index 0~4
+                        if (index >= 0 && index < 5)
+                        {
+                            OutCurveParams[index] = value;
+                        }
+                    }
+                    else if (key == "UseBezier")
+                    {
+                        OutbUseBezier = (value != 0.0f);
+                        value;
+                        OutbUseBezier;
+                        int i = 0;
+                    }
+                }
+            }
+        }
+        file.close();
+    }
+}
+
+void PropertyEditorPanel::SaveBezier(float InCurveParams[5], bool InbUseBezier)
+{
+    FString FilePath = "Bezier.ini";
+    std::ofstream file(*FilePath);
+    for (int i = 0; i < 5; ++i)
+    {
+        file << "BezierCurve" << i << "=" << InCurveParams[i] << "\n";
+    }
+    file << "UseBezier" << "=" << InbUseBezier << "\n";
 }
 
 void PropertyEditorPanel::OnResize(HWND hWnd)

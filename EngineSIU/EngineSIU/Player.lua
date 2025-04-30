@@ -15,9 +15,9 @@ function OnOverlap(overlapObj)
     --충돌 처리 overlapObj는 충돌한 액터의 루트 컴포넌트를 가리킴
     local ok, err = pcall(function()
         print(overlapObj.Tag)
-        PlaySound("score", 1.0, false) -- AddScore
         if (overlapObj.Tag:Equals("Coin")) then
             if not gameOver then
+                PlaySound("score", 1.0, false) -- AddScore
                 AddScore(1)
             end
         elseif overlapObj.Tag:Equals("Ghost") then

@@ -18,7 +18,8 @@ protected:
     float AlphaOutTime;
     float Alpha;
     bool bDisabled = false;
-    float* BezierCurve;
+    float BezierCurve[5];
+    bool bUseBezier = false;
 
 public:
     APlayerCameraManager* GetCameraManager() { return CameraOwner; }
@@ -27,6 +28,7 @@ public:
     void DisableModifier();
     void EnableModifier();
     virtual bool ModifyCamera(float DeltaTime, APlayerCameraManager* NewCameraManager);
+    void LoadBezierInfo();
 };
 
 
