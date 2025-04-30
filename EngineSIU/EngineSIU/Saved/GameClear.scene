@@ -152,7 +152,7 @@
                         "ComponentOwner": "ADefaultPawn_148",
                         "ComponentOwnerClass": "ADefaultPawn",
                         "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
-                        "RelativeLocation": "X=0.000 Y=-2.369 Z=7.673",
+                        "RelativeLocation": "X=-5.000 Y=-2.75 Z=7.673",
                         "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "StaticMeshPath": "Contents/Reference/Reference.obj",

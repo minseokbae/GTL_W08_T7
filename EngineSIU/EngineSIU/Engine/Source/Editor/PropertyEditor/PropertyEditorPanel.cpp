@@ -35,40 +35,40 @@
 #include "Components/BoxComponent.h"
 void PropertyEditorPanel::Render()
 {
-    /* Pre Setup */
-    float PanelWidth = (Width) * 0.2f - 6.0f;
-    float PanelHeight = (Height) * 0.65f;
-
-    float PanelPosX = (Width) * 0.8f + 5.0f;
-    float PanelPosY = (Height) * 0.3f + 15.0f;
-
-    ImVec2 MinSize(140, 370);
-    ImVec2 MaxSize(FLT_MAX, 900);
-
-    /* Min, Max Size */
-    ImGui::SetNextWindowSizeConstraints(MinSize, MaxSize);
-
-    /* Panel Position */
-    ImGui::SetNextWindowPos(ImVec2(PanelPosX, PanelPosY), ImGuiCond_Always);
-
-    /* Panel Size */
-    ImGui::SetNextWindowSize(ImVec2(PanelWidth, PanelHeight), ImGuiCond_Always);
-
-    /* Panel Flags */
-    ImGuiWindowFlags PanelFlags = ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse;
-
-    /* Render Start */
-    ImGui::Begin("Detail", nullptr, PanelFlags);
-
-    UEditorEngine* Engine = Cast<UEditorEngine>(GEngine);
-    if (!Engine)
-        return;
-    AEditorPlayer* player = Engine->GetEditorPlayer();
-    AActor* PickedActor = Engine->GetSelectedActor();
-    USceneComponent* SelectedComponent = Engine->GetSelectedComponent();
-
     if (GEngine->ActiveWorld->WorldType == EWorldType::Editor)
     {
+        /* Pre Setup */
+        float PanelWidth = (Width) * 0.2f - 6.0f;
+        float PanelHeight = (Height) * 0.65f;
+
+        float PanelPosX = (Width) * 0.8f + 5.0f;
+        float PanelPosY = (Height) * 0.3f + 15.0f;
+
+        ImVec2 MinSize(140, 370);
+        ImVec2 MaxSize(FLT_MAX, 900);
+
+        /* Min, Max Size */
+        ImGui::SetNextWindowSizeConstraints(MinSize, MaxSize);
+
+        /* Panel Position */
+        ImGui::SetNextWindowPos(ImVec2(PanelPosX, PanelPosY), ImGuiCond_Always);
+
+        /* Panel Size */
+        ImGui::SetNextWindowSize(ImVec2(PanelWidth, PanelHeight), ImGuiCond_Always);
+
+        /* Panel Flags */
+        ImGuiWindowFlags PanelFlags = ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse;
+
+        /* Render Start */
+        ImGui::Begin("Detail", nullptr, PanelFlags);
+
+        UEditorEngine* Engine = Cast<UEditorEngine>(GEngine);
+        if (!Engine)
+            return;
+        AEditorPlayer* player = Engine->GetEditorPlayer();
+        AActor* PickedActor = Engine->GetSelectedActor();
+        USceneComponent* SelectedComponent = Engine->GetSelectedComponent();
+
         bool bShouldSave = false;
 
         if (!bInitialized)
@@ -90,600 +90,612 @@ void PropertyEditorPanel::Render()
         {
             SaveBezier(CurveParams, bUseBezier);
         }
-    }
 
-    if (SelectedComponent)
-    {
-        ImGui::SetItemDefaultFocus();
-        // TreeNode 배경색을 변경 (기본 상태)
-        ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
-        if (ImGui::TreeNodeEx("Transform", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) // 트리 노드 생성
+        if (SelectedComponent)
         {
-            Location = SelectedComponent->GetRelativeLocation();
-            Rotation = SelectedComponent->GetRelativeRotation();
-            Scale = SelectedComponent->GetRelativeScale3D();
-
-            FImGuiWidget::DrawVec3Control("Location", Location, 0, 85);
-            ImGui::Spacing();
-
-            FImGuiWidget::DrawRot3Control("Rotation", Rotation, 0, 85);
-            ImGui::Spacing();
-
-            FImGuiWidget::DrawVec3Control("Scale", Scale, 0, 85);
-            ImGui::Spacing();
-
-            SelectedComponent->SetRelativeLocation(Location);
-            SelectedComponent->SetRelativeRotation(Rotation);
-            SelectedComponent->SetRelativeScale3D(Scale);
-
-            //std::string coordiButtonLabel;
-            //if (player->GetCoordMode() == ECoordMode::CDM_WORLD)
-            //    coordiButtonLabel = "World";
-            //else if (player->GetCoordMode() == ECoordMode::CDM_LOCAL)
-            //    coordiButtonLabel = "Local";
-
-            //if (ImGui::Button(coordiButtonLabel.c_str(), ImVec2(ImGui::GetWindowContentRegionMax().x * 0.9f, 32)))
-            //{
-            //    player->AddCoordiMode();
-            //}
-            ImGui::TreePop(); // 트리 닫기
-        }
-
-        ImGui::PopStyleColor();
-
-        static char CompSearchBuffer[128] = ""; // 검색어 입력 버퍼
-        ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
-        if (ImGui::TreeNodeEx("Component", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) // 트리 노드 생성
-        {
-            ImGui::Text("Add");
-            ImGui::SameLine();
-
-            TArray<UClass*> CompClasses;
-            GetChildOfClass(UActorComponent::StaticClass(), CompClasses);
-
-            if (ImGui::BeginCombo("##AddComponent", "Components", ImGuiComboFlags_None))
+            ImGui::SetItemDefaultFocus();
+            // TreeNode 배경색을 변경 (기본 상태)
+            ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
+            if (ImGui::TreeNodeEx("Transform", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) // 트리 노드 생성
             {
-                // 1. 검색어 입력창 추가
-                ImGui::InputText("Search", CompSearchBuffer, IM_ARRAYSIZE(CompSearchBuffer));
-                // 2. 검색어로 필터링
-                for (UClass* Class : CompClasses)
+                Location = SelectedComponent->GetRelativeLocation();
+                Rotation = SelectedComponent->GetRelativeRotation();
+                Scale = SelectedComponent->GetRelativeScale3D();
+
+                FImGuiWidget::DrawVec3Control("Location", Location, 0, 85);
+                ImGui::Spacing();
+
+                FImGuiWidget::DrawRot3Control("Rotation", Rotation, 0, 85);
+                ImGui::Spacing();
+
+                FImGuiWidget::DrawVec3Control("Scale", Scale, 0, 85);
+                ImGui::Spacing();
+
+                SelectedComponent->SetRelativeLocation(Location);
+                SelectedComponent->SetRelativeRotation(Rotation);
+                SelectedComponent->SetRelativeScale3D(Scale);
+
+                //std::string coordiButtonLabel;
+                //if (player->GetCoordMode() == ECoordMode::CDM_WORLD)
+                //    coordiButtonLabel = "World";
+                //else if (player->GetCoordMode() == ECoordMode::CDM_LOCAL)
+                //    coordiButtonLabel = "Local";
+
+                //if (ImGui::Button(coordiButtonLabel.c_str(), ImVec2(ImGui::GetWindowContentRegionMax().x * 0.9f, 32)))
+                //{
+                //    player->AddCoordiMode();
+                //}
+                ImGui::TreePop(); // 트리 닫기
+            }
+
+            ImGui::PopStyleColor();
+
+            static char CompSearchBuffer[128] = ""; // 검색어 입력 버퍼
+            ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
+            if (ImGui::TreeNodeEx("Component", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) // 트리 노드 생성
+            {
+                ImGui::Text("Add");
+                ImGui::SameLine();
+
+                TArray<UClass*> CompClasses;
+                GetChildOfClass(UActorComponent::StaticClass(), CompClasses);
+
+                if (ImGui::BeginCombo("##AddComponent", "Components", ImGuiComboFlags_None))
                 {
-                    FString ClassName = Class->GetName();
-                    // 검색어가 비어있거나, 검색어가 포함된 클래스만 표시
-                    if (strlen(CompSearchBuffer) == 0 || ClassName.Contains(CompSearchBuffer))
+                    // 1. 검색어 입력창 추가
+                    ImGui::InputText("Search", CompSearchBuffer, IM_ARRAYSIZE(CompSearchBuffer));
+                    // 2. 검색어로 필터링
+                    for (UClass* Class : CompClasses)
                     {
-                        if (ImGui::Selectable(GetData(ClassName), false))
+                        FString ClassName = Class->GetName();
+                        // 검색어가 비어있거나, 검색어가 포함된 클래스만 표시
+                        if (strlen(CompSearchBuffer) == 0 || ClassName.Contains(CompSearchBuffer))
                         {
-                            static uint32 NewCompIndex = 0;
-                            USceneComponent* NewComp = Cast<USceneComponent>(
-                                SelectedComponent->GetOwner()->AddComponent(
-                                    Class,
-                                    FString::Printf(TEXT("%s_%d"), *ClassName, NewCompIndex++)
-                                )
-                            );
-                            if (NewComp)
+                            if (ImGui::Selectable(GetData(ClassName), false))
                             {
-                                NewComp->SetupAttachment(SelectedComponent);
+                                static uint32 NewCompIndex = 0;
+                                USceneComponent* NewComp = Cast<USceneComponent>(
+                                    SelectedComponent->GetOwner()->AddComponent(
+                                        Class,
+                                        FString::Printf(TEXT("%s_%d"), *ClassName, NewCompIndex++)
+                                    )
+                                );
+                                if (NewComp)
+                                {
+                                    NewComp->SetupAttachment(SelectedComponent);
+                                }
                             }
                         }
                     }
+                    ImGui::EndCombo();
                 }
-                ImGui::EndCombo();
+                ImGui::TreePop();
             }
-            ImGui::TreePop();
-        }
-        ImGui::PopStyleColor();
-    }
-
-    if (PickedActor)
-    {
-        FString ActorTag = PickedActor->GetActorTag();
-        char Tag[256];
-        strcpy_s(Tag, *ActorTag);
-        if (ImGui::InputText("##Actor Tag", Tag, sizeof(Tag)))
-        {
-            PickedActor->SetActorTag(Tag);
-        }
-        ImGui::SameLine();
-        ImGui::Text("Actor Tag");
-        namespace fs = std::filesystem;
-        static char buf[256];
-        FString ActorName = PickedActor->GetActorLabel();
-        ActorName += ".lua";
-
-        // 1. 처음엔 기본 ActorName으로 buf 초기화
-        strcpy_s(buf, *ActorName);
-
-        // 2. 만약 PickedActor에 이미 LuaScriptPath가 설정되어 있으면, 그걸 buf로 덮어씀
-        if (PickedActor->GetLuaScriptPath().Len() != 0)
-        {
-            strcpy_s(buf, *PickedActor->GetLuaScriptPath());
-            PickedActor->SetLuaBindState(true);
+            ImGui::PopStyleColor();
         }
 
-        // 3. ImGui로 사용자 입력 받음
-        if (ImGui::InputText("##ScriptFile", buf, sizeof(buf)))
+        if (PickedActor)
         {
-            // 입력이 바뀌었으면 그대로 LuaScriptPath 업데이트
-            PickedActor->SetLuaScriptPath(buf);
-            PickedActor->SetLuaBindState(true);
-        }
-
-        ImGui::SameLine();
-        ImGui::Text("Script File");
-
-        // 4. 항상 최신 buf 경로 기준으로 fs::exists 검사
-        if (fs::exists(buf))
-        {
-            if (ImGui::Button("Edit Script"))
+            FString ActorTag = PickedActor->GetActorTag();
+            char Tag[256];
+            strcpy_s(Tag, *ActorTag);
+            if (ImGui::InputText("##Actor Tag", Tag, sizeof(Tag)))
             {
-                // 파일 열기
-                std::string ansiStr = buf;
-                std::vector<wchar_t> wbuf(ansiStr.size() + 1);
-                MultiByteToWideChar(CP_UTF8, 0, ansiStr.c_str(), -1, wbuf.data(), (int)wbuf.size());
-
-                LPCTSTR luaFilePath = wbuf.data();
-                HINSTANCE hInst = ShellExecute(
-                    NULL,
-                    _T("open"),
-                    luaFilePath,
-                    NULL,
-                    NULL,
-                    SW_SHOWNORMAL
-                );
-
-                if ((INT_PTR)hInst <= 32)
-                {
-                    MessageBox(NULL, _T("파일 열기에 실패했습니다."), _T("Error"), MB_OK | MB_ICONERROR);
-                }
+                PickedActor->SetActorTag(Tag);
             }
-        }
-        else
-        {
-            PickedActor->SetLuaBindState(false);
-            if (ImGui::Button("Create Script"))
+            ImGui::SameLine();
+            ImGui::Text("Actor Tag");
+            namespace fs = std::filesystem;
+            static char buf[256];
+            FString ActorName = PickedActor->GetActorLabel();
+            ActorName += ".lua";
+
+            // 1. 처음엔 기본 ActorName으로 buf 초기화
+            strcpy_s(buf, *ActorName);
+
+            // 2. 만약 PickedActor에 이미 LuaScriptPath가 설정되어 있으면, 그걸 buf로 덮어씀
+            if (PickedActor->GetLuaScriptPath().Len() != 0)
             {
-                // 템플릿 복사
-                fs::copy_file("template.lua", buf, fs::copy_options::overwrite_existing);
+                strcpy_s(buf, *PickedActor->GetLuaScriptPath());
+                PickedActor->SetLuaBindState(true);
+            }
+
+            // 3. ImGui로 사용자 입력 받음
+            if (ImGui::InputText("##ScriptFile", buf, sizeof(buf)))
+            {
+                // 입력이 바뀌었으면 그대로 LuaScriptPath 업데이트
                 PickedActor->SetLuaScriptPath(buf);
                 PickedActor->SetLuaBindState(true);
             }
-        }
-    }
 
+            ImGui::SameLine();
+            ImGui::Text("Script File");
 
-    if (PickedActor)
-    {
-        if (ImGui::Button("Duplicate"))
-        {
-            UEditorEngine* Engine = Cast<UEditorEngine>(GEngine);
-            AActor* NewActor = Engine->ActiveWorld->DuplicateActor(Engine->GetSelectedActor());
-            Engine->SelectActor(NewActor);
-        }
-    }
-
-    if(SelectedComponent)
-        if (UPointLightComponent* pointlightObj = Cast<UPointLightComponent>(SelectedComponent))
-        {
-            int pointNum = 0;
-            for (const auto iter : TObjectRange<UPointLightComponent>())
+            // 4. 항상 최신 buf 경로 기준으로 fs::exists 검사
+            if (fs::exists(buf))
             {
-                if (iter != pointlightObj) {
-                    pointNum++;
-                }
-                else {
-                    break;
-                }
-            }
-
-            GEngineLoop.Renderer.PointLightShadowMapPass->RenderLinearDepth(pointNum, pointlightObj);
-
-            // Shadow Depth Map 시각화
-            TArray<ID3D11ShaderResourceView*> shaderSRVs = GEngineLoop.Renderer.PointLightShadowMapPass->GetShadowViewSRVArray();
-            TArray<FVector> directions = GEngineLoop.Renderer.PointLightShadowMapPass->GetDirectionArray();
-            TArray<FVector> ups = GEngineLoop.Renderer.PointLightShadowMapPass->GetUpArray();
-
-            ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
-
-            if (ImGui::TreeNodeEx("PointLight Component", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen))
-            {
-                DrawColorProperty("Light Color",
-                    [&]() { return pointlightObj->GetLightColor(); },
-                    [&](FLinearColor c) { pointlightObj->SetLightColor(c); });
-
-                float Intensity = pointlightObj->GetIntensity();
-                if (ImGui::SliderFloat("Intensity", &Intensity, 0.0f, 160.0f, "%.1f"))
-                    pointlightObj->SetIntensity(Intensity);
-
-                float Radius = pointlightObj->GetRadius();
-                if (ImGui::SliderFloat("Radius", &Radius, 0.01f, 200.f, "%.1f")) {
-                    pointlightObj->SetRadius(Radius);
-                }
-
-                // ─ Shadow Map 미리보기 (1열) ─
-                ImGui::Separator();
-                ImGui::Text("Shadow Maps (6 faces):");
-
-                const int   mapsCount = shaderSRVs.Num();
-                const float imgSize = 256.0f; // 원하는 크기로 조정
-
-                for (int i = 0; i < mapsCount; ++i)
+                if (ImGui::Button("Edit Script"))
                 {
-                    ImGui::Text("Direction %1.f %1.f %1.f", directions[i].X, directions[i].Y, directions[i].Z);
-                    ImGui::Text("Up %1.f %1.f %1.f", ups[i].X, ups[i].Y, ups[i].Z);
-                    ImTextureID texID = (ImTextureID)shaderSRVs[i];
-                    ImGui::Image(texID, ImVec2(imgSize, imgSize));
-                    ImGui::Spacing();    // 이미지 사이에 약간의 여백
-                }
+                    // 파일 열기
+                    std::string ansiStr = buf;
+                    std::vector<wchar_t> wbuf(ansiStr.size() + 1);
+                    MultiByteToWideChar(CP_UTF8, 0, ansiStr.c_str(), -1, wbuf.data(), (int)wbuf.size());
 
-                ImGui::TreePop();
-            }
-
-            ImGui::PopStyleColor();
-        }
-
-    if (SelectedComponent)
-        if (USpotLightComponent* SpotLightComp = Cast<USpotLightComponent>(SelectedComponent))
-        {
-            int spotNum = 0;
-            for (const auto iter : TObjectRange<USpotLightComponent>())
-            {
-                if (iter != SpotLightComp) {
-                    spotNum++;
-                }
-                else {
-                    break;
-                }
-            }
-
-            FEngineLoop::Renderer.SpotLightShadowMapPass->RenderLinearDepth(spotNum);
-
-            // Shadow Depth Map 시각화
-            ID3D11ShaderResourceView* shaderSRV = FEngineLoop::Renderer.SpotLightShadowMapPass->GetShadowDebugSRV();
-            //FVector direction = GEngineLoop.Renderer.PointLightShadowMapPass->GetDirection();
-            //FVector up = GEngineLoop.Renderer.PointLightShadowMapPass->GetUp();
-
-            ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
-
-            if (ImGui::TreeNodeEx("SpotLight Component", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen))
-            {
-                DrawColorProperty(
-                    "Light Color",
-                    [&] { return SpotLightComp->GetLightColor(); },
-                    [&](FLinearColor c) { SpotLightComp->SetLightColor(c); }
-                );
-
-                float Intensity = SpotLightComp->GetIntensity();
-                if (ImGui::SliderFloat("Intensity", &Intensity, 0.0f, 5000.0f, "%.1f"))
-                    SpotLightComp->SetIntensity(Intensity);
-
-                float Radius = SpotLightComp->GetRadius();
-                if (ImGui::SliderFloat("Radius", &Radius, 0.01f, 200.f, "%.1f"))
-                {
-                    SpotLightComp->SetRadius(Radius);
-                }
-
-                LightDirection = SpotLightComp->GetDirection();
-                FImGuiWidget::DrawVec3Control("Direction", LightDirection, 0, 85);
-
-                float OuterDegree = SpotLightComp->GetOuterDegree();
-                float InnerDegree = SpotLightComp->GetInnerDegree();
-
-                if (ImGui::SliderFloat("InnerDegree", &InnerDegree, 0.f, 90.0f, "%.1f"))
-                {
-                    SpotLightComp->SetInnerDegree(InnerDegree);
-                    SpotLightComp->SetOuterDegree(
-                        FMath::Max(InnerDegree, OuterDegree)
+                    LPCTSTR luaFilePath = wbuf.data();
+                    HINSTANCE hInst = ShellExecute(
+                        NULL,
+                        _T("open"),
+                        luaFilePath,
+                        NULL,
+                        NULL,
+                        SW_SHOWNORMAL
                     );
-                }
 
-                if (ImGui::SliderFloat("OuterDegree", &OuterDegree, 0.f, 90.f, "%.1f"))
-                {
-                    SpotLightComp->SetOuterDegree(OuterDegree);
-                    SpotLightComp->SetInnerDegree(
-                        FMath::Min(OuterDegree, InnerDegree)
-                    );
-                }
-
-                // ─ Shadow Map 미리보기 (1열) ─
-                ImGui::Separator();
-                ImGui::Text("Testing SpotLight:");
-
-                const float imgSize = 256.0f; // 원하는 크기로 조정
-
-                ImGui::Text("Direction %.01f %.01f %.01f", LightDirection.X, LightDirection.Y, LightDirection.Z);
-                ImTextureID texID = (ImTextureID)shaderSRV;
-                ImGui::Image(texID, ImVec2(imgSize, imgSize));
-                ImGui::Spacing(); // 이미지 사이에 약간의 여백
-
-                ImGui::TreePop();
-            }
-
-            ImGui::PopStyleColor();
-        }
-
-    if (SelectedComponent)
-        if (UDirectionalLightComponent* dirlightObj = Cast<UDirectionalLightComponent>(SelectedComponent))
-        {
-            ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
-
-            int directionalNum = 0;
-            for (const auto iter : TObjectRange<UDirectionalLightComponent>())
-            {
-                if (iter != dirlightObj) {
-                    directionalNum++;
-                }
-                else {
-                    break;
-                }
-            }
-
-            // Shadow Depth Map 시각화
-            ID3D11ShaderResourceView* shaderSRV = FEngineLoop::Renderer.DirectionalShadowMap->GetShadowViewSRV(directionalNum);
-
-
-            if (ImGui::TreeNodeEx("DirectionalLight Component", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen))
-            {
-                DrawColorProperty("Light Color",
-                    [&]() { return dirlightObj->GetLightColor(); },
-                    [&](FLinearColor c) { dirlightObj->SetLightColor(c); });
-
-                float Intensity = dirlightObj->GetIntensity();
-                if (ImGui::SliderFloat("Intensity", &Intensity, 0.0f, 150.0f, "%.1f"))
-                    dirlightObj->SetIntensity(Intensity);
-
-                LightDirection = dirlightObj->GetDirection();
-                FImGuiWidget::DrawVec3Control("Direction", LightDirection, 0, 85);
-
-                // ─ Shadow Map 미리보기 (1열) ─
-                ImGui::Separator();
-                ImGui::Text("Directional Light Shadow SRV:");
-
-                const float imgSize = 256.0f; // 원하는 크기로 조정
-
-                ImGui::Text("Direction %.01f %.01f %.01f", LightDirection.X, LightDirection.Y, LightDirection.Z);
-                ImTextureID texID = (ImTextureID)shaderSRV;
-                ImGui::Image(texID, ImVec2(imgSize, imgSize));
-                ImGui::Spacing(); // 이미지 사이에 약간의 여백
-
-                ImGui::TreePop();
-            }
-
-            ImGui::PopStyleColor();
-        }
-
-    if(SelectedComponent)
-        if (UAmbientLightComponent* ambientLightObj = Cast<UAmbientLightComponent>(SelectedComponent))
-        {
-            ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
-
-            if (ImGui::TreeNodeEx("AmbientLight Component", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen))
-            {
-                DrawColorProperty("Light Color",
-                    [&]() { return ambientLightObj->GetLightColor(); },
-                    [&](FLinearColor c) { ambientLightObj->SetLightColor(c); });
-                ImGui::TreePop();
-            }
-
-            ImGui::PopStyleColor();
-        }
-
-    if (SelectedComponent)
-        if (UProjectileMovementComponent* ProjectileComp = Cast<UProjectileMovementComponent>(SelectedComponent))
-        {
-            ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
-
-            if (ImGui::TreeNodeEx("Projectile Movement Component", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen))
-            {
-                float InitialSpeed = ProjectileComp->GetInitialSpeed();
-                if (ImGui::InputFloat("InitialSpeed", &InitialSpeed, 0.f, 10000.0f, "%.1f"))
-                    ProjectileComp->SetInitialSpeed(InitialSpeed);
-
-                float MaxSpeed = ProjectileComp->GetMaxSpeed();
-                if (ImGui::InputFloat("MaxSpeed", &MaxSpeed, 0.f, 10000.0f, "%.1f"))
-                    ProjectileComp->SetMaxSpeed(MaxSpeed);
-
-                float Gravity = ProjectileComp->GetGravity();
-                if (ImGui::InputFloat("Gravity", &Gravity, 0.f, 10000.f, "%.1f"))
-                    ProjectileComp->SetGravity(Gravity); 
-                
-                float ProjectileLifetime = ProjectileComp->GetLifetime();
-                if (ImGui::InputFloat("Lifetime", &ProjectileLifetime, 0.f, 10000.f, "%.1f"))
-                    ProjectileComp->SetLifetime(ProjectileLifetime);
-
-                FVector currentVelocity = ProjectileComp->GetVelocity();
-
-                float velocity[3] = { currentVelocity.X, currentVelocity.Y, currentVelocity.Z };
-
-                if (ImGui::InputFloat3("Velocity", velocity, "%.1f")) {
-                    ProjectileComp->SetVelocity(FVector(velocity[0], velocity[1], velocity[2]));
-                }
-                
-                ImGui::TreePop();
-            }
-
-            ImGui::PopStyleColor();
-        }
-    // TODO: 추후에 RTTI를 이용해서 프로퍼티 출력하기
-    if (SelectedComponent)
-        if (UTextComponent* textOBj = Cast<UTextComponent>(SelectedComponent))
-        {
-            ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
-            if (ImGui::TreeNodeEx("Text Component", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) // 트리 노드 생성
-            {
-                if (textOBj) {
-                    textOBj->SetTexture(L"Assets/Texture/font.png");
-                    textOBj->SetRowColumnCount(106, 106);
-                    FWString wText = textOBj->GetText();
-                    int len = WideCharToMultiByte(CP_UTF8, 0, wText.c_str(), -1, nullptr, 0, nullptr, nullptr);
-                    std::string u8Text(len, '\0');
-                    WideCharToMultiByte(CP_UTF8, 0, wText.c_str(), -1, u8Text.data(), len, nullptr, nullptr);
-
-                    static char buf[256];
-                    strcpy_s(buf, u8Text.c_str());
-
-                    ImGui::Text("Text: ", buf);
-                    ImGui::SameLine();
-                    ImGui::PushItemFlag(ImGuiItemFlags_NoNavDefaultFocus, true);
-                    if (ImGui::InputText("##Text", buf, 256, ImGuiInputTextFlags_EnterReturnsTrue))
+                    if ((INT_PTR)hInst <= 32)
                     {
-                        textOBj->ClearText();
-                        int wlen = MultiByteToWideChar(CP_UTF8, 0, buf, -1, nullptr, 0);
-                        FWString newWText(wlen, L'\0');
-                        MultiByteToWideChar(CP_UTF8, 0, buf, -1, newWText.data(), wlen);
-                        textOBj->SetText(newWText.c_str());
+                        MessageBox(NULL, _T("파일 열기에 실패했습니다."), _T("Error"), MB_OK | MB_ICONERROR);
                     }
-                    ImGui::PopItemFlag();
                 }
-                ImGui::TreePop();
             }
-            ImGui::PopStyleColor();
-        }
-
-    // TODO: 추후에 RTTI를 이용해서 프로퍼티 출력하기
-    if (SelectedComponent)
-        if (UStaticMeshComponent* StaticMeshComponent = Cast<UStaticMeshComponent>(SelectedComponent))
-        {
-            RenderForStaticMesh(StaticMeshComponent);
-            RenderForMaterial(StaticMeshComponent);
-        }
-
-    if (SelectedComponent)
-        if (UHeightFogComponent* FogComponent = Cast<UHeightFogComponent>(SelectedComponent))
-        {
-            ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
-            if (ImGui::TreeNodeEx("Exponential Height Fog", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) // 트리 노드 생성
+            else
             {
-                FLinearColor currColor = FogComponent->GetFogColor();
-
-                float r = currColor.R;
-                float g = currColor.G;
-                float b = currColor.B;
-                float a = currColor.A;
-                float h, s, v;
-                float lightColor[4] = { r, g, b, a };
-
-                // Fog Color
-                if (ImGui::ColorPicker4("##Fog Color", lightColor,
-                    ImGuiColorEditFlags_DisplayRGB |
-                    ImGuiColorEditFlags_NoSidePreview |
-                    ImGuiColorEditFlags_NoInputs |
-                    ImGuiColorEditFlags_Float))
-
+                PickedActor->SetLuaBindState(false);
+                if (ImGui::Button("Create Script"))
                 {
-
-                    r = lightColor[0];
-                    g = lightColor[1];
-                    b = lightColor[2];
-                    a = lightColor[3];
-                    FogComponent->SetFogColor(FLinearColor(r, g, b, a));
+                    // 템플릿 복사
+                    fs::copy_file("template.lua", buf, fs::copy_options::overwrite_existing);
+                    PickedActor->SetLuaScriptPath(buf);
+                    PickedActor->SetLuaBindState(true);
                 }
-                RGBToHSV(r, g, b, h, s, v);
-                // RGB/HSV
-                bool changedRGB = false;
-                bool changedHSV = false;
+            }
+        }
 
-                // RGB
-                ImGui::PushItemWidth(50.0f);
-                if (ImGui::DragFloat("R##R", &r, 0.001f, 0.f, 1.f)) changedRGB = true;
-                ImGui::SameLine();
-                if (ImGui::DragFloat("G##G", &g, 0.001f, 0.f, 1.f)) changedRGB = true;
-                ImGui::SameLine();
-                if (ImGui::DragFloat("B##B", &b, 0.001f, 0.f, 1.f)) changedRGB = true;
-                ImGui::Spacing();
 
-                // HSV
-                if (ImGui::DragFloat("H##H", &h, 0.1f, 0.f, 360)) changedHSV = true;
-                ImGui::SameLine();
-                if (ImGui::DragFloat("S##S", &s, 0.001f, 0.f, 1)) changedHSV = true;
-                ImGui::SameLine();
-                if (ImGui::DragFloat("V##V", &v, 0.001f, 0.f, 1)) changedHSV = true;
-                ImGui::PopItemWidth();
-                ImGui::Spacing();
+        if (PickedActor)
+        {
+            if (ImGui::Button("Duplicate"))
+            {
+                UEditorEngine* Engine = Cast<UEditorEngine>(GEngine);
+                AActor* NewActor = Engine->ActiveWorld->DuplicateActor(Engine->GetSelectedActor());
+                Engine->SelectActor(NewActor);
+            }
+        }
 
-                if (changedRGB && !changedHSV)
+        if (SelectedComponent)
+        {
+            if (UPointLightComponent* pointlightObj = Cast<UPointLightComponent>(SelectedComponent))
+            {
+                int pointNum = 0;
+                for (const auto iter : TObjectRange<UPointLightComponent>())
                 {
-                    // RGB -> HSV
+                    if (iter != pointlightObj) {
+                        pointNum++;
+                    }
+                    else {
+                        break;
+                    }
+                }
+
+                GEngineLoop.Renderer.PointLightShadowMapPass->RenderLinearDepth(pointNum, pointlightObj);
+
+                // Shadow Depth Map 시각화
+                TArray<ID3D11ShaderResourceView*> shaderSRVs = GEngineLoop.Renderer.PointLightShadowMapPass->GetShadowViewSRVArray();
+                TArray<FVector> directions = GEngineLoop.Renderer.PointLightShadowMapPass->GetDirectionArray();
+                TArray<FVector> ups = GEngineLoop.Renderer.PointLightShadowMapPass->GetUpArray();
+
+                ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
+
+                if (ImGui::TreeNodeEx("PointLight Component", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen))
+                {
+                    DrawColorProperty("Light Color",
+                        [&]() { return pointlightObj->GetLightColor(); },
+                        [&](FLinearColor c) { pointlightObj->SetLightColor(c); });
+
+                    float Intensity = pointlightObj->GetIntensity();
+                    if (ImGui::SliderFloat("Intensity", &Intensity, 0.0f, 160.0f, "%.1f"))
+                        pointlightObj->SetIntensity(Intensity);
+
+                    float Radius = pointlightObj->GetRadius();
+                    if (ImGui::SliderFloat("Radius", &Radius, 0.01f, 200.f, "%.1f")) {
+                        pointlightObj->SetRadius(Radius);
+                    }
+
+                    // ─ Shadow Map 미리보기 (1열) ─
+                    ImGui::Separator();
+                    ImGui::Text("Shadow Maps (6 faces):");
+
+                    const int   mapsCount = shaderSRVs.Num();
+                    const float imgSize = 256.0f; // 원하는 크기로 조정
+
+                    for (int i = 0; i < mapsCount; ++i)
+                    {
+                        ImGui::Text("Direction %1.f %1.f %1.f", directions[i].X, directions[i].Y, directions[i].Z);
+                        ImGui::Text("Up %1.f %1.f %1.f", ups[i].X, ups[i].Y, ups[i].Z);
+                        ImTextureID texID = (ImTextureID)shaderSRVs[i];
+                        ImGui::Image(texID, ImVec2(imgSize, imgSize));
+                        ImGui::Spacing();    // 이미지 사이에 약간의 여백
+                    }
+
+                    ImGui::TreePop();
+                }
+
+                ImGui::PopStyleColor();
+            }
+        }
+            
+        if (SelectedComponent)
+        {
+            if (USpotLightComponent* SpotLightComp = Cast<USpotLightComponent>(SelectedComponent))
+            {
+                int spotNum = 0;
+                for (const auto iter : TObjectRange<USpotLightComponent>())
+                {
+                    if (iter != SpotLightComp) {
+                        spotNum++;
+                    }
+                    else {
+                        break;
+                    }
+                }
+
+                FEngineLoop::Renderer.SpotLightShadowMapPass->RenderLinearDepth(spotNum);
+
+                // Shadow Depth Map 시각화
+                ID3D11ShaderResourceView* shaderSRV = FEngineLoop::Renderer.SpotLightShadowMapPass->GetShadowDebugSRV();
+                //FVector direction = GEngineLoop.Renderer.PointLightShadowMapPass->GetDirection();
+                //FVector up = GEngineLoop.Renderer.PointLightShadowMapPass->GetUp();
+
+                ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
+
+                if (ImGui::TreeNodeEx("SpotLight Component", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen))
+                {
+                    DrawColorProperty(
+                        "Light Color",
+                        [&] { return SpotLightComp->GetLightColor(); },
+                        [&](FLinearColor c) { SpotLightComp->SetLightColor(c); }
+                    );
+
+                    float Intensity = SpotLightComp->GetIntensity();
+                    if (ImGui::SliderFloat("Intensity", &Intensity, 0.0f, 5000.0f, "%.1f"))
+                        SpotLightComp->SetIntensity(Intensity);
+
+                    float Radius = SpotLightComp->GetRadius();
+                    if (ImGui::SliderFloat("Radius", &Radius, 0.01f, 200.f, "%.1f"))
+                    {
+                        SpotLightComp->SetRadius(Radius);
+                    }
+
+                    LightDirection = SpotLightComp->GetDirection();
+                    FImGuiWidget::DrawVec3Control("Direction", LightDirection, 0, 85);
+
+                    float OuterDegree = SpotLightComp->GetOuterDegree();
+                    float InnerDegree = SpotLightComp->GetInnerDegree();
+
+                    if (ImGui::SliderFloat("InnerDegree", &InnerDegree, 0.f, 90.0f, "%.1f"))
+                    {
+                        SpotLightComp->SetInnerDegree(InnerDegree);
+                        SpotLightComp->SetOuterDegree(
+                            FMath::Max(InnerDegree, OuterDegree)
+                        );
+                    }
+
+                    if (ImGui::SliderFloat("OuterDegree", &OuterDegree, 0.f, 90.f, "%.1f"))
+                    {
+                        SpotLightComp->SetOuterDegree(OuterDegree);
+                        SpotLightComp->SetInnerDegree(
+                            FMath::Min(OuterDegree, InnerDegree)
+                        );
+                    }
+
+                    // ─ Shadow Map 미리보기 (1열) ─
+                    ImGui::Separator();
+                    ImGui::Text("Testing SpotLight:");
+
+                    const float imgSize = 256.0f; // 원하는 크기로 조정
+
+                    ImGui::Text("Direction %.01f %.01f %.01f", LightDirection.X, LightDirection.Y, LightDirection.Z);
+                    ImTextureID texID = (ImTextureID)shaderSRV;
+                    ImGui::Image(texID, ImVec2(imgSize, imgSize));
+                    ImGui::Spacing(); // 이미지 사이에 약간의 여백
+
+                    ImGui::TreePop();
+                }
+
+                ImGui::PopStyleColor();
+            }
+        }
+            
+
+        if (SelectedComponent)
+        {
+            if (UDirectionalLightComponent* dirlightObj = Cast<UDirectionalLightComponent>(SelectedComponent))
+            {
+                ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
+
+                int directionalNum = 0;
+                for (const auto iter : TObjectRange<UDirectionalLightComponent>())
+                {
+                    if (iter != dirlightObj) {
+                        directionalNum++;
+                    }
+                    else {
+                        break;
+                    }
+                }
+
+                // Shadow Depth Map 시각화
+                ID3D11ShaderResourceView* shaderSRV = FEngineLoop::Renderer.DirectionalShadowMap->GetShadowViewSRV(directionalNum);
+
+
+                if (ImGui::TreeNodeEx("DirectionalLight Component", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen))
+                {
+                    DrawColorProperty("Light Color",
+                        [&]() { return dirlightObj->GetLightColor(); },
+                        [&](FLinearColor c) { dirlightObj->SetLightColor(c); });
+
+                    float Intensity = dirlightObj->GetIntensity();
+                    if (ImGui::SliderFloat("Intensity", &Intensity, 0.0f, 150.0f, "%.1f"))
+                        dirlightObj->SetIntensity(Intensity);
+
+                    LightDirection = dirlightObj->GetDirection();
+                    FImGuiWidget::DrawVec3Control("Direction", LightDirection, 0, 85);
+
+                    // ─ Shadow Map 미리보기 (1열) ─
+                    ImGui::Separator();
+                    ImGui::Text("Directional Light Shadow SRV:");
+
+                    const float imgSize = 256.0f; // 원하는 크기로 조정
+
+                    ImGui::Text("Direction %.01f %.01f %.01f", LightDirection.X, LightDirection.Y, LightDirection.Z);
+                    ImTextureID texID = (ImTextureID)shaderSRV;
+                    ImGui::Image(texID, ImVec2(imgSize, imgSize));
+                    ImGui::Spacing(); // 이미지 사이에 약간의 여백
+
+                    ImGui::TreePop();
+                }
+
+                ImGui::PopStyleColor();
+            }
+        }
+
+        if (SelectedComponent)
+        {
+            if (UAmbientLightComponent* ambientLightObj = Cast<UAmbientLightComponent>(SelectedComponent))
+            {
+                ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
+
+                if (ImGui::TreeNodeEx("AmbientLight Component", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen))
+                {
+                    DrawColorProperty("Light Color",
+                        [&]() { return ambientLightObj->GetLightColor(); },
+                        [&](FLinearColor c) { ambientLightObj->SetLightColor(c); });
+                    ImGui::TreePop();
+                }
+
+                ImGui::PopStyleColor();
+            }
+        }
+
+        if (SelectedComponent)
+        {
+            if (UProjectileMovementComponent* ProjectileComp = Cast<UProjectileMovementComponent>(SelectedComponent))
+            {
+                ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
+
+                if (ImGui::TreeNodeEx("Projectile Movement Component", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen))
+                {
+                    float InitialSpeed = ProjectileComp->GetInitialSpeed();
+                    if (ImGui::InputFloat("InitialSpeed", &InitialSpeed, 0.f, 10000.0f, "%.1f"))
+                        ProjectileComp->SetInitialSpeed(InitialSpeed);
+
+                    float MaxSpeed = ProjectileComp->GetMaxSpeed();
+                    if (ImGui::InputFloat("MaxSpeed", &MaxSpeed, 0.f, 10000.0f, "%.1f"))
+                        ProjectileComp->SetMaxSpeed(MaxSpeed);
+
+                    float Gravity = ProjectileComp->GetGravity();
+                    if (ImGui::InputFloat("Gravity", &Gravity, 0.f, 10000.f, "%.1f"))
+                        ProjectileComp->SetGravity(Gravity);
+
+                    float ProjectileLifetime = ProjectileComp->GetLifetime();
+                    if (ImGui::InputFloat("Lifetime", &ProjectileLifetime, 0.f, 10000.f, "%.1f"))
+                        ProjectileComp->SetLifetime(ProjectileLifetime);
+
+                    FVector currentVelocity = ProjectileComp->GetVelocity();
+
+                    float velocity[3] = { currentVelocity.X, currentVelocity.Y, currentVelocity.Z };
+
+                    if (ImGui::InputFloat3("Velocity", velocity, "%.1f")) {
+                        ProjectileComp->SetVelocity(FVector(velocity[0], velocity[1], velocity[2]));
+                    }
+
+                    ImGui::TreePop();
+                }
+
+                ImGui::PopStyleColor();
+            }
+        }
+            
+        // TODO: 추후에 RTTI를 이용해서 프로퍼티 출력하기
+        if (SelectedComponent)
+            if (UTextComponent* textOBj = Cast<UTextComponent>(SelectedComponent))
+            {
+                ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
+                if (ImGui::TreeNodeEx("Text Component", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) // 트리 노드 생성
+                {
+                    if (textOBj) {
+                        textOBj->SetTexture(L"Assets/Texture/font.png");
+                        textOBj->SetRowColumnCount(106, 106);
+                        FWString wText = textOBj->GetText();
+                        int len = WideCharToMultiByte(CP_UTF8, 0, wText.c_str(), -1, nullptr, 0, nullptr, nullptr);
+                        std::string u8Text(len, '\0');
+                        WideCharToMultiByte(CP_UTF8, 0, wText.c_str(), -1, u8Text.data(), len, nullptr, nullptr);
+
+                        static char buf[256];
+                        strcpy_s(buf, u8Text.c_str());
+
+                        ImGui::Text("Text: ", buf);
+                        ImGui::SameLine();
+                        ImGui::PushItemFlag(ImGuiItemFlags_NoNavDefaultFocus, true);
+                        if (ImGui::InputText("##Text", buf, 256, ImGuiInputTextFlags_EnterReturnsTrue))
+                        {
+                            textOBj->ClearText();
+                            int wlen = MultiByteToWideChar(CP_UTF8, 0, buf, -1, nullptr, 0);
+                            FWString newWText(wlen, L'\0');
+                            MultiByteToWideChar(CP_UTF8, 0, buf, -1, newWText.data(), wlen);
+                            textOBj->SetText(newWText.c_str());
+                        }
+                        ImGui::PopItemFlag();
+                    }
+                    ImGui::TreePop();
+                }
+                ImGui::PopStyleColor();
+            }
+
+        // TODO: 추후에 RTTI를 이용해서 프로퍼티 출력하기
+        if (SelectedComponent)
+            if (UStaticMeshComponent* StaticMeshComponent = Cast<UStaticMeshComponent>(SelectedComponent))
+            {
+                RenderForStaticMesh(StaticMeshComponent);
+                RenderForMaterial(StaticMeshComponent);
+            }
+
+        if (SelectedComponent)
+            if (UHeightFogComponent* FogComponent = Cast<UHeightFogComponent>(SelectedComponent))
+            {
+                ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
+                if (ImGui::TreeNodeEx("Exponential Height Fog", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) // 트리 노드 생성
+                {
+                    FLinearColor currColor = FogComponent->GetFogColor();
+
+                    float r = currColor.R;
+                    float g = currColor.G;
+                    float b = currColor.B;
+                    float a = currColor.A;
+                    float h, s, v;
+                    float lightColor[4] = { r, g, b, a };
+
+                    // Fog Color
+                    if (ImGui::ColorPicker4("##Fog Color", lightColor,
+                        ImGuiColorEditFlags_DisplayRGB |
+                        ImGuiColorEditFlags_NoSidePreview |
+                        ImGuiColorEditFlags_NoInputs |
+                        ImGuiColorEditFlags_Float))
+
+                    {
+
+                        r = lightColor[0];
+                        g = lightColor[1];
+                        b = lightColor[2];
+                        a = lightColor[3];
+                        FogComponent->SetFogColor(FLinearColor(r, g, b, a));
+                    }
                     RGBToHSV(r, g, b, h, s, v);
-                    FogComponent->SetFogColor(FLinearColor(r, g, b, a));
-                }
-                else if (changedHSV && !changedRGB)
-                {
-                    // HSV -> RGB
-                    HSVToRGB(h, s, v, r, g, b);
-                    FogComponent->SetFogColor(FLinearColor(r, g, b, a));
-                }
+                    // RGB/HSV
+                    bool changedRGB = false;
+                    bool changedHSV = false;
 
-                float FogDensity = FogComponent->GetFogDensity();
-                if (ImGui::SliderFloat("Density", &FogDensity, 0.00f, 3.0f))
-                {
-                    FogComponent->SetFogDensity(FogDensity);
-                }
+                    // RGB
+                    ImGui::PushItemWidth(50.0f);
+                    if (ImGui::DragFloat("R##R", &r, 0.001f, 0.f, 1.f)) changedRGB = true;
+                    ImGui::SameLine();
+                    if (ImGui::DragFloat("G##G", &g, 0.001f, 0.f, 1.f)) changedRGB = true;
+                    ImGui::SameLine();
+                    if (ImGui::DragFloat("B##B", &b, 0.001f, 0.f, 1.f)) changedRGB = true;
+                    ImGui::Spacing();
 
-                float FogDistanceWeight = FogComponent->GetFogDistanceWeight();
-                if (ImGui::SliderFloat("Distance Weight", &FogDistanceWeight, 0.00f, 3.0f))
-                {
-                    FogComponent->SetFogDistanceWeight(FogDistanceWeight);
-                }
+                    // HSV
+                    if (ImGui::DragFloat("H##H", &h, 0.1f, 0.f, 360)) changedHSV = true;
+                    ImGui::SameLine();
+                    if (ImGui::DragFloat("S##S", &s, 0.001f, 0.f, 1)) changedHSV = true;
+                    ImGui::SameLine();
+                    if (ImGui::DragFloat("V##V", &v, 0.001f, 0.f, 1)) changedHSV = true;
+                    ImGui::PopItemWidth();
+                    ImGui::Spacing();
 
-                float FogHeightFallOff = FogComponent->GetFogHeightFalloff();
-                if (ImGui::SliderFloat("Height Fall Off", &FogHeightFallOff, 0.001f, 0.15f))
-                {
-                    FogComponent->SetFogHeightFalloff(FogHeightFallOff);
-                }
+                    if (changedRGB && !changedHSV)
+                    {
+                        // RGB -> HSV
+                        RGBToHSV(r, g, b, h, s, v);
+                        FogComponent->SetFogColor(FLinearColor(r, g, b, a));
+                    }
+                    else if (changedHSV && !changedRGB)
+                    {
+                        // HSV -> RGB
+                        HSVToRGB(h, s, v, r, g, b);
+                        FogComponent->SetFogColor(FLinearColor(r, g, b, a));
+                    }
 
-                float FogStartDistance = FogComponent->GetStartDistance();
-                if (ImGui::SliderFloat("Start Distance", &FogStartDistance, 0.00f, 50.0f))
-                {
-                    FogComponent->SetStartDistance(FogStartDistance);
-                }
+                    float FogDensity = FogComponent->GetFogDensity();
+                    if (ImGui::SliderFloat("Density", &FogDensity, 0.00f, 3.0f))
+                    {
+                        FogComponent->SetFogDensity(FogDensity);
+                    }
 
-                float FogEndtDistance = FogComponent->GetEndDistance();
-                if (ImGui::SliderFloat("End Distance", &FogEndtDistance, 0.00f, 50.0f))
-                {
-                    FogComponent->SetEndDistance(FogEndtDistance);
-                }
+                    float FogDistanceWeight = FogComponent->GetFogDistanceWeight();
+                    if (ImGui::SliderFloat("Distance Weight", &FogDistanceWeight, 0.00f, 3.0f))
+                    {
+                        FogComponent->SetFogDistanceWeight(FogDistanceWeight);
+                    }
 
-                ImGui::TreePop();
+                    float FogHeightFallOff = FogComponent->GetFogHeightFalloff();
+                    if (ImGui::SliderFloat("Height Fall Off", &FogHeightFallOff, 0.001f, 0.15f))
+                    {
+                        FogComponent->SetFogHeightFalloff(FogHeightFallOff);
+                    }
+
+                    float FogStartDistance = FogComponent->GetStartDistance();
+                    if (ImGui::SliderFloat("Start Distance", &FogStartDistance, 0.00f, 50.0f))
+                    {
+                        FogComponent->SetStartDistance(FogStartDistance);
+                    }
+
+                    float FogEndtDistance = FogComponent->GetEndDistance();
+                    if (ImGui::SliderFloat("End Distance", &FogEndtDistance, 0.00f, 50.0f))
+                    {
+                        FogComponent->SetEndDistance(FogEndtDistance);
+                    }
+
+                    ImGui::TreePop();
+                }
+                ImGui::PopStyleColor();
             }
-            ImGui::PopStyleColor();
-        }
 
-    if(SelectedComponent)
-        if (USphereComponent* SphereComponent = Cast<USphereComponent>(SelectedComponent))
-        {
-            ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
-
-            if (ImGui::TreeNodeEx("SphereComponent", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen))
+        if (SelectedComponent)
+            if (USphereComponent* SphereComponent = Cast<USphereComponent>(SelectedComponent))
             {
-                float UnscaledRadius = SphereComponent->GetUnscaledSphereRadius();
-                if (ImGui::InputFloat("UnscaledRadius", &UnscaledRadius, 0.f, 100.0f, "%.1f"))
-                    SphereComponent->SetSphereRadius(UnscaledRadius);
+                ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
 
-                ImGui::TreePop();
-            }
-            ImGui::PopStyleColor();
-        }    
-    if(SelectedComponent)
-        if (UBoxComponent* BoxComponent = Cast<UBoxComponent>(SelectedComponent))
-        {
-            ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
-
-            if (ImGui::TreeNodeEx("BoxComponent", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen))
-            {
-                FVector UnscaledExtent = BoxComponent->GetUnscaledBoxExtent();
-                float Extent[3] = { UnscaledExtent.X, UnscaledExtent.Y, UnscaledExtent.Z };
-                if (ImGui::InputFloat3("UnscaledExtent", Extent, "%.1f"))
+                if (ImGui::TreeNodeEx("SphereComponent", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen))
                 {
-                    BoxComponent->SetBoxExtent(FVector(Extent[0], Extent[1], Extent[2]));
+                    float UnscaledRadius = SphereComponent->GetUnscaledSphereRadius();
+                    if (ImGui::InputFloat("UnscaledRadius", &UnscaledRadius, 0.f, 100.0f, "%.1f"))
+                        SphereComponent->SetSphereRadius(UnscaledRadius);
+
+                    ImGui::TreePop();
                 }
-
-                ImGui::TreePop();
+                ImGui::PopStyleColor();
             }
-            ImGui::PopStyleColor();
-        }
+        if (SelectedComponent)
+            if (UBoxComponent* BoxComponent = Cast<UBoxComponent>(SelectedComponent))
+            {
+                ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
 
-    ImGui::End();
+                if (ImGui::TreeNodeEx("BoxComponent", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen))
+                {
+                    FVector UnscaledExtent = BoxComponent->GetUnscaledBoxExtent();
+                    float Extent[3] = { UnscaledExtent.X, UnscaledExtent.Y, UnscaledExtent.Z };
+                    if (ImGui::InputFloat3("UnscaledExtent", Extent, "%.1f"))
+                    {
+                        BoxComponent->SetBoxExtent(FVector(Extent[0], Extent[1], Extent[2]));
+                    }
+
+                    ImGui::TreePop();
+                }
+                ImGui::PopStyleColor();
+            }
+
+        ImGui::End();
+    }
 }
 
 void PropertyEditorPanel::RGBToHSV(float r, float g, float b, float& h, float& s, float& v) const
