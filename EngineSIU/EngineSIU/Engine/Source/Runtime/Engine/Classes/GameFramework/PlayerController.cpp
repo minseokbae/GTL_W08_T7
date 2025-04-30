@@ -94,7 +94,7 @@ void APlayerController::SpawnPlayerCameraManager()
     PlayerCameraManager = GetWorld()->SpawnActor<APlayerCameraManager>();
     GEngineLoop.LuaCompiler.AddPlayerCameraMangerToLua(PlayerCameraManager);
     PlayerCameraManager->InitializeFor(this);
-
+    
     //UCameraModifier* CameraModifier = FObjectFactory::ConstructObject<UCameraModifier>(this);
     //PlayerCameraManager->AddCameraModifier(CameraModifier);
 }

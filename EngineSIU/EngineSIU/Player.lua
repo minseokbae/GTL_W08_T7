@@ -16,14 +16,16 @@ function OnOverlap(overlapObj)
         print(overlapObj.Tag)
         PlaySound("score", 1.0, false) -- AddScore
         if (overlapObj.Tag:Equals("Coin")) then
-            AddScore(1)
+            if not gameOver then
+                AddScore(1)
+            end
         elseif overlapObj.Tag:Equals("Ghost") then
             if not(gameOver) then
                 print("GameOver")
                 PlaySound("lose", 1.0, false) -- Lose
                 local modifier = CreateCameraTransitionModifier(obj)
                 local position = Vector.new(27.5, 27.5, 60) - obj.Location
-                modifier:Initialize(position, Rotator.new(90,0,0), 60, 5.0)
+                modifier:Initialize(position, Rotator.new(89,0,0) - obj.Rotation, 60, 20.0)
                 print("success Initialize")
                 Global.CameraManager:AddCameraModifier(modifier)
                 print("success AddModifier")

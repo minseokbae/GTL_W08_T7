@@ -67,6 +67,13 @@ void PropertyEditorPanel::Render()
     AActor* PickedActor = Engine->GetSelectedActor();
     USceneComponent* SelectedComponent = Engine->GetSelectedComponent();
 
+    static float CurveParams[5] = { 0.39f, 0.575f, 0.565f, 1.0f, 0 }; // x1, y1, x2, y2, presetIndex
+
+    ImGui::Text("Bezier Curve Editor");
+    ImGui::Bezier("MyCurve", CurveParams);
+    GEngine->BezierCurve = CurveParams;
+    ImGui::Checkbox("Use Bezier", &GEngine->bUseBezier);
+
     if (SelectedComponent)
     {
         ImGui::SetItemDefaultFocus();
@@ -152,11 +159,6 @@ void PropertyEditorPanel::Render()
 
     if (PickedActor)
     {
-        static float CurveParams[5] = { 0.39f, 0.575f, 0.565f, 1.0f, 0 }; // x1, y1, x2, y2, presetIndex
-
-        ImGui::Text("Bezier Curve Editor");
-        ImGui::Bezier("MyCurve", CurveParams);
-
         FString ActorTag = PickedActor->GetActorTag();
         char Tag[256];
         strcpy_s(Tag, *ActorTag);

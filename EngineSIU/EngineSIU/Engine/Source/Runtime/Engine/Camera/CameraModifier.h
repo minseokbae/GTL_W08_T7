@@ -18,6 +18,7 @@ protected:
     float AlphaOutTime;
     float Alpha;
     bool bDisabled = false;
+    float* BezierCurve;
 
 public:
     APlayerCameraManager* GetCameraManager() { return CameraOwner; }
@@ -25,6 +26,8 @@ public:
     bool IsDisabled() {return bDisabled;}
     void DisableModifier();
     void EnableModifier();
+    void SetBezierCurve(float* Bezier);
+    float* GetBezierCurver() { return BezierCurve; }
     virtual void ModifyCamera(float DeltaTime, FVector ViewLocation, FRotator ViewRotation, float FOV, FVector& NewViewLocation, FRotator& NewViewRotation, float& NewFOV);
 };
 

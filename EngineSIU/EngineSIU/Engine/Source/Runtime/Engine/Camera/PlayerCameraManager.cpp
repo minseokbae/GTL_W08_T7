@@ -65,6 +65,7 @@ void APlayerCameraManager::Tick(float DeltaTime)
             CachedCamera->SetRelativeLocation(NewLocation);
             CachedCamera->SetRelativeRotation(NewRotation);
             CachedCamera->SetFieldOfView(NewFOV);
+            std::cout << *CachedCamera->GetWorldRotation().ToString() << std::endl;
         }
     }
 }
