@@ -13,6 +13,7 @@ APlayerCameraManager::APlayerCameraManager()
 
 APlayerCameraManager::~APlayerCameraManager()
 {
+
 }
 
 void APlayerCameraManager::InitializeFor(APlayerController* PC)
@@ -57,15 +58,20 @@ void APlayerCameraManager::Tick(float DeltaTime)
         
         if (!modifier->IsDisabled())
         {
-            modifier->ModifyCamera(DeltaTime,FVector::Zero(),FRotator(0,0,0),0,
-            NewLocation,NewRotation,NewFOV);
+            modifier->ModifyCamera(DeltaTime, this);
             CachedCamera->SetRelativeLocation(NewLocation);
             CachedCamera->SetRelativeRotation(NewRotation);
             CachedCamera->SetFieldOfView(NewFOV);
         }
     }
 }
-
+inline void APlayerCameraManager::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+    for (auto modifier : ModifierList)
+    {
+        GUObjectArray.MarkRemoveObject(modifier);
+    }
+}
 void APlayerCameraManager::AddCameraModifier(UCameraModifier* CameraModifier)
 {
     ModifierList.AddUnique(CameraModifier);
