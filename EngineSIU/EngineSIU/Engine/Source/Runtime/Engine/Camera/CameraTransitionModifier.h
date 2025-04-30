@@ -15,6 +15,9 @@ private:
     FRotator TargetRotation;
     float TargetFOV;
     float ElapsedTime;
+    FVector StartLocation;
+    FRotator StartRotation;
+    bool bInitialized = false;
 
 public:
     virtual bool ModifyCamera(float DeltaTime, APlayerCameraManager* NewCameraManager) override;

@@ -22,12 +22,18 @@ bool UCameraTransitionModifier::ModifyCamera(float DeltaTime, APlayerCameraManag
 {
     ElapsedTime += DeltaTime;
     UCameraComponent* CachedCamera = NewCameraManager->GetCachedCamera();
+    if (!bInitialized)
+    {
+        StartLocation = CachedCamera->GetRelativeLocation();
+        StartRotation = CachedCamera->GetRelativeRotation();
+        bInitialized = true;
+    }
     if (GEngine->bUseBezier)
     {
         float BezierValue = ImGui::BezierValue(ElapsedTime / ModifyDuration, BezierCurve);
         CachedCamera->SetFieldOfView(FMath::Lerp(CachedCamera->GetFieldOfView(), TargetFOV, BezierValue));
-        CachedCamera->SetRelativeLocation(FMath::Lerp(CachedCamera->GetRelativeLocation(), TargetLocation, BezierValue));
-        CachedCamera->SetRelativeRotation(FRotator(FQuat::Slerp(CachedCamera->GetRelativeRotation().ToQuaternion(), TargetRotation.ToQuaternion(), BezierValue)));
+        CachedCamera->SetRelativeLocation(FMath::Lerp(StartLocation, TargetLocation, BezierValue));
+        CachedCamera->SetRelativeRotation(FRotator(FQuat::Slerp(StartRotation.ToQuaternion(), TargetRotation.ToQuaternion(), BezierValue)));
     }
     else
     {
@@ -41,4 +47,3 @@ bool UCameraTransitionModifier::ModifyCamera(float DeltaTime, APlayerCameraManag
         return true;
     return false;
 }
-
