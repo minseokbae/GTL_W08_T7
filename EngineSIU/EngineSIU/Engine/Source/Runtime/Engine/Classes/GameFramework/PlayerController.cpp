@@ -92,6 +92,7 @@ void APlayerController::InitMouseLook()
 void APlayerController::SpawnPlayerCameraManager()
 {
     PlayerCameraManager = GetWorld()->SpawnActor<APlayerCameraManager>();
+    GEngineLoop.LuaCompiler.AddPlayerCameraMangerToLua(PlayerCameraManager);
     PlayerCameraManager->InitializeFor(this);
     if (Pawn)
         PlayerCameraManager->SetViewTarget(Pawn);
@@ -99,6 +100,7 @@ void APlayerController::SpawnPlayerCameraManager()
     {
         UE_LOG(ELogLevel::Error, "PlayerController dont have any Posses pawn");
     }
-    UCameraModifier* CameraModifier = FObjectFactory::ConstructObject<UCameraModifier>(this);
-    PlayerCameraManager->AddCameraModifier(CameraModifier);
+    //UCameraModifier* CameraModifier = FObjectFactory::ConstructObject<UCameraModifier>(this);
+    //CameraModifier->Initialize(FVector(0, 0, 0), FRotator(0, 0, 0), 60, 5.0f);
+    //PlayerCameraManager->AddCameraModifier(CameraModifier);
 }

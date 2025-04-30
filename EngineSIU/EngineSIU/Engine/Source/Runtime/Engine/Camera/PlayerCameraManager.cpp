@@ -1,4 +1,4 @@
-﻿#include "PlayerCameraManager.h"
+#include "PlayerCameraManager.h"
 
 #include "CameraComponent.h"
 #include "CameraModifier.h"
@@ -33,19 +33,22 @@ void APlayerCameraManager::Tick(float DeltaTime)
     }
     if (!Camera)
         return;
-    FVector NewLocation = Camera->GetRelativeLocation();
-    FRotator NewRotation = Camera->GetRelativeRotation();
-    float NewFOV = Camera->GetFieldOfView();
+    FVector CurLocation = Camera->GetRelativeLocation();
+    FRotator CurRotation = Camera->GetRelativeRotation();
+    float CurFOV = Camera->GetFieldOfView();
+    float NewFOV = 0;
+    FVector NewLocation;
+    FRotator NewRotation;
     for (auto modifier : ModifierList)
     {
-        
         if (!modifier->IsDisabled())
         {
-            modifier->ModifyCamera(DeltaTime,FVector::Zero(),FRotator(0,0,0),0,
+            modifier->ModifyCamera(DeltaTime, CurLocation, CurRotation, CurFOV,
             NewLocation,NewRotation,NewFOV);
             Camera->SetRelativeLocation(NewLocation);
             Camera->SetRelativeRotation(NewRotation);
             Camera->SetFieldOfView(NewFOV);
+            std::cout << *Camera->GetWorldLocation().ToString() << std::endl;
         }
     }
 }

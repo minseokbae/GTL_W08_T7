@@ -5,6 +5,12 @@
 
 class AActor;
 
+class UCameraModifier;
+
+class UCameraTransitionModifier;
+
+class APlayerCameraManager;
+
 class FLuaCompiler
 {
 public:
@@ -22,6 +28,10 @@ public:
 
     void UpdateInput();
 
+    void AddPlayerCameraMangerToLua(APlayerCameraManager* CameraManager);
+
+    void UpdateGlobal(std::unique_ptr<FLuaInstance> LuaInstance);
+
 private:
     sol::state Lua;
     sol::table Input;
@@ -30,4 +40,7 @@ private:
 
     void AddScore(float score);
     void GameOver();
+
+    UCameraTransitionModifier* CreateCameraTransitionModifier(USceneComponent* Comp);
+    void ChangeViewMode(int ViewModeIndex);
 };

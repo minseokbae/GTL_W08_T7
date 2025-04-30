@@ -1,5 +1,6 @@
 function BeginPlay()
     PlaySound("piano", 1.0, true) -- BGM
+    ChangeViewMode(2)
     print("[BeginPlay] " .. obj.UUID)
 end
 
@@ -7,21 +8,36 @@ function EndPlay()
     StopSound("piano")
     print("[EndPlay] " .. obj.UUID)
 end
-
+local elapsedTime = 0.0
+local gameOver = false;
 function OnOverlap(overlapObj)
     --충돌 처리 overlapObj는 충돌한 액터의 루트 컴포넌트를 가리킴
-    print(overlapObj.Tag)
-    if (overlapObj.Tag:Equals("Coin")) then
-        PlaySound("score", 1.0, false) -- AddScore
-        AddScore(1)
-    elseif overlapObj.Tag:Equals("Ghost") then
-        PlaySound("lose", 1.0, false) -- Lose
-        print("GameOver")
-        GameOver()
-    else
-        local repulsion = Vector.new(0,0,0)
-        obj.Location = obj.Location - obj.Velocity * 5
-        print(obj.Velocity)
+    local ok, err = pcall(function()
+        print(overlapObj.Tag)
+        if (overlapObj.Tag:Equals("Coin")) then
+            PlaySound("score", 1.0, false) -- AddScore
+            AddScore(1)
+        elseif overlapObj.Tag:Equals("Ghost") then
+            if not gameOver then
+                print("GameOver")
+                PlaySound("lose", 1.0, false) -- Lose
+                local modifier = CreateCameraTransitionModifier(obj)
+                local position = Vector.new(80, 27.5, 0) - obj.Location
+                modifier:Initialize(position, Rotator.new(90,0,0), 60, 3.0)
+                print("success Initialize")
+                Global.CameraManager:AddCameraModifier(modifier)
+                print("success AddModifier")
+                ChangeViewMode(3)
+                gameOver = true
+            end
+        else
+            obj.Location = obj.Location - obj.Velocity * 5
+            print(obj.Velocity)
+        end
+    end)
+
+    if not ok then
+        print("[Lua Error]", err)
     end
 end
 
@@ -38,6 +54,13 @@ function Tick(dt)
         if obj == nil then
             print("[Lua] obj is nil")
             return
+        end
+        if gameOver then
+            elapsedTime = elapsedTime + dt
+            print(elapsedTime)
+        end
+        if elapsedTime >= 5.0 then
+            GameOver()
         end
     end)
 

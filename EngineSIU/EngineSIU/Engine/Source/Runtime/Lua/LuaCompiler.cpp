@@ -5,6 +5,10 @@
 #include "GameFramework/Actor.h"
 #include "Engine/Engine.h"
 #include "Engine/EditorEngine.h"
+#include "Camera/CameraTransitionModifier.h"
+#include "Camera/PlayerCameraManager.h"
+#include "LevelEditor/SLevelEditor.h"
+#include "UnrealEd/EditorViewportClient.h"
 
 FLuaCompiler::FLuaCompiler()
 {
@@ -19,6 +23,21 @@ FLuaCompiler::FLuaCompiler()
         "Tag", sol::property(&USceneComponent::GetTag),
         "Destroy", &USceneComponent::DestroyOwner
     );
+
+    Lua.new_usertype<APlayerCameraManager>("PlayerCameraManager",
+        sol::no_constructor,
+        "AddCameraModifier", &APlayerCameraManager::AddCameraModifier
+        );
+
+    Lua.new_usertype<UCameraTransitionModifier>("CameraTransitionModifier",
+        sol::constructors<>(),
+        "Initialize", &UCameraTransitionModifier::Initialize);
+
+    Lua.set_function("CreateCameraTransitionModifier", [this](USceneComponent* Comp) {
+        return CreateCameraTransitionModifier(Comp);
+        });
+
+    Lua["Global"] = Lua.create_table();
 
     Lua.set_function("print", [&Lua = this->Lua](sol::variadic_args args) {
         std::ostringstream oss;
@@ -44,6 +63,10 @@ FLuaCompiler::FLuaCompiler()
 
     Lua.set_function("GameOver", [this]() {
         GameOver();
+        });
+
+    Lua.set_function("ChangeViewMode", [this](int index) {
+        ChangeViewMode(index);
         });
 
     Input = Lua.create_table();
@@ -202,6 +225,7 @@ void FLuaCompiler::Tick(float DeltaTime)
         {
             Instance.second->Reload(Lua);
         }
+        Instance.second->UpdateGlobal(Lua);
         Instance.second->Tick(DeltaTime);
     }
 }
@@ -218,6 +242,16 @@ void FLuaCompiler::UpdateInput()
     Input.set("W", W);
 }
 
+void FLuaCompiler::AddPlayerCameraMangerToLua(APlayerCameraManager* CameraManager)
+{
+    Lua["Global"]["CameraManager"] = CameraManager;
+}
+
+void FLuaCompiler::UpdateGlobal(std::unique_ptr<FLuaInstance> LuaInstance)
+{
+    LuaInstance->UpdateGlobal(Lua);
+}
+
 void FLuaCompiler::AddScore(float score)
 {
     UEditorEngine* Engine = Cast<UEditorEngine>(GEngine);
@@ -230,4 +264,14 @@ void FLuaCompiler::GameOver()
     UEditorEngine* Engine = Cast<UEditorEngine>(GEngine);
     AGameMode* GameMode = Engine->ActiveWorld->GetGameMode();
     GameMode->GameOver();
+}
+
+UCameraTransitionModifier* FLuaCompiler::CreateCameraTransitionModifier(USceneComponent* Comp)
+{
+    return FObjectFactory::ConstructObject<UCameraTransitionModifier>(Comp);
+}
+
+void FLuaCompiler::ChangeViewMode(int ViewModeIndex)
+{
+    GEngineLoop.GetLevelEditor()->GetActiveViewportClient()->SetViewMode(static_cast<EViewModeIndex>(ViewModeIndex));
 }
