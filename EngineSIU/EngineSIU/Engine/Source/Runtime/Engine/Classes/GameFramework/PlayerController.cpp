@@ -3,6 +3,7 @@
 #include "Pawn.h"
 #include "WindowsCursor.h"
 #include "Camera/CameraComponent.h"
+#include "Camera/CameraFadeInModifier.h"
 #include "Engine/EditorEngine.h"
 #include "Engine/Engine.h"
 #include "LevelEditor/SLevelEditor.h"
@@ -137,6 +138,10 @@ void APlayerController::SpawnPlayerCameraManager()
     {
         UE_LOG(ELogLevel::Error, "Failed to construct CameraShakeBase");
     }
+
+    UCameraFadeInModifier* CameraModifier = FObjectFactory::ConstructObject<UCameraFadeInModifier>(this);
+    CameraModifier->Initialize(FLinearColor::Red, 5.0f);
+    PlayerCameraManager->AddCameraModifier(CameraModifier);
 }
 
 void APlayerController::HandleKeyDown(const FKeyEvent& InKeyEvent)

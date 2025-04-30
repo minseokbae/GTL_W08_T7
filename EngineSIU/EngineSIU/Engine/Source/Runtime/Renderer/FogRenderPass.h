@@ -9,7 +9,6 @@
 class FGraphicsDevice;
 class FDXDShaderManager;
 class FDXDBufferManager;
-class FEditorViewportClient;
 
 class FFogRenderPass : public IRenderPass
 {
@@ -52,3 +51,4 @@ private:
 
     TArray<UHeightFogComponent*> FogComponents;
 };
+

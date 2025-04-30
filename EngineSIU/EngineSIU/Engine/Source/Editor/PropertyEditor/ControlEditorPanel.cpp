@@ -21,8 +21,6 @@
 #include "UnrealEd/EditorViewportClient.h"
 #include "tinyfiledialogs.h"
 
-#include "Actors/Cube.h"
-
 #include "Engine/EditorEngine.h"
 #include <Actors/HeightFogActor.h>
 #include "Actors/PointLightActor.h"
@@ -313,7 +311,8 @@ void ControlEditorPanel::CreateModifyButton(ImVec2 ButtonSize, ImFont* IconFont)
                 case OBJ_CUBE:
                 {
                     // TODO: 다른 부분들 전부 Actor만 소환하도록 하고, Component 생성은 Actor가 자체적으로 하도록 변경.
-                    ACube* CubeActor = World->SpawnActor<ACube>();
+                    AStaticMeshActor* CubeActor = World->SpawnActor<AStaticMeshActor>();
+                    CubeActor->GetStaticMeshComponent()->SetStaticMesh(FManagerOBJ::GetStaticMesh(L"Contents/Cube/cube-tex.obj"));
                     CubeActor->SetActorLabel(TEXT("OBJ_CUBE"));
                     break;
                 }

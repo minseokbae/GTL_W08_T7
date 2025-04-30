@@ -12,6 +12,7 @@
 #include "UObject/ObjectFactory.h"
 #include "BaseGizmos/TransformGizmo.h"
 #include "Camera/CameraComponent.h"
+#include "Camera/PlayerCameraManager.h"
 #include "GameFramework/Pawn.h"
 #include "LevelEditor/SLevelEditor.h"
 #include "SlateCore/Input/Events.h"
@@ -72,24 +73,20 @@ void FEditorViewportClient::UpdateEditorCameraMovement(float DeltaTime)
     {
         AController* PlayerController =  EditorEngine->GetCurrentController(); 
         APawn* Pawn = PlayerController->GetPossessingPawn();
-        for (auto Component : Pawn->GetComponents())
+        APlayerCameraManager* PCM = Cast<APlayerController>(PlayerController)->GetPlayerCameraManager();
+        if (UCameraComponent* Cam = PCM->GetCachedCamera())
         {
-            if ( UCameraComponent* CameraComponent = Cast<UCameraComponent>(Component))
-            {
-                FVector LocalLoc = CameraComponent->GetRelativeLocation();
-                FVector PawnWorldLoc = Pawn->GetActorLocation();
-                FRotator WorldRoc =CameraComponent->GetWorldRotation();
-                // UE_LOG(ELogLevel::Warning, "Camera Comp Loc : %f %f %f", WorldLoc.X, WorldLoc.Y, WorldLoc.Z);
-                FVector RotLoc = JungleMath::FVectorRotate(LocalLoc, WorldRoc);
-                PerspectiveCamera.SetLocation(PawnWorldLoc + RotLoc);
-                
-                FVector WorldRocVec = FVector(CameraComponent->GetWorldRotation().Roll,CameraComponent->GetWorldRotation().Pitch,CameraComponent->GetWorldRotation().Yaw);
-                PerspectiveCamera.SetRotation(WorldRocVec);
-#pragma region ModifierTest
-                ViewFOV = CameraComponent->GetFieldOfView();
-#pragma endregion
-                return;
-            }
+            FVector LocalLoc = Cam->GetRelativeLocation();
+            FVector PawnWorldLoc = Pawn->GetActorLocation();
+            FRotator WorldRoc =Cam->GetWorldRotation();
+            // UE_LOG(ELogLevel::Warning, "Camera Comp Loc : %f %f %f", WorldLoc.X, WorldLoc.Y, WorldLoc.Z);
+            FVector RotLoc = JungleMath::FVectorRotate(LocalLoc, WorldRoc);
+            PerspectiveCamera.SetLocation(PawnWorldLoc + RotLoc);
+            
+            FVector WorldRocVec = FVector(Cam->GetWorldRotation().Roll,Cam->GetWorldRotation().Pitch,Cam->GetWorldRotation().Yaw);
+            PerspectiveCamera.SetRotation(WorldRocVec);
+            ViewFOV = Cam->GetFieldOfView();
+            return;
         }
         // PerspectiveCamera.SetRotation(EditorEngine->GetCurrentController()->GetPossessingPawn()->GetActorRotation().ToVector());
         PerspectiveCamera.SetLocation(EditorEngine->GetCurrentController()->GetPossessingPawn()->GetActorLocation());
@@ -279,6 +276,7 @@ void FEditorViewportClient::InputKey(const FKeyEvent& InKeyEvent)
             if (AActor* SelectedActor = EdEngine->GetSelectedActor())
             {
                 EdEngine->SelectActor(nullptr);
+                EdEngine->SelectComponent(nullptr);
                 GEngine->ActiveWorld->DestroyActor(SelectedActor);
             }
             break;

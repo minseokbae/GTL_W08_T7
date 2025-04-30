@@ -64,16 +64,18 @@ void PropertyEditorPanel::Render()
         return;
     AEditorPlayer* player = Engine->GetEditorPlayer();
     AActor* PickedActor = Engine->GetSelectedActor();
-    if (PickedActor)
+    USceneComponent* SelectedComponent = Engine->GetSelectedComponent();
+
+    if (SelectedComponent)
     {
         ImGui::SetItemDefaultFocus();
         // TreeNode 배경색을 변경 (기본 상태)
         ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
         if (ImGui::TreeNodeEx("Transform", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) // 트리 노드 생성
         {
-            Location = PickedActor->GetActorLocation();
-            Rotation = PickedActor->GetActorRotation();
-            Scale = PickedActor->GetActorScale();
+            Location = SelectedComponent->GetRelativeLocation();
+            Rotation = SelectedComponent->GetRelativeRotation();
+            Scale = SelectedComponent->GetRelativeScale3D();
 
             FImGuiWidget::DrawVec3Control("Location", Location, 0, 85);
             ImGui::Spacing();
@@ -84,23 +86,71 @@ void PropertyEditorPanel::Render()
             FImGuiWidget::DrawVec3Control("Scale", Scale, 0, 85);
             ImGui::Spacing();
 
-            PickedActor->SetActorLocation(Location);
-            PickedActor->SetActorRotation(Rotation);
-            PickedActor->SetActorScale(Scale);
+            SelectedComponent->SetRelativeLocation(Location);
+            SelectedComponent->SetRelativeRotation(Rotation);
+            SelectedComponent->SetRelativeScale3D(Scale);
 
-            std::string coordiButtonLabel;
-            if (player->GetCoordMode() == ECoordMode::CDM_WORLD)
-                coordiButtonLabel = "World";
-            else if (player->GetCoordMode() == ECoordMode::CDM_LOCAL)
-                coordiButtonLabel = "Local";
+            //std::string coordiButtonLabel;
+            //if (player->GetCoordMode() == ECoordMode::CDM_WORLD)
+            //    coordiButtonLabel = "World";
+            //else if (player->GetCoordMode() == ECoordMode::CDM_LOCAL)
+            //    coordiButtonLabel = "Local";
 
-            if (ImGui::Button(coordiButtonLabel.c_str(), ImVec2(ImGui::GetWindowContentRegionMax().x * 0.9f, 32)))
-            {
-                player->AddCoordiMode();
-            }
+            //if (ImGui::Button(coordiButtonLabel.c_str(), ImVec2(ImGui::GetWindowContentRegionMax().x * 0.9f, 32)))
+            //{
+            //    player->AddCoordiMode();
+            //}
             ImGui::TreePop(); // 트리 닫기
         }
 
+        ImGui::PopStyleColor();
+
+        static char CompSearchBuffer[128] = ""; // 검색어 입력 버퍼
+        ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
+        if (ImGui::TreeNodeEx("Component", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) // 트리 노드 생성
+        {
+            ImGui::Text("Add");
+            ImGui::SameLine();
+
+            TArray<UClass*> CompClasses;
+            GetChildOfClass(UActorComponent::StaticClass(), CompClasses);
+
+            if (ImGui::BeginCombo("##AddComponent", "Components", ImGuiComboFlags_None))
+            {
+                // 1. 검색어 입력창 추가
+                ImGui::InputText("Search", CompSearchBuffer, IM_ARRAYSIZE(CompSearchBuffer));
+                // 2. 검색어로 필터링
+                for (UClass* Class : CompClasses)
+                {
+                    FString ClassName = Class->GetName();
+                    // 검색어가 비어있거나, 검색어가 포함된 클래스만 표시
+                    if (strlen(CompSearchBuffer) == 0 || ClassName.Contains(CompSearchBuffer))
+                    {
+                        if (ImGui::Selectable(GetData(ClassName), false))
+                        {
+                            static uint32 NewCompIndex = 0;
+                            USceneComponent* NewComp = Cast<USceneComponent>(
+                                SelectedComponent->GetOwner()->AddComponent(
+                                    Class,
+                                    FString::Printf(TEXT("%s_%d"), *ClassName, NewCompIndex++)
+                                )
+                            );
+                            if (NewComp)
+                            {
+                                NewComp->SetupAttachment(SelectedComponent);
+                            }
+                        }
+                    }
+                }
+                ImGui::EndCombo();
+            }
+            ImGui::TreePop();
+        }
+        ImGui::PopStyleColor();
+    }
+
+    if (PickedActor)
+    {
         FString ActorTag = PickedActor->GetActorTag();
         char Tag[256];
         strcpy_s(Tag, *ActorTag);
@@ -110,11 +160,6 @@ void PropertyEditorPanel::Render()
         }
         ImGui::SameLine();
         ImGui::Text("Actor Tag");
-        ImGui::PopStyleColor();
-    }
-
-    if (PickedActor)
-    {
         namespace fs = std::filesystem;
         static char buf[256];
         FString ActorName = PickedActor->GetActorLabel();
@@ -191,8 +236,8 @@ void PropertyEditorPanel::Render()
         }
     }
 
-    if(PickedActor)
-        if (UPointLightComponent* pointlightObj = PickedActor->GetComponentByClass<UPointLightComponent>())
+    if(SelectedComponent)
+        if (UPointLightComponent* pointlightObj = Cast<UPointLightComponent>(SelectedComponent))
         {
             int pointNum = 0;
             for (const auto iter : TObjectRange<UPointLightComponent>())
@@ -251,8 +296,8 @@ void PropertyEditorPanel::Render()
             ImGui::PopStyleColor();
         }
 
-    if (PickedActor)
-        if (USpotLightComponent* SpotLightComp = PickedActor->GetComponentByClass<USpotLightComponent>())
+    if (SelectedComponent)
+        if (USpotLightComponent* SpotLightComp = Cast<USpotLightComponent>(SelectedComponent))
         {
             int spotNum = 0;
             for (const auto iter : TObjectRange<USpotLightComponent>())
@@ -331,8 +376,8 @@ void PropertyEditorPanel::Render()
             ImGui::PopStyleColor();
         }
 
-    if (PickedActor)
-        if (UDirectionalLightComponent* dirlightObj = PickedActor->GetComponentByClass<UDirectionalLightComponent>())
+    if (SelectedComponent)
+        if (UDirectionalLightComponent* dirlightObj = Cast<UDirectionalLightComponent>(SelectedComponent))
         {
             ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
 
@@ -381,8 +426,8 @@ void PropertyEditorPanel::Render()
             ImGui::PopStyleColor();
         }
 
-    if(PickedActor)
-        if (UAmbientLightComponent* ambientLightObj = PickedActor->GetComponentByClass<UAmbientLightComponent>())
+    if(SelectedComponent)
+        if (UAmbientLightComponent* ambientLightObj = Cast<UAmbientLightComponent>(SelectedComponent))
         {
             ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
 
@@ -397,8 +442,8 @@ void PropertyEditorPanel::Render()
             ImGui::PopStyleColor();
         }
 
-    if (PickedActor)
-        if (UProjectileMovementComponent* ProjectileComp = (PickedActor->GetComponentByClass<UProjectileMovementComponent>()))
+    if (SelectedComponent)
+        if (UProjectileMovementComponent* ProjectileComp = Cast<UProjectileMovementComponent>(SelectedComponent))
         {
             ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
 
@@ -434,8 +479,8 @@ void PropertyEditorPanel::Render()
             ImGui::PopStyleColor();
         }
     // TODO: 추후에 RTTI를 이용해서 프로퍼티 출력하기
-    if (PickedActor)
-        if (UTextComponent* textOBj = Cast<UTextComponent>(PickedActor->GetRootComponent()))
+    if (SelectedComponent)
+        if (UTextComponent* textOBj = Cast<UTextComponent>(SelectedComponent))
         {
             ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
             if (ImGui::TreeNodeEx("Text Component", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) // 트리 노드 생성
@@ -470,15 +515,15 @@ void PropertyEditorPanel::Render()
         }
 
     // TODO: 추후에 RTTI를 이용해서 프로퍼티 출력하기
-    if (PickedActor)
-        if (UStaticMeshComponent* StaticMeshComponent = Cast<UStaticMeshComponent>(PickedActor->GetRootComponent()))
+    if (SelectedComponent)
+        if (UStaticMeshComponent* StaticMeshComponent = Cast<UStaticMeshComponent>(SelectedComponent))
         {
             RenderForStaticMesh(StaticMeshComponent);
             RenderForMaterial(StaticMeshComponent);
         }
 
-    if (PickedActor)
-        if (UHeightFogComponent* FogComponent = Cast<UHeightFogComponent>(PickedActor->GetRootComponent()))
+    if (SelectedComponent)
+        if (UHeightFogComponent* FogComponent = Cast<UHeightFogComponent>(SelectedComponent))
         {
             ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
             if (ImGui::TreeNodeEx("Exponential Height Fog", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) // 트리 노드 생성
@@ -578,8 +623,8 @@ void PropertyEditorPanel::Render()
             ImGui::PopStyleColor();
         }
 
-    if(PickedActor)
-        if (USphereComponent* SphereComponent = Cast<USphereComponent>(PickedActor->GetComponentByClass<USphereComponent>()))
+    if(SelectedComponent)
+        if (USphereComponent* SphereComponent = Cast<USphereComponent>(SelectedComponent))
         {
             ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
 
@@ -593,8 +638,8 @@ void PropertyEditorPanel::Render()
             }
             ImGui::PopStyleColor();
         }    
-    if(PickedActor)
-        if (UBoxComponent* BoxComponent = Cast<UBoxComponent>(PickedActor->GetComponentByClass<UBoxComponent>()))
+    if(SelectedComponent)
+        if (UBoxComponent* BoxComponent = Cast<UBoxComponent>(SelectedComponent))
         {
             ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
 
@@ -672,10 +717,6 @@ void PropertyEditorPanel::HSVToRGB(float h, float s, float v, float& r, float& g
 
 void PropertyEditorPanel::RenderForStaticMesh(UStaticMeshComponent* StaticMeshComp) const
 {
-    if (StaticMeshComp->GetStaticMesh() == nullptr)
-    {
-        return;
-    }
 
     ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
     if (ImGui::TreeNodeEx("Static Mesh", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) // 트리 노드 생성
@@ -683,63 +724,45 @@ void PropertyEditorPanel::RenderForStaticMesh(UStaticMeshComponent* StaticMeshCo
         ImGui::Text("StaticMesh");
         ImGui::SameLine();
 
-        FString PreviewName = StaticMeshComp->GetStaticMesh()->GetRenderData()->DisplayName;
+        FString PreviewName;
+        if (StaticMeshComp->GetStaticMesh() == nullptr)
+        {
+            PreviewName = "None";
+        }
+        else
+        {
+            PreviewName = StaticMeshComp->GetStaticMesh()->GetRenderData()->DisplayName;
+        }
+    
         const TMap<FName, FAssetInfo> Assets = UAssetManager::Get().GetAssetRegistry();
+
+        static char StaticMeshSearchBuffer[128] = ""; // 검색어 입력 버퍼
 
         if (ImGui::BeginCombo("##StaticMesh", GetData(PreviewName), ImGuiComboFlags_None))
         {
+            // 1. 검색어 입력창 추가
+            ImGui::InputText("Search", StaticMeshSearchBuffer, IM_ARRAYSIZE(StaticMeshSearchBuffer));
+
+            // 2. 검색어로 필터링
             for (const auto& Asset : Assets)
             {
-                if (ImGui::Selectable(GetData(Asset.Value.AssetName.ToString()), false))
+                FString AssetName = Asset.Value.AssetName.ToString();
+                // 검색어가 비어있거나, 검색어가 포함된 항목만 표시
+                if (strlen(StaticMeshSearchBuffer) == 0 || AssetName.Contains(StaticMeshSearchBuffer))
                 {
-                    FString MeshName = Asset.Value.PackagePath.ToString() + "/" + Asset.Value.AssetName.ToString();
-                    UStaticMesh* StaticMesh = FManagerOBJ::GetStaticMesh(MeshName.ToWideString());
-                    if (StaticMesh)
+                    if (ImGui::Selectable(GetData(AssetName), false))
                     {
-                        StaticMeshComp->SetStaticMesh(StaticMesh);
+                        FString MeshName = Asset.Value.PackagePath.ToString() + "/" + AssetName;
+                        UStaticMesh* StaticMesh = FManagerOBJ::GetStaticMesh(MeshName.ToWideString());
+                        if (StaticMesh)
+                        {
+                            StaticMeshComp->SetStaticMesh(StaticMesh);
+                        }
                     }
                 }
             }
             ImGui::EndCombo();
         }
-
-        ImGui::TreePop();
-    }
-    ImGui::PopStyleColor();
-
-    ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
-    if (ImGui::TreeNodeEx("Component", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) // 트리 노드 생성
-    {
-        ImGui::Text("Add");
-        ImGui::SameLine();
-
-        TArray<UClass*> CompClasses;
-        GetChildOfClass(UActorComponent::StaticClass(), CompClasses);
-
-        if (ImGui::BeginCombo("##AddComponent", "Components", ImGuiComboFlags_None))
-        {
-            for (UClass* Class : CompClasses)
-            {
-                if (ImGui::Selectable(GetData(Class->GetName()), false))
-                {
-                    // TODO: 임시로 static uint32 NewCompIndex사용
-                    static uint32 NewCompIndex = 0;
-                    USceneComponent* NewComp = Cast<USceneComponent>(
-                        StaticMeshComp->GetOwner()->AddComponent(
-                            Class,
-                            FString::Printf(TEXT("%s_%d"), *Class->GetName(), NewCompIndex++)
-                        )
-                    );
-                    if (NewComp)
-                    {
-                        NewComp->SetupAttachment(StaticMeshComp);
-                    }
-                    // 추후 Engine으로부터 SelectedComponent 받아서 선택된 Comp 아래로 붙일 수있으면 붙이기.
-                }
-            }
-            ImGui::EndCombo();
-        }
-
         ImGui::TreePop();
     }
     ImGui::PopStyleColor();

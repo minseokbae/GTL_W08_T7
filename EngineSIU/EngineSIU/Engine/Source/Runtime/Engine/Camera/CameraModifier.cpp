@@ -22,3 +22,9 @@ void UCameraModifier::EnableModifier()
 {
     bDisabled = false;
 }
+
+bool UCameraModifier::ModifyCamera(float DeltaTime, APlayerCameraManager* NewCameraManager)
+{
+    return true;
+
+}

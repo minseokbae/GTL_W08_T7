@@ -8,12 +8,10 @@ class APlayerCameraManager;
 class UCameraModifier : public UObject
 {
     DECLARE_CLASS(UCameraModifier, UObject)
-    //DECLARE_ABSTRACT_CLASS(UCameraModifier, UObject)
-
 public:
     UCameraModifier();
 
-    virtual void ModifyCamera(
+    virtual bool ModifyCamera(
         float DeltaTime, 
         FVector ViewLocation, 
         FRotator ViewRotation, 

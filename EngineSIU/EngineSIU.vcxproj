@@ -173,6 +173,8 @@
     <ClCompile Include="EngineSIU\Engine\Source\Developer\ShaderCompileUtils\ShaderFileMetadata.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Developer\ShaderCompileUtils\ShaderMetadataPtr.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Editor\PropertyEditor\PlayerInEditorPanel.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraFadeInModifier.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraFadeOutModifier.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Core\Math\Transform.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraShakeBase.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraModifier.cpp" />
@@ -217,7 +219,6 @@
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Core\Stats\Stats.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\ActorEditor.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraComponent.cpp" />
-    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Actors\Cube.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Actors\DirectionalLightActor.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Actors\FireballActor.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Actors\HeightFogActor.cpp" />
@@ -333,6 +334,8 @@
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Core\Traits\IsCharType.h" />
     <None Include="EngineSIU\Engine\Source\Runtime\Core\Delegates\JungleDelegate.h" />
     <None Include="EngineSIU\Engine\Source\Runtime\Core\Delegates\JungleDelegateCombination.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraFadeInModifier.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraFadeOutModifier.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraShakeBase.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraModifier.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\PlayerCameraManager.h" />
@@ -392,7 +395,6 @@
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Core\Serialization\MemoryArchive.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Core\Stats\Stats.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraComponent.h" />
-    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Actors\Cube.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Actors\DirectionalLightActor.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Actors\FireballActor.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Actors\HeightFogActor.h" />

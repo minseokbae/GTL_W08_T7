@@ -1,6 +1,5 @@
 #include "World.h"
 
-#include "Actors/Cube.h"
 #include "Actors/EditorPlayer.h"
 #include "BaseGizmos/TransformGizmo.h"
 #include "Camera/CameraComponent.h"
@@ -75,7 +74,7 @@ void UWorld::Release()
         ActiveLevel = nullptr;
     }
     
-    GUObjectArray.ProcessPendingDestroyObjects();
+    // GUObjectArray.ProcessPendingDestroyObjects();
 }
 
 AActor* UWorld::SpawnActor(UClass* InClass, FName InActorName)
