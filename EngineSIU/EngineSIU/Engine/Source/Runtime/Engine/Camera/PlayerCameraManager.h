@@ -11,7 +11,7 @@ public:
     AActor* Target;
 
 public:
-    void SetNewTarget(AActor* NewTarget);
+    void SetNewTarget(AActor* NewTarget) {Target = NewTarget;};
 };
 
 class APlayerCameraManager : public AActor
@@ -21,8 +21,10 @@ public:
     APlayerCameraManager();
     virtual ~APlayerCameraManager();
     void InitializeFor(APlayerController* PC);
+    virtual void Tick(float DeltaTime) override;
 
-    void SetViewTarget(AActor* NewTarget) { ViewTarget.SetNewTarget(NewTarget); };
+    void SetViewTarget(AActor* NewTarget) { ViewTarget.SetNewTarget(NewTarget); }
+    void AddCameraModifier(UCameraModifier* CameraModifier);
 public:
     FLinearColor FadeColor;
     float FadeAmount;

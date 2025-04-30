@@ -9,7 +9,7 @@
 #include "UnrealEd/EditorViewportClient.h"
 #include "World/World.h"
 #include "Camera/PlayerCameraManager.h"
-
+#include "Camera/CameraModifier.h"
 APlayerController::APlayerController()
 {
 
@@ -93,4 +93,12 @@ void APlayerController::SpawnPlayerCameraManager()
 {
     PlayerCameraManager = GetWorld()->SpawnActor<APlayerCameraManager>();
     PlayerCameraManager->InitializeFor(this);
+    if (Pawn)
+        PlayerCameraManager->SetViewTarget(Pawn);
+    else
+    {
+        UE_LOG(ELogLevel::Error, "PlayerController dont have any Posses pawn");
+    }
+    UCameraModifier* CameraModifier = FObjectFactory::ConstructObject<UCameraModifier>(this);
+    PlayerCameraManager->AddCameraModifier(CameraModifier);
 }
