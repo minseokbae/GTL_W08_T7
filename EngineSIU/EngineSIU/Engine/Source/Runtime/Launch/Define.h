@@ -497,9 +497,14 @@ struct FFogConstants
     float padding1;
     float padding2;
 };
-struct FCameraFadeConstants
+struct FCameraOverlayConstants
 {
     FLinearColor FadeColor;
     float FadeAlpha;
     FVector Padding;
+
+    FLinearColor LetterBoxColor;
+    float LetterBoxHeight;
+    float LetterBoxWidth;
+    FVector2D Padding2;
 };

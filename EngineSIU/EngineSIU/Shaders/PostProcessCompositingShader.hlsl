@@ -3,11 +3,17 @@ Texture2D FogTexture : register(t103);
 
 SamplerState CompositingSampler : register(s0);
 
-cbuffer CameraFaceConstants : register(b0)
+cbuffer CameraOverlayConstants : register(b0)
 {
     float4 FadeColor;
     float FadeAlpha;
-    float3 padding;
+    float3 Padding;
+
+    float4 LetterBoxColor;
+    
+    float LetterBoxHeight;
+    float LetterBoxWidth;
+    float2 Padding2; 
 }
 
 struct PS_Input
@@ -44,8 +50,12 @@ float4 mainPS(PS_Input input) : SV_Target
 {
     float2 UV = input.UV;
     float4 FogColor = FogTexture.Sample(CompositingSampler, UV);
+    if (UV.x <LetterBoxWidth || UV.x > 1.0 - LetterBoxWidth || UV.y < LetterBoxHeight || UV.y > 1.0 - LetterBoxHeight)
+    {
+        return lerp(LetterBoxColor, FadeColor, FadeAlpha);
+    }
 
     // PostProcessing Texture 추가
     float4 FinalColor = FogColor;
-    return FinalColor + (FadeColor * FadeAlpha);
+    return lerp(FinalColor, FadeColor,  FadeAlpha);
 }

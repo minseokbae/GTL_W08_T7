@@ -169,8 +169,8 @@ void FRenderer::CreateConstantBuffers()
     UINT DepthMapData = sizeof(struct FDepthMapData);
     BufferManager->CreateBufferGeneric<struct FDepthMapData>("FDepthMapData", nullptr, DepthMapData, D3D11_BIND_CONSTANT_BUFFER, D3D11_USAGE_DYNAMIC, D3D11_CPU_ACCESS_WRITE);
 
-    UINT CameraFade = sizeof(FCameraFadeConstants);
-    BufferManager->CreateBufferGeneric<FCameraFadeConstants>("FCameraFadeConstants",nullptr, CameraFade,D3D11_BIND_CONSTANT_BUFFER, D3D11_USAGE_DYNAMIC, D3D11_CPU_ACCESS_WRITE);
+    UINT CameraFade = sizeof(FCameraOverlayConstants);
+    BufferManager->CreateBufferGeneric<FCameraOverlayConstants>("FCameraOverlayConstants",nullptr, CameraFade,D3D11_BIND_CONSTANT_BUFFER, D3D11_USAGE_DYNAMIC, D3D11_CPU_ACCESS_WRITE);
     // TODO: 함수로 분리
     ID3D11Buffer* ObjectBuffer = BufferManager->GetConstantBuffer(TEXT("FObjectConstantBuffer"));
     ID3D11Buffer* CameraConstantBuffer = BufferManager->GetConstantBuffer(TEXT("FCameraConstantBuffer"));

@@ -98,7 +98,7 @@ void FPostProcessCompositingPass::Render(const std::shared_ptr<FEditorViewportCl
     ID3D11PixelShader* PixelShader = ShaderManager->GetPixelShaderByKey(L"PostProcessCompositing");
     Graphics->DeviceContext->VSSetShader(VertexShader, nullptr, 0);
     Graphics->DeviceContext->PSSetShader(PixelShader, nullptr, 0);
-    BufferManager->BindConstantBuffer(TEXT("FCameraFadeConstants"), 0,EShaderStage::Pixel);
+    BufferManager->BindConstantBuffer(TEXT("FCameraOverlayConstants"), 0,EShaderStage::Pixel);
     UdpateCameraConstants();
     
     Graphics->DeviceContext->IASetInputLayout(nullptr);
@@ -121,12 +121,15 @@ void FPostProcessCompositingPass::ClearRenderArr()
 
 void FPostProcessCompositingPass::UdpateCameraConstants()
 {
-    FCameraFadeConstants CameraFadeData = {};
+    FCameraOverlayConstants CameraFadeData = {};
     UEditorEngine* EditorEngine = Cast<UEditorEngine>(GEngine);
     if (EditorEngine->GetGameInstance() == nullptr || EditorEngine->GetGameInstance()->GetLocalPlayer() == nullptr || EditorEngine->GetGameInstance()->GetLocalPlayer()->GetPlayerController() == nullptr)
     {
         CameraFadeData.FadeColor = FLinearColor::White;
         CameraFadeData.FadeAlpha = 0;
+        CameraFadeData.LetterBoxColor = FLinearColor::White;
+        CameraFadeData.LetterBoxHeight = 0.0f;
+        CameraFadeData.LetterBoxWidth = 0.0f;
     }
     else
     {
@@ -134,7 +137,10 @@ void FPostProcessCompositingPass::UdpateCameraConstants()
     
         CameraFadeData.FadeColor = PCM->FadeColor;
         CameraFadeData.FadeAlpha = PCM->FadeAmount;
+        CameraFadeData.LetterBoxColor = PCM->LetterBoxColor;
+        CameraFadeData.LetterBoxHeight = PCM->LetterBoxHeight;
+        CameraFadeData.LetterBoxWidth = PCM->LetterBoxWidth;
     }
-    BufferManager->UpdateConstantBuffer(TEXT("FCameraFadeConstants"), CameraFadeData);
+    BufferManager->UpdateConstantBuffer(TEXT("FCameraOverlayConstants"), CameraFadeData);
 
 }

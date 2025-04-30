@@ -32,6 +32,12 @@ public:
     float FadeTime;
     float FadeTimeRemaining;
 
+    FLinearColor LetterBoxColor = FLinearColor::Black;
+    float LetterBoxHeight = 0.05;
+    float LetterBoxWidth = 0.05f;
+
+
+    
     FName CameraStyle;
     struct FViewTarget ViewTarget;
     
