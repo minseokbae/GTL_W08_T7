@@ -11,9 +11,24 @@
 #include "World/World.h"
 #include "Camera/PlayerCameraManager.h"
 #include "Camera/CameraModifier.h"
-APlayerController::APlayerController()
-{
+#include "Camera/CameraShakeBase.h"
 
+#include "SlateCore/Input/Events.h"
+
+APlayerController::APlayerController()
+    : Player(nullptr)
+    , PlayerCameraManager(nullptr)
+    , CameraShakeModifier(nullptr)
+    , MyMessageHandler(nullptr)
+    , bIsRunning(false)
+{
+    MouseCenterPos = { 0, 0 };
+}
+
+APlayerController::~APlayerController()
+{
+    MyMessageHandler->OnKeyDownDelegate.RemoveAllForObject(this);
+    MyMessageHandler->OnKeyUpDelegate.RemoveAllForObject(this);
 }
 
 void APlayerController::Tick(float DeltaTime)
@@ -30,24 +45,30 @@ void APlayerController::Input()
     {
         Pawn->SetActorLocation(Pawn->GetActorLocation() + Pawn->GetActorForwardVector() * 0.1f);
         Pawn->GetRootComponent()->ComponentVelocity += Pawn->GetActorForwardVector() * 0.1f;
+        bIsRunning=true;
     }
     if (GetAsyncKeyState('S') & 0x8000)
     {
         Pawn->SetActorLocation(Pawn->GetActorLocation() - Pawn->GetActorForwardVector() * 0.1f);
         Pawn->GetRootComponent()->ComponentVelocity += -Pawn->GetActorForwardVector() * 0.1f;
+        bIsRunning = true;
 
     }
     if (GetAsyncKeyState('A') & 0x8000)
     {
         Pawn->SetActorLocation(Pawn->GetActorLocation() - Pawn->GetActorRightVector() * 0.1f);
         Pawn->GetRootComponent()->ComponentVelocity += -Pawn->GetActorRightVector() * 0.1f;
+        bIsRunning = true;
 
     }
     if (GetAsyncKeyState('D') & 0x8000)
     {
         Pawn->SetActorLocation(Pawn->GetActorLocation() + Pawn->GetActorRightVector() * 0.1f);
         Pawn->GetRootComponent()->ComponentVelocity += Pawn->GetActorRightVector() * 0.1f;
+        bIsRunning = true;
     }
+
+
     POINT cur;
     GetCursorPos(&cur);
 
@@ -70,9 +91,28 @@ void APlayerController::BeginPlay()
     InitMouseLook();
 }
 
+void APlayerController::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+    AController::EndPlay(EndPlayReason);
+
+    MyMessageHandler->OnKeyDownDelegate.RemoveAllForObject(this);
+    MyMessageHandler->OnKeyUpDelegate.RemoveAllForObject(this);
+
+    MyMessageHandler->OnMouseMoveDelegate.RemoveAllForObject(this);
+}
+
 void APlayerController::Initialize()
 {
     SpawnPlayerCameraManager();
+
+    MyMessageHandler = GEngineLoop.GetAppMessageHandler();
+    if (MyMessageHandler)
+    {
+        MyMessageHandler->OnKeyDownDelegate.AddDynamic(this, &APlayerController::HandleKeyDown);
+        MyMessageHandler->OnKeyUpDelegate.AddDynamic(this, &APlayerController::HandleKeyUp);
+
+        //MyMessageHandler->OnMouseMoveDelegate.AddDynamic(this, &APlayerController::HandleMouseMove);
+    }
 }
 
 void APlayerController::InitMouseLook()
@@ -95,4 +135,87 @@ void APlayerController::SpawnPlayerCameraManager()
     PlayerCameraManager = GetWorld()->SpawnActor<APlayerCameraManager>();
     GEngineLoop.LuaCompiler.AddPlayerCameraMangerToLua(PlayerCameraManager);
     PlayerCameraManager->InitializeFor(this);
+    if (Pawn)
+        PlayerCameraManager->SetViewTarget(Pawn);
+    else
+    {
+        UE_LOG(ELogLevel::Error, "PlayerController dont have any Posses pawn");
+    }
+
+    CameraShakeModifier = FObjectFactory::ConstructObject<UCameraShakeBase>(this);
+    if (CameraShakeModifier)
+    {
+        UE_LOG(ELogLevel::Error, TEXT("CameraShakeModifier 생성 성공. 주소: %p"), CameraShakeModifier);
+        PlayerCameraManager->AddCameraModifier(CameraShakeModifier);
+    }
+    else
+    {
+        UE_LOG(ELogLevel::Error, "Failed to construct CameraShakeBase");
+    }
 }
+
+void APlayerController::HandleKeyDown(const FKeyEvent& InKeyEvent)
+{
+    UE_LOG(ELogLevel::Error, TEXT("CameraShakeModifier Down 사용 시도. 현재 주소: %p"), this->CameraShakeModifier); // 사용 시 주소 로깅
+
+    EInputEvent InputEvent = InKeyEvent.GetInputEvent();
+    if (InputEvent == IE_Pressed)
+    {
+        //EKeys::Type KeyType = InKeyEvent.GetKey();
+        uint32 character = InKeyEvent.GetCharacter();
+
+        switch (character)
+        {
+        case 'W':
+            bIsRunning = true;
+            break;
+        case 'A':
+            bIsRunning = true;
+            break;
+        case 'S':
+            bIsRunning = true;
+            break;
+        case 'D':
+            bIsRunning = true;
+            break;
+        default:
+            break;
+        }
+    }
+    if (!bIsRunning) return;
+}
+
+void APlayerController::HandleKeyUp(const FKeyEvent& InKeyEvent)
+{
+    UE_LOG(ELogLevel::Error, TEXT("CameraShakeModifier Up 사용 시도. 현재 주소: %p"), this->CameraShakeModifier); // 사용 시 주소 로깅
+
+    EInputEvent InputEvent = InKeyEvent.GetInputEvent();
+    if (InputEvent == IE_Released)
+    {
+        //EKeys::Type KeyType = InKeyEvent.GetKey();
+        uint32 character = InKeyEvent.GetCharacter();
+        switch (character)
+        {
+        case 'W':
+            bIsRunning = false;
+            break;
+        case 'A':
+            bIsRunning = false;
+            break;
+        case 'S':
+            bIsRunning = false;
+            break;
+        case 'D':
+            bIsRunning = false;
+            break;
+        default:
+            break;
+        }
+    }
+    if (bIsRunning) return;
+}
+
+//void APlayerController::HandleMouseMove(const FPointerEvent& InPointerEvent)
+//{
+//}
+

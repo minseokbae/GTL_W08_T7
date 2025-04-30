@@ -85,6 +85,7 @@ void APlayerCameraManager::EndPlay(const EEndPlayReason::Type EndPlayReason)
 }
 void APlayerCameraManager::AddCameraModifier(UCameraModifier* CameraModifier)
 {
+    CameraModifier->AddedToCamera(this);
     ModifierList.AddUnique(CameraModifier);
 }
 

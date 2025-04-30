@@ -179,6 +179,7 @@
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraLetterBoxIn.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraLetterBoxOut.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Core\Math\Transform.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraShakeBase.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraModifier.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraTransitionModifier.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\PlayerCameraManager.cpp" />
@@ -343,6 +344,7 @@
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraFadeOutModifier.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraLetterBoxIn.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraLetterBoxOut.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraShakeBase.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraModifier.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraTransitionModifier.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\PlayerCameraManager.h" />
@@ -530,6 +532,7 @@
     <ClInclude Include="EngineSIU\Engine\Source\ThirdParty\DirectXTK\Include\DirectXTK\VertexTypes.h" />
     <ClInclude Include="EngineSIU\Engine\Source\ThirdParty\DirectXTK\Include\DirectXTK\WICTextureLoader.h" />
     <ClInclude Include="EngineSIU\Engine\Source\ThirdParty\DirectXTK\Include\DirectXTK\XboxDDSTextureLoader.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\ThirdParty\FastNoiseLite\FastNoiseLite.h" />
     <ClInclude Include="EngineSIU\Engine\Source\ThirdParty\ImGui\include\ImGui\imconfig.h" />
     <ClInclude Include="EngineSIU\Engine\Source\ThirdParty\ImGui\include\ImGui\imgui.h" />
     <ClInclude Include="EngineSIU\Engine\Source\ThirdParty\ImGui\include\ImGui\imgui_impl_dx11.h" />

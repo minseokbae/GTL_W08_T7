@@ -5,7 +5,7 @@
 class UCameraComponent : public USceneComponent
 {
     DECLARE_CLASS(UCameraComponent, USceneComponent)
-
+ 
 public:
     UCameraComponent() = default;
 

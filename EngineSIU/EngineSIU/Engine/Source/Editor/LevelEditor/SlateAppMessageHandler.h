@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "RawInput.h"
 #include "Delegates/DelegateCombination.h"
 #include "HAL/PlatformType.h"

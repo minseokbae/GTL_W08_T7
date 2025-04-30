@@ -9,7 +9,6 @@ UCameraModifier::UCameraModifier()
 {
     LoadBezierInfo();
 }
-
 void UCameraModifier::AddedToCamera(APlayerCameraManager* Camera)
 {
     CameraOwner = Camera;
@@ -28,6 +27,7 @@ void UCameraModifier::EnableModifier()
 bool UCameraModifier::ModifyCamera(float DeltaTime, APlayerCameraManager* NewCameraManager)
 {
     return true;
+
 }
 
 void UCameraModifier::LoadBezierInfo()
