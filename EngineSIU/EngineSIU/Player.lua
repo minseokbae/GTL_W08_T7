@@ -10,6 +10,7 @@ function EndPlay()
 end
 local elapsedTime = 0.0
 local gameOver = false;
+local hitCount = 0
 function OnOverlap(overlapObj)
     --충돌 처리 overlapObj는 충돌한 액터의 루트 컴포넌트를 가리킴
     local ok, err = pcall(function()
@@ -21,16 +22,21 @@ function OnOverlap(overlapObj)
             end
         elseif overlapObj.Tag:Equals("Ghost") then
             if not(gameOver) then
-                print("GameOver")
-                PlaySound("lose", 1.0, false) -- Lose
-                local modifier = CreateCameraTransitionModifier(obj)
-                local position = Vector.new(27.5, 27.5, 60) - obj.Location
-                modifier:Initialize(position, Rotator.new(89,0,0) - obj.Rotation, 60, 5.0)
-                print("success Initialize")
-                Global.CameraManager:AddCameraModifier(modifier)
-                print("success AddModifier")
-                ChangeViewMode(3)
-                gameOver = true
+                if hitCount<2 then
+                    hitCount = hitCount+1
+                    GameOver()
+                else
+                    print("GameOver")
+                    PlaySound("lose", 1.0, false) -- Lose
+                    local modifier = CreateCameraTransitionModifier(obj)
+                    local position = Vector.new(27.5, 27.5, 60) - obj.Location
+                    modifier:Initialize(position, Rotator.new(89,0,0) - obj.Rotation, 60, 5.0)
+                    print("success Initialize")
+                    Global.CameraManager:AddCameraModifier(modifier)
+                    print("success AddModifier")
+                    ChangeViewMode(3)
+                    gameOver = true
+                end
             end
         else
             obj.Location = obj.Location - obj.Velocity * 5
