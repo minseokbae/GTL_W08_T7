@@ -1,6 +1,7 @@
 #pragma once
 #include "ActorComponent.h"
 #include "Math/Rotator.h"
+#include "Math/Transform.h"
 #include "UObject/ObjectMacros.h"
 
 class USceneComponent : public UActorComponent
@@ -32,7 +33,13 @@ public:
     const TArray<USceneComponent*>& GetAttachChildren() const { return AttachChildren; }
 
     void AttachToComponent(USceneComponent* InParent);
-
+    FTransform GetComponentTransform() const // Added const to make the function const-correct
+    {
+       FQuat Rotation = GetWorldRotation().ToQuaternion();
+       FVector Location = GetWorldLocation();
+       FVector Scale = GetRelativeScale3D();
+       return FTransform(Rotation, Location, Scale);
+    }
 public:
     void SetRelativeLocation(const FVector& InNewLocation) { RelativeLocation = InNewLocation; }
     void SetRelativeRotation(const FRotator& InNewRotation) { RelativeRotation = InNewRotation; }

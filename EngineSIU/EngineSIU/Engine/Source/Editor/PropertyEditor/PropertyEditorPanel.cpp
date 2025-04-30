@@ -32,6 +32,7 @@
 
 #include "Components/SphereComponent.h"
 #include "Components/BoxComponent.h"
+#include "GameFramework/SpringArmComponent.h"
 void PropertyEditorPanel::Render()
 {
     /* Pre Setup */
@@ -656,6 +657,47 @@ void PropertyEditorPanel::Render()
             }
             ImGui::PopStyleColor();
         }
+
+    if (SelectedComponent)
+        if (USpringArmComponent* SpringArmComponent = Cast<USpringArmComponent>(SelectedComponent))
+        {
+            ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
+            if (ImGui::TreeNodeEx("SpringArm Component", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen))
+            {
+                // 암 길이
+                ImGui::DragFloat("Target Arm Length", &SpringArmComponent->TargetArmLength, 1.0f, 0.0f, 10000.0f);
+
+                // 소켓 오프셋
+                ImGui::DragFloat3("Socket Offset", &SpringArmComponent->SocketOffset.X, 1.0f);
+
+                // 타겟 오프셋
+                ImGui::DragFloat3("Target Offset", &SpringArmComponent->TargetOffset.X, 1.0f);
+
+                // 충돌 검사
+                ImGui::Checkbox("Do Collision Test", &SpringArmComponent->bDoCollisionTest);
+
+                // 위치 랙
+                ImGui::Checkbox("Enable Camera Lag", &SpringArmComponent->bEnableCameraLag);
+                ImGui::DragFloat("Camera Lag Speed", &SpringArmComponent->CameraLagSpeed, 0.1f, 0.0f, 100.0f);
+                ImGui::DragFloat("Camera Lag Max Dist", &SpringArmComponent->CameraLagMaxDistance, 1.0f, 0.0f, 10000.0f);
+
+                // 회전 랙
+                ImGui::Checkbox("Enable Camera Rotation Lag", &SpringArmComponent->bEnableCameraRotationLag);
+                ImGui::DragFloat("Camera Rot Lag Speed", &SpringArmComponent->CameraRotationLagSpeed, 0.1f, 0.0f, 100.0f);
+
+                // 폰 컨트롤러 회전
+                ImGui::Checkbox("Use Pawn Control Rotation", &SpringArmComponent->bUsePawnControlRotation);
+
+                // 부모 회전 상속
+                ImGui::Checkbox("Inherit Pitch", &SpringArmComponent->bInheritPitch);
+                ImGui::Checkbox("Inherit Yaw", &SpringArmComponent->bInheritYaw);
+                ImGui::Checkbox("Inherit Roll", &SpringArmComponent->bInheritRoll);
+
+                ImGui::TreePop();
+            }
+            ImGui::PopStyleColor();
+        }
+
 
     ImGui::End();
 }

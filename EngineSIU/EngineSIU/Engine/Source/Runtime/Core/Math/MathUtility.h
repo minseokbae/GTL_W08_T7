@@ -226,6 +226,11 @@ struct FMath
             return Target;
         }
 
+        if (Current.Equals(Target, SMALL_NUMBER))
+        {
+            return Target;
+        }
+
         return Slerp(Current, Target, Clamp<float>(InterpSpeed * DeltaTime, 0.f, 1.f));
     }
 
