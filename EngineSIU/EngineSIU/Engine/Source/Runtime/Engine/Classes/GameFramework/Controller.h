@@ -11,6 +11,7 @@ public:
 
     virtual void Tick(float DeltaTime) override;
     virtual void Input();
+    virtual void Initialize();
 
 protected:
     APawn* Pawn;
