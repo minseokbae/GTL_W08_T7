@@ -25,7 +25,7 @@ function OnOverlap(overlapObj)
                 PlaySound("lose", 1.0, false) -- Lose
                 local modifier = CreateCameraTransitionModifier(obj)
                 local position = Vector.new(27.5, 27.5, 60) - obj.Location
-                modifier:Initialize(position, Rotator.new(89,0,0) - obj.Rotation, 60, 20.0)
+                modifier:Initialize(position, Rotator.new(89,0,0) - obj.Rotation, 60, 5.0)
                 print("success Initialize")
                 Global.CameraManager:AddCameraModifier(modifier)
                 print("success AddModifier")
@@ -62,7 +62,7 @@ function Tick(dt)
             elapsedTime = elapsedTime + dt
             --obj.Rotation = Rotator.new(0,5,0) + obj.Rotation
         end
-        if elapsedTime >= 30.0 then
+        if elapsedTime >= 10.0 then
             GameOver()
         end
     end)
