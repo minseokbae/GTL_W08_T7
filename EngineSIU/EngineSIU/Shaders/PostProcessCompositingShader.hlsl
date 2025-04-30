@@ -13,7 +13,13 @@ cbuffer CameraOverlayConstants : register(b0)
     
     float LetterBoxHeight;
     float LetterBoxWidth;
-    float2 Padding2; 
+    float2 Padding2;
+
+    float4 VignetteColor;
+    float VignetteIntensity;
+    float VignetteSmoothness;
+    float2 VignetteCenter;
+    
 }
 
 struct PS_Input
@@ -52,10 +58,21 @@ float4 mainPS(PS_Input input) : SV_Target
     float4 FogColor = FogTexture.Sample(CompositingSampler, UV);
     if (UV.x <LetterBoxWidth || UV.x > 1.0 - LetterBoxWidth || UV.y < LetterBoxHeight || UV.y > 1.0 - LetterBoxHeight)
     {
-        return lerp(LetterBoxColor, FadeColor, FadeAlpha);
+        return LetterBoxColor;
     }
 
     // PostProcessing Texture 추가
-    float4 FinalColor = FogColor;
-    return lerp(FinalColor, FadeColor,  FadeAlpha);
+    // float4 Faded = lerp(FogColor, FadeColor,  FadeAlpha);
+
+    float2 pos = UV * 2.0 - 1.0;
+    float2 centered = pos - (VignetteCenter * 2.0 - 1.0);
+    float dist = length(centered);
+    float mask = saturate( smoothstep(1.0 - VignetteSmoothness, 1.0, dist) * VignetteIntensity );
+
+    // 4) Combine fade alpha with mask
+    float finalAlpha = FadeAlpha * mask;
+
+    // 5) Apply fade via lerp
+    float4 finalColor = lerp(FogColor, FadeColor, finalAlpha);
+    return finalColor;
 }

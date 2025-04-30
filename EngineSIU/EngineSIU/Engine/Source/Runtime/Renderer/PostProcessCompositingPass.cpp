@@ -130,6 +130,9 @@ void FPostProcessCompositingPass::UdpateCameraConstants()
         CameraFadeData.LetterBoxColor = FLinearColor::White;
         CameraFadeData.LetterBoxHeight = 0.0f;
         CameraFadeData.LetterBoxWidth = 0.0f;
+        CameraFadeData.VignetteIntensity = 0.0f;
+        CameraFadeData.VignetteSmoothness = 0.0f;
+        CameraFadeData.VignetteCenter = FVector2D::ZeroVector;
     }
     else
     {
@@ -140,6 +143,12 @@ void FPostProcessCompositingPass::UdpateCameraConstants()
         CameraFadeData.LetterBoxColor = PCM->LetterBoxColor;
         CameraFadeData.LetterBoxHeight = PCM->LetterBoxHeight;
         CameraFadeData.LetterBoxWidth = PCM->LetterBoxWidth;
+        
+        CameraFadeData.VignetteColor = PCM->VignetteColor;
+        CameraFadeData.VignetteIntensity = PCM->VignetteIntensity;
+        CameraFadeData.VignetteSmoothness = PCM->VignetteSmoothness;
+        CameraFadeData.VignetteCenter = PCM->VignetteCenter;
+        
     }
     BufferManager->UpdateConstantBuffer(TEXT("FCameraOverlayConstants"), CameraFadeData);
 
