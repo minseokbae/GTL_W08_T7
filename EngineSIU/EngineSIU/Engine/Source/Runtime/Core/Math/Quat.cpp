@@ -164,48 +164,48 @@ FQuat FQuat::CreateRotation(float roll, float pitch, float yaw)
     return qRoll * qPitch * qYaw;
 }
 
-//FQuat FQuat::Slerp(const FQuat& A, const FQuat& B, float Alpha)
-//{
-//    FQuat NormalizedA = A.Normalize();
-//    FQuat NormalizedB = B.Normalize();
-//
-//    float dot = NormalizedA.W * NormalizedB.W + NormalizedA.X * NormalizedB.X + NormalizedA.Y * NormalizedB.Y + NormalizedA.Z * NormalizedB.Z;
-//
-//    if (dot < 0.0f)
-//    {
-//        NormalizedB = FQuat(-NormalizedB.W, -NormalizedB.X, -NormalizedB.Y, -NormalizedB.Z);
-//        dot = -dot;
-//    }
-//
-//    const float DOT_THRESHOLD = 0.00095f;
-//    if (dot > DOT_THRESHOLD)
-//    {
-//        FQuat result = FQuat(
-//            FMath::Lerp(NormalizedA.W, NormalizedB.W, Alpha),
-//            FMath::Lerp(NormalizedA.X, NormalizedB.X, Alpha),
-//            FMath::Lerp(NormalizedA.Y, NormalizedB.Y, Alpha),
-//            FMath::Lerp(NormalizedA.Z, NormalizedB.Z, Alpha)
-//        );
-//        return result.Normalize();
-//    }
-//
-//    float theta_0 = acosf(dot);
-//    float theta = theta_0 * Alpha;
-//    float sin_theta = sinf(theta);
-//    float sin_theta_0 = sinf(theta_0);
-//
-//    float s0 = cosf(theta) - dot * sin_theta / sin_theta_0;
-//    float s1 = sin_theta / sin_theta_0;
-//
-//    FQuat result = FQuat(
-//        s0 * NormalizedA.W + s1 * NormalizedB.W,
-//        s0 * NormalizedA.X + s1 * NormalizedB.X,
-//        s0 * NormalizedA.Y + s1 * NormalizedB.Y,
-//        s0 * NormalizedA.Z + s1 * NormalizedB.Z
-//    );
-//
-//    return result.Normalize();
-//}
+FQuat FQuat::Slerp(const FQuat& A, const FQuat& B, float Alpha)
+{
+    FQuat NormalizedA = A.Normalize();
+    FQuat NormalizedB = B.Normalize();
+
+    float dot = NormalizedA.W * NormalizedB.W + NormalizedA.X * NormalizedB.X + NormalizedA.Y * NormalizedB.Y + NormalizedA.Z * NormalizedB.Z;
+
+    if (dot < 0.0f)
+    {
+        NormalizedB = FQuat(-NormalizedB.W, -NormalizedB.X, -NormalizedB.Y, -NormalizedB.Z);
+        dot = -dot;
+    }
+
+    const float DOT_THRESHOLD = 0.00095f;
+    if (dot > DOT_THRESHOLD)
+    {
+        FQuat result = FQuat(
+            FMath::Lerp(NormalizedA.W, NormalizedB.W, Alpha),
+            FMath::Lerp(NormalizedA.X, NormalizedB.X, Alpha),
+            FMath::Lerp(NormalizedA.Y, NormalizedB.Y, Alpha),
+            FMath::Lerp(NormalizedA.Z, NormalizedB.Z, Alpha)
+        );
+        return result.Normalize();
+    }
+
+    float theta_0 = acosf(dot);
+    float theta = theta_0 * Alpha;
+    float sin_theta = sinf(theta);
+    float sin_theta_0 = sinf(theta_0);
+
+    float s0 = cosf(theta) - dot * sin_theta / sin_theta_0;
+    float s1 = sin_theta / sin_theta_0;
+
+    FQuat result = FQuat(
+        s0 * NormalizedA.W + s1 * NormalizedB.W,
+        s0 * NormalizedA.X + s1 * NormalizedB.X,
+        s0 * NormalizedA.Y + s1 * NormalizedB.Y,
+        s0 * NormalizedA.Z + s1 * NormalizedB.Z
+    );
+
+    return result.Normalize();
+}
 
 FMatrix FQuat::ToMatrix() const
 {
