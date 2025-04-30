@@ -54,7 +54,7 @@ public:
     bool IsFinished() const { return bIsFinished; }
     bool IsActive() const { return bIsActive; }
 
-    virtual void ModifyCamera(float DeltaTime, FVector ViewLocation, FRotator ViewRotation, float FOV, FVector& NewViewLocation, FRotator& NewViewRotation, float& NewFOV) override;
+    virtual bool ModifyCamera(float DeltaTime, APlayerCameraManager* NewCameraManager) override;
 
 protected:
     void InitializeNoiseGenerator();

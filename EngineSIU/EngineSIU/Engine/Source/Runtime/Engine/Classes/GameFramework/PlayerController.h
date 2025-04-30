@@ -11,6 +11,7 @@ class APlayerController : public AController
     DECLARE_CLASS(APlayerController, AController)
 public:
     APlayerController();
+    ~APlayerController();
 
     virtual void Tick(float DeltaTime) override;
     virtual void Input() override;

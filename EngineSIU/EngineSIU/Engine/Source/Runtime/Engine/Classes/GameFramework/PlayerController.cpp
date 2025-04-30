@@ -25,6 +25,13 @@ APlayerController::APlayerController()
     MouseCenterPos = { 0, 0 };
 }
 
+APlayerController::~APlayerController()
+{
+    MyMessageHandler->OnKeyDownDelegate.RemoveAllForObject(this);
+    MyMessageHandler->OnKeyUpDelegate.RemoveAllForObject(this);
+
+}
+
 void APlayerController::Tick(float DeltaTime)
 {
     AController::Tick(DeltaTime);
@@ -37,6 +44,7 @@ void APlayerController::Input()
     Pawn->GetRootComponent()->ComponentVelocity = FVector(0.f, 0.f, 0.f);
     if (GetAsyncKeyState('W') & 0x8000)
     {
+        ///
         Pawn->SetActorLocation(Pawn->GetActorLocation() + Pawn->GetActorForwardVector() * 0.1f);
         Pawn->GetRootComponent()->ComponentVelocity += Pawn->GetActorForwardVector() * 0.1f;
     }
@@ -83,8 +91,8 @@ void APlayerController::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
     AController::EndPlay(EndPlayReason);
 
-    MyMessageHandler->OnKeyDownDelegate.RemoveAllForObject(this);
-    MyMessageHandler->OnKeyUpDelegate.RemoveAllForObject(this);
+    //MyMessageHandler->OnKeyDownDelegate.RemoveAllForObject(this);
+    //MyMessageHandler->OnKeyUpDelegate.RemoveAllForObject(this);
 
     //MyMessageHandler->OnMouseMoveDelegate.RemoveAllForObject(this);
 }
@@ -138,10 +146,6 @@ void APlayerController::SpawnPlayerCameraManager()
     {
         UE_LOG(ELogLevel::Error, "Failed to construct CameraShakeBase");
     }
-
-    UCameraFadeInModifier* CameraModifier = FObjectFactory::ConstructObject<UCameraFadeInModifier>(this);
-    CameraModifier->Initialize(FLinearColor::Red, 5.0f);
-    PlayerCameraManager->AddCameraModifier(CameraModifier);
 }
 
 void APlayerController::HandleKeyDown(const FKeyEvent& InKeyEvent)

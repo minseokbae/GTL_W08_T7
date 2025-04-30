@@ -3,11 +3,6 @@
 UCameraModifier::UCameraModifier()
 {
 }
-
-void UCameraModifier::ModifyCamera(float DeltaTime, FVector ViewLocation, FRotator ViewRotation, float FOV, FVector& NewViewLocation, FRotator& NewViewRotation, float& NewFOV)
-{
-}
-
 void UCameraModifier::AddedToCamera(APlayerCameraManager* Camera)
 {
     CameraOwner = Camera;

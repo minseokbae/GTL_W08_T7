@@ -11,18 +11,10 @@ class UCameraModifier : public UObject
 public:
     UCameraModifier();
 
-    virtual bool ModifyCamera(
-        float DeltaTime, 
-        FVector ViewLocation, 
-        FRotator ViewRotation, 
-        float FOV,
-        FVector& NewViewLocation,
-        FRotator& NewViewRotation,
-        float& NewFOV
-);
-
     void DisableModifier();
     void EnableModifier();
+
+    virtual bool ModifyCamera(float DeltaTime, APlayerCameraManager* NewCameraManager);
 
 protected:
     APlayerCameraManager* CameraOwner = nullptr;
