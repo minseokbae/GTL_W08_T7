@@ -17,6 +17,7 @@
 #include "Engine/EditorEngine.h"
 #include "Engine/FLoaderOBJ.h"
 #include "UnrealEd/ImGuiWidget.h"
+#include "UnrealEd/ImGuiBezierWidget.h"
 #include "UObject/Casts.h"
 #include "UObject/ObjectFactory.h"
 #include "Engine/Engine.h"
@@ -100,6 +101,11 @@ void PropertyEditorPanel::Render()
             }
             ImGui::TreePop(); // 트리 닫기
         }
+
+        static float CurveParams[5] = { 0.39f, 0.575f, 0.565f, 1.0f, 0 }; // x1, y1, x2, y2, presetIndex
+
+        ImGui::Text("Bezier Curve Editor");
+        ImGui::Bezier("MyCurve", CurveParams);
 
         FString ActorTag = PickedActor->GetActorTag();
         char Tag[256];
