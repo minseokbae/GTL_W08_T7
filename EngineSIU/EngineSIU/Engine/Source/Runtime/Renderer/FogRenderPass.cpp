@@ -11,9 +11,7 @@
 
 #include "RendererHelpers.h"
 #include "UnrealClient.h"
-#include "Camera/PlayerCameraManager.h"
-#include "Engine/EditorEngine.h"
-#include "Engine/GameInstance.h"
+
 #include "PropertyEditor/ShowFlags.h"
 
 FFogRenderPass::FFogRenderPass()
@@ -99,7 +97,6 @@ void FFogRenderPass::PrepareRenderState()
     };
 
     BufferManager->BindConstantBuffers(PSBufferKeys, 0, EShaderStage::Pixel);
-    BufferManager->BindConstantBuffer(TEXT("FCameraFadeConstants"),1, EShaderStage::Pixel);
 }
 
 void FFogRenderPass::Render(const std::shared_ptr<FEditorViewportClient>& Viewport)
@@ -123,7 +120,7 @@ void FFogRenderPass::Render(const std::shared_ptr<FEditorViewportClient>& Viewpo
     Graphics->DeviceContext->PSSetShaderResources(static_cast<UINT>(EShaderSRVSlot::SRV_SceneDepth), 1, &ViewportResource->GetDepthStencilSRV());
     
     PrepareRenderState();
-    UdpateCameraConstants();
+
     for (const auto& Fog : FogComponents)
     {
         if (Fog->GetFogDensity() > 0)
@@ -187,28 +184,4 @@ void FFogRenderPass::CreateSampler()
     SamplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
     
     Graphics->Device->CreateSamplerState(&SamplerDesc, &Sampler);
-}
-void FFogRenderPass::UdpateCameraConstants()
-{
-    FCameraFadeConstants CameraFadeData = {};
-    UEditorEngine* EditorEngine = Cast<UEditorEngine>(GEngine);
-    if (EditorEngine->GetGameInstance() == nullptr || EditorEngine->GetGameInstance()->GetLocalPlayer() == nullptr || EditorEngine->GetGameInstance()->GetLocalPlayer()->GetPlayerController() == nullptr)
-    {
-        CameraFadeData.FadeColor = FLinearColor::White;
-        CameraFadeData.FadeAlpha = 1;
-
-        BufferManager->UpdateConstantBuffer(TEXT("FCameraFadeConstants"), CameraFadeData);
-    }
-    else
-    {
-        APlayerCameraManager* PCM = EditorEngine->GetGameInstance()->GetLocalPlayer()->GetPlayerController()->GetPlayerCameraManager();
-    
-        CameraFadeData.FadeColor = PCM->FadeColor;
-        CameraFadeData.FadeAlpha = PCM->FadeAmount;
-
-        BufferManager->UpdateConstantBuffer(TEXT("FCameraFadeConstants"), CameraFadeData);
-    }
-    // APlayerCameraManager* PCM = EditorEngine->GetGameInstance()->GetLocalPlayer()->GetPlayerController()->GetPlayerCameraManager();
-    //
-
 }

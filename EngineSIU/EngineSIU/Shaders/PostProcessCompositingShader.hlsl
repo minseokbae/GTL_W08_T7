@@ -47,6 +47,5 @@ float4 mainPS(PS_Input input) : SV_Target
 
     // PostProcessing Texture 추가
     float4 FinalColor = FogColor;
-    return float4(0,0,0,0);
-    return lerp(FinalColor, FadeColor, FadeAlpha);
+    return FinalColor + (FadeColor * FadeAlpha);
 }

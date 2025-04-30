@@ -33,7 +33,6 @@ public:
     void PrepareRenderState();
 
     void UpdateFogConstant(UHeightFogComponent* Fog);
-    void UdpateCameraConstants();
 
     void CreateBlendState();
     void CreateSampler();

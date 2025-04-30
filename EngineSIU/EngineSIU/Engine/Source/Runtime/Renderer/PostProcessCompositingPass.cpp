@@ -76,15 +76,16 @@ void FPostProcessCompositingPass::Render(const std::shared_ptr<FEditorViewportCl
     const EResourceType ResourceType = EResourceType::ERT_PostProcessCompositing; 
     FRenderTargetRHI* RenderTargetRHI = Viewport->GetViewportResource()->GetRenderTarget(ResourceType);
 
-    Graphics->DeviceContext->ClearRenderTargetView(RenderTargetRHI->RTV, ViewportResource->GetClearColor(ResourceType).data());
-    
-    Graphics->DeviceContext->PSSetShaderResources(static_cast<UINT>(EShaderSRVSlot::SRV_Fog), 1, &ViewportResource->GetRenderTarget(EResourceType::ERT_PP_Fog)->SRV);
+    ViewportResource->ClearRenderTarget(Graphics->DeviceContext, ResourceType);
+
 
     const float BlendFactor[4] = {0,0,0,0};       // 보통 0,0,0,0 사용
     const UINT SampleMask     = 0xFFFFFFFF;      
     Graphics->DeviceContext->OMSetBlendState(FadeBlendState, BlendFactor, SampleMask);
 
     Graphics->DeviceContext->OMSetRenderTargets(1, &RenderTargetRHI->RTV, nullptr);
+
+    Graphics->DeviceContext->PSSetShaderResources(static_cast<UINT>(EShaderSRVSlot::SRV_Fog), 1, &ViewportResource->GetRenderTarget(EResourceType::ERT_PP_Fog)->SRV);
 
     Graphics->DeviceContext->RSSetState(Graphics->RasterizerSolidBack);
     Graphics->DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -99,7 +100,6 @@ void FPostProcessCompositingPass::Render(const std::shared_ptr<FEditorViewportCl
     Graphics->DeviceContext->PSSetShader(PixelShader, nullptr, 0);
     BufferManager->BindConstantBuffer(TEXT("FCameraFadeConstants"), 0,EShaderStage::Pixel);
     UdpateCameraConstants();
-
     
     Graphics->DeviceContext->IASetInputLayout(nullptr);
     Graphics->DeviceContext->Draw(6, 0);
@@ -123,12 +123,18 @@ void FPostProcessCompositingPass::UdpateCameraConstants()
 {
     FCameraFadeConstants CameraFadeData = {};
     UEditorEngine* EditorEngine = Cast<UEditorEngine>(GEngine);
-    if (EditorEngine->GetGameInstance() == nullptr || EditorEngine->GetGameInstance()->GetLocalPlayer() == nullptr || EditorEngine->GetGameInstance()->GetLocalPlayer()->GetPlayerController())
-        return;
-    APlayerCameraManager* PCM = EditorEngine->GetGameInstance()->GetLocalPlayer()->GetPlayerController()->GetPlayerCameraManager();
+    if (EditorEngine->GetGameInstance() == nullptr || EditorEngine->GetGameInstance()->GetLocalPlayer() == nullptr || EditorEngine->GetGameInstance()->GetLocalPlayer()->GetPlayerController() == nullptr)
+    {
+        CameraFadeData.FadeColor = FLinearColor::White;
+        CameraFadeData.FadeAlpha = 0;
+    }
+    else
+    {
+        APlayerCameraManager* PCM = EditorEngine->GetGameInstance()->GetLocalPlayer()->GetPlayerController()->GetPlayerCameraManager();
     
-    CameraFadeData.FadeColor = PCM->FadeColor;
-    CameraFadeData.FadeAlpha = PCM->FadeAmount;
-
+        CameraFadeData.FadeColor = PCM->FadeColor;
+        CameraFadeData.FadeAlpha = PCM->FadeAmount;
+    }
     BufferManager->UpdateConstantBuffer(TEXT("FCameraFadeConstants"), CameraFadeData);
+
 }
