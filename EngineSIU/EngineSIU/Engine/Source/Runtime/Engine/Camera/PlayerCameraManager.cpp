@@ -45,22 +45,30 @@ void APlayerCameraManager::Tick(float DeltaTime)
 {
     AActor::Tick(DeltaTime);
 
-    static float CameraFadeTime = 0.0f;
-    CameraFadeTime += DeltaTime;
+    // 반복 도중 추가에 불안전한 반복문
+    // for (auto modifier : ModifierList)
+    // {
+    //     if (!modifier->IsDisabled())
+    //     {
+    //         if (modifier->ModifyCamera(DeltaTime, this))
+    //         {
+    //             RemoveModifier(modifier);   
+    //         }
+    //     }
+    // }
 
-    FadeAmount = FMath::Sin(CameraFadeTime) * .5f + 0.5f;
-    
-    for (auto modifier : ModifierList)
+    // 중간 추가에 안전한 반복문
+    for (size_t ModifierNum = 0; ModifierNum < ModifierList.Num(); ModifierNum++)
     {
-        if (!modifier->IsDisabled())
+        if (!ModifierList[ModifierNum]->IsDisabled())
         {
-            if (modifier->ModifyCamera(DeltaTime, this))
+            if (ModifierList[ModifierNum]->ModifyCamera(DeltaTime,this))
             {
-                RemoveModifier(modifier);   
+                RemoveModifier(ModifierList[ModifierNum]);
             }
         }
     }
-
+    
     for (auto finishedmodifier : FinishedModifier)
     {
         ModifierList.Remove(finishedmodifier);
