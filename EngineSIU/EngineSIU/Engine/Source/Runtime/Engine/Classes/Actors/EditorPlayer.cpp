@@ -136,7 +136,7 @@ void AEditorPlayer::PickActor(const FVector& pickPosition)
 {
     if (!(ShowFlags::GetInstance().currentFlags & EEngineShowFlags::SF_Primitives)) return;
 
-    const UActorComponent* Possible = nullptr;
+    USceneComponent* Possible = nullptr;
     int maxIntersect = 0;
     float minDistance = FLT_MAX;
     for (const auto iter : TObjectRange<UPrimitiveComponent>())
@@ -171,13 +171,17 @@ void AEditorPlayer::PickActor(const FVector& pickPosition)
             }
         }
     }
+
+    UEditorEngine* Editor = Cast<UEditorEngine>(GEngine);
     if (Possible)
     {
-        Cast<UEditorEngine>(GEngine)->SelectActor(Possible->GetOwner());
+        Editor->SelectActor(Possible->GetOwner());
+        Editor->SelectComponent(Possible);
     }
     else
     {
-        Cast<UEditorEngine>(GEngine)->SelectActor(nullptr);
+        Editor->SelectActor(nullptr);
+        Editor->SelectComponent(nullptr);
     }
 }
 

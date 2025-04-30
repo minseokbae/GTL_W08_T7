@@ -42,15 +42,7 @@ void OutlinerEditorPanel::Render()
     std::function<void(USceneComponent*)> CreateNode = [&CreateNode, &Engine](USceneComponent* InComp)->void
         {
             FString Name;
-
-            if (InComp == InComp->GetOwner()->GetRootComponent())
-            {
-                Name = InComp->GetOwner()->GetActorLabel();
-            }
-            else
-            {
-                Name = InComp->GetName();
-            }
+            Name = InComp->GetName();
 
             ImGuiTreeNodeFlags Flags = ImGuiTreeNodeFlags_None;
             if (InComp->GetAttachChildren().Num() == 0)
@@ -70,13 +62,29 @@ void OutlinerEditorPanel::Render()
                 {
                     CreateNode(Child);
                 }
-                ImGui::TreePop(); // 트리 닫기
+                ImGui::TreePop();
             }
         };
 
     for (AActor* Actor : Engine->ActiveWorld->GetActiveLevel()->Actors)
     {
-        CreateNode(Actor->GetRootComponent());
+        FString ActorLabel = Actor->GetActorLabel();
+        ImGuiTreeNodeFlags ActorFlags = ImGuiTreeNodeFlags_None;
+
+        bool bActorOpen = ImGui::TreeNodeEx(*ActorLabel, ActorFlags);
+        if (ImGui::IsItemClicked())
+        {
+            Engine->SelectActor(Actor);
+            Engine->SelectComponent(Actor->GetRootComponent());
+        }
+        if (bActorOpen)
+        {
+            if (USceneComponent* RootComp = Actor->GetRootComponent())
+            {
+                CreateNode(RootComp);
+            }
+            ImGui::TreePop();
+        }
     }
 
     ImGui::EndChild();
