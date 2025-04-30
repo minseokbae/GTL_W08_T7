@@ -23,4 +23,7 @@ public:
     float MouseSens = 0.01f;
 
     APlayerCameraManager* PlayerCameraManager;
+
+public:
+    APlayerCameraManager* GetPlayerCameraManager() { return PlayerCameraManager; }
 };

@@ -443,42 +443,6 @@
             ],
             "LuaScriptPath": "Coin.lua",
             "RootComponentID": "USphereComp_272"
-        },
-        {
-            "ActorClass": "AHeightFogActor",
-            "ActorID": "AHeightFogActor_161",
-            "ActorLabel": "OBJ_FOG_161",
-            "ActorTag": "",
-            "Components": [
-                {
-                    "AttachParentID": "HeightFogComponent",
-                    "ComponentClass": "UHeightFogComponent",
-                    "ComponentID": "HeightFogComponent",
-                    "Properties": {
-                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
-                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
-                        "ComponentClass": "UHeightFogComponent",
-                        "ComponentName": "HeightFogComponent",
-                        "ComponentOwner": "AHeightFogActor_161",
-                        "ComponentOwnerClass": "AHeightFogActor",
-                        "ComponentVelocity": "X=20.000 Y=0.000 Z=0.000",
-                        "FogCutoffDistance": "0.750000",
-                        "FogDensity": "0.500000",
-                        "FogHeightFalloff": "0.050000",
-                        "FogInscatteringColor": "R=1.000 G=1.000 B=1.000 A=1.000",
-                        "FogMaxOpacity": "0.100000",
-                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "StartDistance": "0.000000",
-                        "bAutoActive": "true",
-                        "bIsActive": "true",
-                        "m_Type": ""
-                    }
-                }
-            ],
-            "LuaScriptPath": "",
-            "RootComponentID": "HeightFogComponent"
         }
     ],
     "NextUUID": 0,

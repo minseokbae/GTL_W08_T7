@@ -28,7 +28,7 @@ void APlayerController::Input()
     if (GetAsyncKeyState('W') & 0x8000)
     {
         Pawn->SetActorLocation(Pawn->GetActorLocation() + Pawn->GetActorForwardVector() * 0.1f);
-        Pawn->GetRootComponent()->ComponentVelocity +=Pawn->GetActorForwardVector() * 0.1f;
+        Pawn->GetRootComponent()->ComponentVelocity += Pawn->GetActorForwardVector() * 0.1f;
     }
     if (GetAsyncKeyState('S') & 0x8000)
     {
@@ -49,14 +49,14 @@ void APlayerController::Input()
     }
     POINT cur;
     GetCursorPos(&cur);
-    
+
     float dx = (cur.x - MouseCenterPos.x) * MouseSens;
     float dy = (cur.y - MouseCenterPos.y) * MouseSens;
-    
+
     SetCursorPos(MouseCenterPos.x, MouseCenterPos.y);
-    
+
     FRotator ControlRot = Pawn->GetActorRotation();
-    ControlRot.Yaw   = std::fmod(ControlRot.Yaw + dx, 360.f);
+    ControlRot.Yaw = std::fmod(ControlRot.Yaw + dx, 360.f);
     // ControlRot.Pitch = FMath::Clamp(ControlRot.Pitch + dy, -45.f, +45.f);
 
     Pawn->GetRootComponent()->SetRelativeRotation(ControlRot);
@@ -94,13 +94,7 @@ void APlayerController::SpawnPlayerCameraManager()
     PlayerCameraManager = GetWorld()->SpawnActor<APlayerCameraManager>();
     GEngineLoop.LuaCompiler.AddPlayerCameraMangerToLua(PlayerCameraManager);
     PlayerCameraManager->InitializeFor(this);
-    if (Pawn)
-        PlayerCameraManager->SetViewTarget(Pawn);
-    else
-    {
-        UE_LOG(ELogLevel::Error, "PlayerController dont have any Posses pawn");
-    }
+
     //UCameraModifier* CameraModifier = FObjectFactory::ConstructObject<UCameraModifier>(this);
-    //CameraModifier->Initialize(FVector(0, 0, 0), FRotator(0, 0, 0), 60, 5.0f);
     //PlayerCameraManager->AddCameraModifier(CameraModifier);
 }

@@ -11,6 +11,7 @@
 
 #include "RendererHelpers.h"
 #include "UnrealClient.h"
+
 #include "PropertyEditor/ShowFlags.h"
 
 FFogRenderPass::FFogRenderPass()
@@ -119,7 +120,7 @@ void FFogRenderPass::Render(const std::shared_ptr<FEditorViewportClient>& Viewpo
     Graphics->DeviceContext->PSSetShaderResources(static_cast<UINT>(EShaderSRVSlot::SRV_SceneDepth), 1, &ViewportResource->GetDepthStencilSRV());
     
     PrepareRenderState();
-    
+
     for (const auto& Fog : FogComponents)
     {
         if (Fog->GetFogDensity() > 0)
