@@ -3,6 +3,7 @@
 #include "Pawn.h"
 #include "WindowsCursor.h"
 #include "Camera/CameraComponent.h"
+#include "Camera/CameraFadeInModifier.h"
 #include "Engine/EditorEngine.h"
 #include "Engine/Engine.h"
 #include "LevelEditor/SLevelEditor.h"
@@ -94,7 +95,8 @@ void APlayerController::SpawnPlayerCameraManager()
     PlayerCameraManager = GetWorld()->SpawnActor<APlayerCameraManager>();
     GEngineLoop.LuaCompiler.AddPlayerCameraMangerToLua(PlayerCameraManager);
     PlayerCameraManager->InitializeFor(this);
-    
-    //UCameraModifier* CameraModifier = FObjectFactory::ConstructObject<UCameraModifier>(this);
-    //PlayerCameraManager->AddCameraModifier(CameraModifier);
+
+    UCameraFadeInModifier* CameraModifier = FObjectFactory::ConstructObject<UCameraFadeInModifier>(this);
+    CameraModifier->Initialize(FLinearColor::Red, 5.0f);
+    PlayerCameraManager->AddCameraModifier(CameraModifier);
 }

@@ -26,9 +26,7 @@ public:
     bool IsDisabled() {return bDisabled;}
     void DisableModifier();
     void EnableModifier();
-    void SetBezierCurve(float* Bezier);
-    float* GetBezierCurver() { return BezierCurve; }
-    virtual void ModifyCamera(float DeltaTime, FVector ViewLocation, FRotator ViewRotation, float FOV, FVector& NewViewLocation, FRotator& NewViewRotation, float& NewFOV);
+    virtual bool ModifyCamera(float DeltaTime, APlayerCameraManager* NewCameraManager);
 };
 
 

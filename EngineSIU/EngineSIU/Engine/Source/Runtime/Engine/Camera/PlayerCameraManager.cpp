@@ -14,6 +14,7 @@ APlayerCameraManager::APlayerCameraManager()
 
 APlayerCameraManager::~APlayerCameraManager()
 {
+
 }
 
 void APlayerCameraManager::InitializeFor(APlayerController* PC)
@@ -45,32 +46,50 @@ void APlayerCameraManager::Tick(float DeltaTime)
 {
     AActor::Tick(DeltaTime);
 
-    static float CameraFadeTime = 0.0f;
-    CameraFadeTime += DeltaTime;
+    // 반복 도중 추가에 불안전한 반복문
+    // for (auto modifier : ModifierList)
+    // {
+    //     if (!modifier->IsDisabled())
+    //     {
+    //         if (modifier->ModifyCamera(DeltaTime, this))
+    //         {
+    //             RemoveModifier(modifier);   
+    //         }
+    //     }
+    // }
 
-    FadeAmount = FMath::Sin(CameraFadeTime) * .5f + 0.5f;
-    
-    FVector CurLocation = CachedCamera->GetRelativeLocation();
-    FRotator CurRotation = CachedCamera->GetRelativeRotation();
-    float CurFOV = CachedCamera->GetFieldOfView();
-    FVector NewLocation;
-    FRotator NewRotation;
-    float NewFOV;
-    for (auto modifier : ModifierList)
+    // 중간 추가에 안전한 반복문
+    for (size_t ModifierNum = 0; ModifierNum < ModifierList.Num(); ModifierNum++)
     {
-        if (!modifier->IsDisabled())
+        if (!ModifierList[ModifierNum]->IsDisabled())
         {
-            modifier->ModifyCamera(DeltaTime, CurLocation, CurRotation, CurFOV,
-            NewLocation, NewRotation, NewFOV);
-            CachedCamera->SetRelativeLocation(NewLocation);
-            CachedCamera->SetRelativeRotation(NewRotation);
-            CachedCamera->SetFieldOfView(NewFOV);
-            std::cout << *CachedCamera->GetWorldRotation().ToString() << std::endl;
+            if (ModifierList[ModifierNum]->ModifyCamera(DeltaTime,this))
+            {
+                RemoveModifier(ModifierList[ModifierNum]);
+            }
         }
     }
+    
+    for (auto finishedmodifier : FinishedModifier)
+    {
+        ModifierList.Remove(finishedmodifier);
+    }
+    FinishedModifier.Empty();
 }
-
+void APlayerCameraManager::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+    for (auto modifier : ModifierList)
+    {
+        GUObjectArray.MarkRemoveObject(modifier);
+    }
+}
 void APlayerCameraManager::AddCameraModifier(UCameraModifier* CameraModifier)
 {
     ModifierList.AddUnique(CameraModifier);
+}
+
+void APlayerCameraManager::RemoveModifier(UCameraModifier* Modifier)
+{
+    GUObjectArray.MarkRemoveObject(Modifier);
+    FinishedModifier.AddUnique(Modifier);
 }

@@ -20,7 +20,7 @@ void FUObjectArray::ProcessPendingDestroyObjects()
 {
     for (UObject* Object : PendingDestroyObjects)
     {
-        delete Object;
+            delete Object;
     }
     PendingDestroyObjects.Empty();
 }

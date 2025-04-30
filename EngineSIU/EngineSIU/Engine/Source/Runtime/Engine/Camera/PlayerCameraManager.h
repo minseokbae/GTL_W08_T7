@@ -23,7 +23,7 @@ public:
     virtual ~APlayerCameraManager();
     void InitializeFor(APlayerController* PC);
     virtual void Tick(float DeltaTime) override;
-
+    virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
     void SetViewTarget(AActor* NewTarget) { ViewTarget.SetNewTarget(NewTarget); }
     void AddCameraModifier(UCameraModifier* CameraModifier);
 public:
@@ -47,6 +47,7 @@ public:
     
 protected:
     TArray<UCameraModifier*> ModifierList;
+    TArray<UCameraModifier*> FinishedModifier;
     APlayerController* PCOwner;
 
     UCameraComponent* CachedCamera = nullptr;
@@ -56,4 +57,7 @@ private:
 public:
     UCameraComponent* GetCachedCamera() { return CachedCamera; }
     void SetCachedCamera(UCameraComponent* NewCachedCamera) { CachedCamera = NewCachedCamera; }
+    void RemoveModifier(UCameraModifier* Modifier);
 };
+
+

@@ -3,6 +3,7 @@
 #include <Engine/EditorEngine.h>
 #include "Engine/GameInstance.h"
 #include <UnrealEd/ImGuiBezierWidget.h>
+#include "PlayerCameraManager.h"
 
 UCameraTransitionModifier::UCameraTransitionModifier()
 {
@@ -17,27 +18,31 @@ void UCameraTransitionModifier::Initialize(FVector Loc, FRotator Rot, float FOV,
     ElapsedTime = 0.0f;
 }
 
-void UCameraTransitionModifier::ModifyCamera(float DeltaTime, FVector ViewLocation, FRotator ViewRotation, float FOV, FVector& NewViewLocation, FRotator& NewViewRotation, float& NewFOV)
+bool UCameraTransitionModifier::ModifyCamera(float DeltaTime, APlayerCameraManager* NewCameraManager)
 {
     ElapsedTime += DeltaTime;
+    UCameraComponent* CachedCamera = NewCameraManager->GetCachedCamera();
     if (GEngine->bUseBezier)
     {
         float BezierValue = ImGui::BezierValue(ElapsedTime / ModifyDuration, BezierCurve);
-        NewFOV = FMath::Lerp(FOV, TargetFOV, BezierValue);
-        NewViewLocation = FMath::Lerp(ViewLocation, TargetLocation, BezierValue);
-        NewViewRotation = FRotator(FQuat::Slerp(ViewRotation.ToQuaternion(), TargetRotation.ToQuaternion(), BezierValue));
+        CachedCamera->SetFieldOfView(FMath::Lerp(CachedCamera->GetFieldOfView(), TargetFOV, BezierValue));
+        CachedCamera->SetRelativeLocation(FMath::Lerp(CachedCamera->GetRelativeLocation(), TargetLocation, BezierValue));
+        CachedCamera->SetRelativeRotation(FRotator(FQuat::Slerp(CachedCamera->GetRelativeRotation().ToQuaternion(), TargetRotation.ToQuaternion(), BezierValue)));
     }
     else
     {
-        NewFOV = FMath::Lerp(FOV, TargetFOV, ElapsedTime / ModifyDuration);
-        float LocationSpeed = (TargetLocation - ViewLocation).Length() / ModifyDuration;
-        float RotationSpeed = FMath::RadiansToDegrees((TargetRotation - ViewRotation).ToVector().Length()) / ModifyDuration;
-        NewViewLocation = JungleMath::FInterpTo(ViewLocation, TargetLocation, DeltaTime, LocationSpeed);
-        NewViewRotation = JungleMath::RInterpTo(ViewRotation, TargetRotation, DeltaTime, RotationSpeed);
+        CachedCamera->SetFieldOfView(FMath::Lerp(CachedCamera->GetFieldOfView(), TargetFOV, ElapsedTime / ModifyDuration));
+        if (!bSpeedInitialized)
+        {
+            LocationSpeed = (TargetLocation - CachedCamera->GetRelativeLocation()).Length() / ModifyDuration;
+            RotationSpeed = FMath::RadiansToDegrees((TargetRotation - CachedCamera->GetRelativeLocation()).ToVector().Length()) / ModifyDuration;
+            bSpeedInitialized = true;
+        }
+        CachedCamera->SetRelativeLocation(JungleMath::FInterpTo(CachedCamera->GetRelativeLocation(), TargetLocation, DeltaTime, LocationSpeed));
+        CachedCamera->SetRelativeRotation(JungleMath::RInterpTo(CachedCamera->GetRelativeLocation(), TargetRotation, DeltaTime, RotationSpeed));
     }
     if (ElapsedTime >= ModifyDuration)
-    {
-        DisableModifier();
-    }
+        return true;
+    return false;
 }
 

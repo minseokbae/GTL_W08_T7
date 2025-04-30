@@ -74,7 +74,7 @@ void UWorld::Release()
         ActiveLevel = nullptr;
     }
     
-    GUObjectArray.ProcessPendingDestroyObjects();
+    // GUObjectArray.ProcessPendingDestroyObjects();
 }
 
 AActor* UWorld::SpawnActor(UClass* InClass, FName InActorName)
