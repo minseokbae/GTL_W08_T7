@@ -16,7 +16,6 @@ cbuffer FogConstant : register(b0)
     float FogDistanceWeight;
     float2 padding;
 };
-
 struct PS_INPUT
 {
     float4 Position : SV_Position;
@@ -108,5 +107,6 @@ float4 mainPS(PS_INPUT input) : SV_Target
     float FogFactor = ComputeFogFactor(WorldPos, rawDepth);
 
     float4 FinalColor = float4(FogColor.rgb, FogFactor);
+    
     return FinalColor;
 }

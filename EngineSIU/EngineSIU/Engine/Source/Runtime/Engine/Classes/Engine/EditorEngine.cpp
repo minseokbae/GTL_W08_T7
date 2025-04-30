@@ -188,6 +188,7 @@ void UEditorEngine::EndPIE()
         SelectComponent(nullptr);
     }
     GUObjectArray.MarkRemoveObject(GameInstance);
+    GameInstance = nullptr;
     // 다시 EditorWorld로 돌아옴.
     ActiveWorld = EditorWorld;
     CurrentPlayer = EditorPlayer;

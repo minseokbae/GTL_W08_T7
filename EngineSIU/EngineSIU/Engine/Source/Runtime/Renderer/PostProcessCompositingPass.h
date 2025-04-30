@@ -13,13 +13,15 @@ public:
     virtual void PrepareRender() override;
 
     virtual void Render(const std::shared_ptr<FEditorViewportClient>& Viewport) override;
-
-    virtual void ClearRenderArr() override;
     
+    virtual void ClearRenderArr() override;
+
+    void UdpateCameraConstants();
 private:
     FDXDBufferManager* BufferManager;
     FGraphicsDevice* Graphics;
     FDXDShaderManager* ShaderManager;
 
     ID3D11SamplerState* Sampler;
+    ID3D11BlendState* FadeBlendState;
 };
