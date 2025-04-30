@@ -120,9 +120,9 @@ FLuaCompiler::FLuaCompiler()
         >(),
 
         //필드
-        "Roll", & FRotator::Roll,
         "Pitch", & FRotator::Pitch,
         "Yaw", & FRotator::Yaw,
+        "Roll", & FRotator::Roll,
 
         //연산자 오버로딩
         sol::meta_function::addition, [](const FRotator& a, const FRotator& b)

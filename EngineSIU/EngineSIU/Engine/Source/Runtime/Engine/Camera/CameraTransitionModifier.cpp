@@ -18,8 +18,6 @@ void UCameraTransitionModifier::Initialize(FVector Loc, FRotator Rot, float FOV,
 
 void UCameraTransitionModifier::ModifyCamera(float DeltaTime, FVector ViewLocation, FRotator ViewRotation, float FOV, FVector& NewViewLocation, FRotator& NewViewRotation, float& NewFOV)
 {
-    UEditorEngine* Engine = Cast < UEditorEngine>(GEngine);
-    Engine->SetCurrentController(Engine->GetEditorPlayer());
     ElapsedTime += DeltaTime;
     NewFOV = FMath::Lerp(FOV, TargetFOV, ElapsedTime / ModifyDuration);
     float LocationSpeed = (TargetLocation - ViewLocation).Length() / ModifyDuration;
@@ -29,7 +27,6 @@ void UCameraTransitionModifier::ModifyCamera(float DeltaTime, FVector ViewLocati
     if (ElapsedTime >= ModifyDuration)
     {
         DisableModifier();
-        Engine->SetCurrentController(Engine->GetGameInstance()->GetLocalPlayer()->GetPlayerController());
     }
 }
 

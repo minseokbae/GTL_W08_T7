@@ -76,12 +76,13 @@ void FEditorViewportClient::UpdateEditorCameraMovement(float DeltaTime)
         {
             if ( UCameraComponent* CameraComponent = Cast<UCameraComponent>(Component))
             {
-                FVector LocalLoc = CameraComponent->GetRelativeLocation();
-                FVector PawnWorldLoc = Pawn->GetActorLocation();
-                FRotator WorldRoc =CameraComponent->GetWorldRotation();
+                FVector WorldLoc = CameraComponent->GetWorldLocation();
+                //FVector LocalLoc = CameraComponent->GetRelativeLocation();
+                //FVector PawnWorldLoc = Pawn->GetActorLocation();
+                //FRotator WorldRoc =CameraComponent->GetWorldRotation();
                 // UE_LOG(ELogLevel::Warning, "Camera Comp Loc : %f %f %f", WorldLoc.X, WorldLoc.Y, WorldLoc.Z);
-                FVector RotLoc = JungleMath::FVectorRotate(LocalLoc, WorldRoc);
-                PerspectiveCamera.SetLocation(PawnWorldLoc + RotLoc);
+                //FVector RotLoc = JungleMath::FVectorRotate(LocalLoc, WorldRoc);
+                PerspectiveCamera.SetLocation(WorldLoc);
                 
                 FVector WorldRocVec = FVector(CameraComponent->GetWorldRotation().Roll,CameraComponent->GetWorldRotation().Pitch,CameraComponent->GetWorldRotation().Yaw);
                 PerspectiveCamera.SetRotation(WorldRocVec);

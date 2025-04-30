@@ -4,6 +4,12 @@
 #include "CameraModifier.h"
 #include "GameFramework/PlayerController.h"
 
+#include "World/World.h"
+#include "Engine/StaticMeshActor.h"
+#include "Engine/FLoaderOBJ.h"
+#include <Engine/Engine.h>
+
+
 APlayerCameraManager::APlayerCameraManager()
 {
     TransformComponent = AddComponent<USceneComponent>("TransformComponent_0");
@@ -39,16 +45,29 @@ void APlayerCameraManager::Tick(float DeltaTime)
     float NewFOV = 0;
     FVector NewLocation;
     FRotator NewRotation;
+    static int cube;
     for (auto modifier : ModifierList)
     {
         if (!modifier->IsDisabled())
         {
+            cube = 0;
+            Camera->GetOwner()->SetActorRotation(FRotator(0, 0, 0));
             modifier->ModifyCamera(DeltaTime, CurLocation, CurRotation, CurFOV,
             NewLocation,NewRotation,NewFOV);
             Camera->SetRelativeLocation(NewLocation);
             Camera->SetRelativeRotation(NewRotation);
             Camera->SetFieldOfView(NewFOV);
-            std::cout << *Camera->GetWorldLocation().ToString() << std::endl;
+        }
+        else
+        {
+            if (cube == 0)
+            {
+                AStaticMeshActor* CubeActor = GEngine->ActiveWorld->SpawnActor<AStaticMeshActor>();
+                CubeActor->GetStaticMeshComponent()->SetStaticMesh(FManagerOBJ::GetStaticMesh(L"Contents/Madara/Madara_Uchiha.obj"));
+                CubeActor->SetActorLocation(Camera->GetWorldLocation());
+                CubeActor->SetActorRotation(Camera->GetWorldRotation());
+                cube += 1;
+            }
         }
     }
 }
