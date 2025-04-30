@@ -93,12 +93,7 @@ void APlayerController::SpawnPlayerCameraManager()
 {
     PlayerCameraManager = GetWorld()->SpawnActor<APlayerCameraManager>();
     PlayerCameraManager->InitializeFor(this);
-    if (Pawn)
-        PlayerCameraManager->SetViewTarget(Pawn);
-    else
-    {
-        UE_LOG(ELogLevel::Error, "PlayerController dont have any Posses pawn");
-    }
+
     UCameraModifier* CameraModifier = FObjectFactory::ConstructObject<UCameraModifier>(this);
     PlayerCameraManager->AddCameraModifier(CameraModifier);
 }

@@ -18,6 +18,26 @@ APlayerCameraManager::~APlayerCameraManager()
 void APlayerCameraManager::InitializeFor(APlayerController* PC)
 {
     PCOwner = PC;
+    AActor* TargetActor = Cast<AActor>(PC->GetPossessingPawn()); 
+    if (TargetActor)
+        SetViewTarget(TargetActor);
+    else
+    {
+        UE_LOG(ELogLevel::Error, "PlayerController dont have any Posses pawn");
+    }
+    for (auto Comp : TargetActor->GetComponents())
+    {
+        UCameraComponent* Cam =Cast<UCameraComponent>(Comp);
+        if ( Cam)
+        {
+            CachedCamera = Cam;
+            break;
+        }
+    }
+    if (CachedCamera == nullptr)
+    {
+        CachedCamera = TargetActor->AddComponent<UCameraComponent>("CameraComponent_0");
+    }
 }
 
 void APlayerCameraManager::Tick(float DeltaTime)
@@ -29,19 +49,9 @@ void APlayerCameraManager::Tick(float DeltaTime)
 
     FadeAmount = FMath::Sin(CameraFadeTime) * .5f + 0.5f;
     
-    UCameraComponent* Camera =nullptr;
-    for ( auto Component :  ViewTarget.Target->GetComponents())
-    {
-        if (Cast<UCameraComponent>(Component) != nullptr)
-        {
-            Camera = Cast<UCameraComponent>(Component);
-        }
-    }
-    if (!Camera)
-        return;
-    FVector NewLocation = Camera->GetRelativeLocation();
-    FRotator NewRotation = Camera->GetRelativeRotation();
-    float NewFOV = Camera->GetFieldOfView();
+    FVector NewLocation = CachedCamera->GetRelativeLocation();
+    FRotator NewRotation = CachedCamera->GetRelativeRotation();
+    float NewFOV = CachedCamera->GetFieldOfView();
     for (auto modifier : ModifierList)
     {
         
@@ -49,9 +59,9 @@ void APlayerCameraManager::Tick(float DeltaTime)
         {
             modifier->ModifyCamera(DeltaTime,FVector::Zero(),FRotator(0,0,0),0,
             NewLocation,NewRotation,NewFOV);
-            Camera->SetRelativeLocation(NewLocation);
-            Camera->SetRelativeRotation(NewRotation);
-            Camera->SetFieldOfView(NewFOV);
+            CachedCamera->SetRelativeLocation(NewLocation);
+            CachedCamera->SetRelativeRotation(NewRotation);
+            CachedCamera->SetFieldOfView(NewFOV);
         }
     }
 }

@@ -2,6 +2,7 @@
 #include "GameFramework/Actor.h"
 #include "GameFramework/PlayerController.h"
 
+class UCameraComponent;
 class UCameraModifier;
 
 struct FViewTarget
@@ -47,7 +48,12 @@ public:
 protected:
     TArray<UCameraModifier*> ModifierList;
     APlayerController* PCOwner;
-    
+
+    UCameraComponent* CachedCamera = nullptr;
 private:
     USceneComponent* TransformComponent;
+
+public:
+    UCameraComponent* GetCachedCamera() { return CachedCamera; }
+    void SetCachedCamera(UCameraComponent* NewCachedCamera) { CachedCamera = NewCachedCamera; }
 };
