@@ -85,6 +85,9 @@ void FEditorViewportClient::UpdateEditorCameraMovement(float DeltaTime)
                 
                 FVector WorldRocVec = FVector(CameraComponent->GetWorldRotation().Roll,CameraComponent->GetWorldRotation().Pitch,CameraComponent->GetWorldRotation().Yaw);
                 PerspectiveCamera.SetRotation(WorldRocVec);
+#pragma region ModifierTest
+                ViewFOV = CameraComponent->GetFieldOfView();
+#pragma endregion
                 return;
             }
         }

@@ -22,6 +22,7 @@ public:
     virtual ~APlayerCameraManager();
     void InitializeFor(APlayerController* PC);
 
+    void SetViewTarget(AActor* NewTarget) { ViewTarget.SetNewTarget(NewTarget); };
 public:
     FLinearColor FadeColor;
     float FadeAmount;

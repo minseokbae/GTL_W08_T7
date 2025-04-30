@@ -3,6 +3,8 @@
 
 APlayerCameraManager::APlayerCameraManager()
 {
+    TransformComponent = AddComponent<USceneComponent>("TransformComponent_0");
+    RootComponent = TransformComponent;
 }
 
 APlayerCameraManager::~APlayerCameraManager()
