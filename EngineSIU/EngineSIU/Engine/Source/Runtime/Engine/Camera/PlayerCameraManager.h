@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "GameFramework/Actor.h"
 #include "GameFramework/PlayerController.h"
 
@@ -11,7 +11,7 @@ public:
     AActor* Target;
 
 public:
-    void SetNewTarget(AActor* NewTarget) {Target = NewTarget;};
+    void SetNewTarget(AActor* NewTarget) {Target = NewTarget;}
 };
 
 class APlayerCameraManager : public AActor

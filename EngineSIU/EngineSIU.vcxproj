@@ -173,6 +173,8 @@
     <ClCompile Include="EngineSIU\Engine\Source\Developer\ShaderCompileUtils\ShaderFileMetadata.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Developer\ShaderCompileUtils\ShaderMetadataPtr.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Editor\PropertyEditor\PlayerInEditorPanel.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Core\Math\Transform.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraShakeBase.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraModifier.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\PlayerCameraManager.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Actors\AmbientLightActor.cpp" />
@@ -327,9 +329,11 @@
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Core\Container\Queue.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Core\Container\StringConv.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Core\Container\TSafeQueue.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Core\Math\Transform.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Core\Traits\IsCharType.h" />
     <None Include="EngineSIU\Engine\Source\Runtime\Core\Delegates\JungleDelegate.h" />
     <None Include="EngineSIU\Engine\Source\Runtime\Core\Delegates\JungleDelegateCombination.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraShakeBase.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraModifier.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\PlayerCameraManager.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\Actors\AmbientLightActor.h" />
@@ -516,6 +520,7 @@
     <ClInclude Include="EngineSIU\Engine\Source\ThirdParty\DirectXTK\Include\DirectXTK\VertexTypes.h" />
     <ClInclude Include="EngineSIU\Engine\Source\ThirdParty\DirectXTK\Include\DirectXTK\WICTextureLoader.h" />
     <ClInclude Include="EngineSIU\Engine\Source\ThirdParty\DirectXTK\Include\DirectXTK\XboxDDSTextureLoader.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\ThirdParty\FastNoiseLite\FastNoiseLite.h" />
     <ClInclude Include="EngineSIU\Engine\Source\ThirdParty\ImGui\include\ImGui\imconfig.h" />
     <ClInclude Include="EngineSIU\Engine\Source\ThirdParty\ImGui\include\ImGui\imgui.h" />
     <ClInclude Include="EngineSIU\Engine\Source\ThirdParty\ImGui\include\ImGui\imgui_impl_dx11.h" />

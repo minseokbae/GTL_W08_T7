@@ -1378,6 +1378,10 @@
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\GameFramework\PlayerController.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Runtime\Lua\LuaCompiler.cpp" />
     <ClCompile Include="EngineSIU\Engine\Source\Editor\PropertyEditor\PlayerInEditorPanel.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Core\Math\Transform.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraShakeBase.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraModifier.cpp" />
+    <ClCompile Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\PlayerCameraManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="EngineSIU\EngineSIU.natvis" />
@@ -1472,6 +1476,11 @@
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\GameFramework\PlayerController.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Classes\OverlapInfo.h" />
     <ClInclude Include="EngineSIU\Engine\Source\Editor\PropertyEditor\PlayerInEditorPanel.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Core\Math\Transform.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraShakeBase.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\CameraModifier.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\Runtime\Engine\Camera\PlayerCameraManager.h" />
+    <ClInclude Include="EngineSIU\Engine\Source\ThirdParty\FastNoiseLite\FastNoiseLite.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="EngineSIU\Engine\Source\Runtime\Core\Delegates\JungleDelegate.h" />

@@ -1,8 +1,10 @@
-﻿#pragma once
+#pragma once
 #include "Controller.h"
 
 class APlayerCameraManager;
 class UPlayer;
+
+class UCameraShakeBase;
 
 class APlayerController : public AController
 {
@@ -23,4 +25,11 @@ public:
     float MouseSens = 0.01f;
 
     APlayerCameraManager* PlayerCameraManager;
+    UCameraShakeBase* CameraShakeModifier;
+
+private:
+    void HandleKeyDown(const FKeyEvent& InKeyEvent);
+    void HandleKeyUp(const FKeyEvent& InKeyEvent);
+
+    FSlateAppMessageHandler* MyMessageHandler;
 };

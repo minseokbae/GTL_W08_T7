@@ -10,9 +10,17 @@
 #include "World/World.h"
 #include "Camera/PlayerCameraManager.h"
 #include "Camera/CameraModifier.h"
-APlayerController::APlayerController()
-{
+#include "Camera/CameraShakeBase.h"
 
+#include "SlateCore/Input/Events.h"
+
+APlayerController::APlayerController()
+    : Player(nullptr)
+    , PlayerCameraManager(nullptr)
+    , CameraShakeModifier(nullptr)
+    , MyMessageHandler(nullptr)
+{
+    MouseCenterPos = { 0, 0 };
 }
 
 void APlayerController::Tick(float DeltaTime)
@@ -72,6 +80,13 @@ void APlayerController::BeginPlay()
 void APlayerController::Initialize()
 {
     SpawnPlayerCameraManager();
+
+    MyMessageHandler = GEngineLoop.GetAppMessageHandler();
+    if (MyMessageHandler)
+    {
+        MyMessageHandler->OnKeyDownDelegate.AddDynamic(this, &APlayerController::HandleKeyDown);
+        MyMessageHandler->OnKeyUpDelegate.AddDynamic(this, &APlayerController::HandleKeyUp);
+    }
 }
 
 void APlayerController::InitMouseLook()
@@ -99,6 +114,74 @@ void APlayerController::SpawnPlayerCameraManager()
     {
         UE_LOG(ELogLevel::Error, "PlayerController dont have any Posses pawn");
     }
-    UCameraModifier* CameraModifier = FObjectFactory::ConstructObject<UCameraModifier>(this);
-    PlayerCameraManager->AddCameraModifier(CameraModifier);
+
+    CameraShakeModifier = FObjectFactory::ConstructObject<UCameraShakeBase>(this);
+    if (CameraShakeModifier)
+    {
+        PlayerCameraManager->AddCameraModifier(CameraShakeModifier);
+    }
+    else
+    {
+        UE_LOG(ELogLevel::Error, "Failed to construct CameraShakeBase");
+    }
 }
+
+void APlayerController::HandleKeyDown(const FKeyEvent& InKeyEvent)
+{
+    EInputEvent InputEvent = InKeyEvent.GetInputEvent();
+    if (InputEvent == IE_Pressed)
+    {
+        //EKeys::Type KeyType = InKeyEvent.GetKey();
+        uint32 character = InKeyEvent.GetCharacter();
+
+        switch (character)
+        {
+        case 'W':
+            if (CameraShakeModifier != nullptr) // 혹은 간단히 if (CameraShakeModifier)
+            {
+                CameraShakeModifier->PlayShake();
+                UE_LOG(ELogLevel::Display, "PlayShake");
+            }
+            else
+            {
+                // 포인터가 null일 경우 에러 로그 출력
+                UE_LOG(ELogLevel::Error, TEXT("CameraShakeModifier is NULL when trying to PlayShake!"));
+            }
+            break;
+        case 'A':
+            break;
+        case 'S':
+            break;
+        case 'D':
+            break;
+        default:
+            break;
+        }
+    }
+}
+
+void APlayerController::HandleKeyUp(const FKeyEvent& InKeyEvent)
+{
+    EInputEvent InputEvent = InKeyEvent.GetInputEvent();
+    if (InputEvent == IE_Released)
+    {
+        //EKeys::Type KeyType = InKeyEvent.GetKey();
+        uint32 character = InKeyEvent.GetCharacter();
+        switch (character)
+        {
+        case 'W':
+            UE_LOG(ELogLevel::Display, "StopShake");
+            CameraShakeModifier->StopShake();
+            break;
+        case 'A':
+            break;
+        case 'S':
+            break;
+        case 'D':
+            break;
+        default:
+            break;
+        }
+    }
+}
+
