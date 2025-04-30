@@ -3,6 +3,13 @@ Texture2D FogTexture : register(t103);
 
 SamplerState CompositingSampler : register(s0);
 
+cbuffer CameraFaceConstants : register(b0)
+{
+    float4 FadeColor;
+    float FadeAlpha;
+    float3 padding;
+}
+
 struct PS_Input
 {
     float4 Position : SV_POSITION;
@@ -40,5 +47,6 @@ float4 mainPS(PS_Input input) : SV_Target
 
     // PostProcessing Texture 추가
     float4 FinalColor = FogColor;
-    return FinalColor;
+    return float4(0,0,0,0);
+    return lerp(FinalColor, FadeColor, FadeAlpha);
 }

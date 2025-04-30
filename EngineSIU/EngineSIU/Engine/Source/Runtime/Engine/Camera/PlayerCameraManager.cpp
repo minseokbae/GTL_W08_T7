@@ -2,6 +2,7 @@
 
 #include "CameraComponent.h"
 #include "CameraModifier.h"
+#include "WindowsPlatformTime.h"
 #include "GameFramework/PlayerController.h"
 
 APlayerCameraManager::APlayerCameraManager()
@@ -23,6 +24,11 @@ void APlayerCameraManager::Tick(float DeltaTime)
 {
     AActor::Tick(DeltaTime);
 
+    static float CameraFadeTime = 0.0f;
+    CameraFadeTime += DeltaTime;
+
+    FadeAmount = FMath::Sin(CameraFadeTime) * .5f + 0.5f;
+    
     UCameraComponent* Camera =nullptr;
     for ( auto Component :  ViewTarget.Target->GetComponents())
     {

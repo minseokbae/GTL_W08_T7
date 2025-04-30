@@ -26,9 +26,9 @@ public:
     void SetViewTarget(AActor* NewTarget) { ViewTarget.SetNewTarget(NewTarget); }
     void AddCameraModifier(UCameraModifier* CameraModifier);
 public:
-    FLinearColor FadeColor;
-    float FadeAmount;
-    FVector2D FadeAlpha;
+    FLinearColor FadeColor = FLinearColor::White;
+    float FadeAmount; // 현제 페이드 정도 
+    FVector2D FadeAlpha; // 퀵 페이드 페이드 전환용 
     float FadeTime;
     float FadeTimeRemaining;
 

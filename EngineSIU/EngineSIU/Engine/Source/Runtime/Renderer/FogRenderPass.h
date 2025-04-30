@@ -9,7 +9,6 @@
 class FGraphicsDevice;
 class FDXDShaderManager;
 class FDXDBufferManager;
-class FEditorViewportClient;
 
 class FFogRenderPass : public IRenderPass
 {
@@ -34,6 +33,7 @@ public:
     void PrepareRenderState();
 
     void UpdateFogConstant(UHeightFogComponent* Fog);
+    void UdpateCameraConstants();
 
     void CreateBlendState();
     void CreateSampler();
@@ -52,3 +52,4 @@ private:
 
     TArray<UHeightFogComponent*> FogComponents;
 };
+
