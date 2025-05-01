@@ -88,6 +88,17 @@ FQuat FQuat::operator*(const FQuat& Other) const
         );
 }
 
+FQuat FQuat::operator^(float t) const
+{
+    float Angle = 0;
+    FVector Normal;
+
+    ToAxisAngle(Normal, Angle);
+
+    float TAngle = Angle * t;
+    return FQuat(Normal, TAngle);
+}
+
 FVector FQuat::RotateVector(const FVector& Vec) const
 {
     // 벡터를 쿼터니언으로 변환
@@ -117,6 +128,26 @@ FQuat FQuat::FromAxisAngle(const FVector& Axis, float Angle)
     return FQuat(cosf(halfAngle), Axis.X * sinHalfAngle, Axis.Y * sinHalfAngle, Axis.Z * sinHalfAngle);
 }
 
+void FQuat::ToAxisAngle(FVector OutAxis, float OutAngle) const
+{
+    if (W > 1.0f)
+        Normalize();
+
+    OutAngle = 2.0f * acosf(W);
+    float sinTheta = sqrtf(1.0f - W * W);
+
+    if (sinTheta < 0.001f)
+    {
+        OutAxis = FVector(0, 0, 1);
+    }
+    else
+    {
+        OutAxis.X = X / sinTheta;
+        OutAxis.Y = Y / sinTheta;
+        OutAxis.Z = Z / sinTheta;
+    }
+}
+
 FQuat FQuat::CreateRotation(float roll, float pitch, float yaw)
 {
     // 각도를 라디안으로 변환
@@ -131,6 +162,49 @@ FQuat FQuat::CreateRotation(float roll, float pitch, float yaw)
 
     // 회전 순서대로 쿼터니언 결합 (Y -> X -> Z)
     return qRoll * qPitch * qYaw;
+}
+
+FQuat FQuat::Slerp(const FQuat& A, const FQuat& B, float Alpha)
+{
+    FQuat NormalizedA = A.Normalize();
+    FQuat NormalizedB = B.Normalize();
+
+    float dot = NormalizedA.W * NormalizedB.W + NormalizedA.X * NormalizedB.X + NormalizedA.Y * NormalizedB.Y + NormalizedA.Z * NormalizedB.Z;
+
+    if (dot < 0.0f)
+    {
+        NormalizedB = FQuat(-NormalizedB.W, -NormalizedB.X, -NormalizedB.Y, -NormalizedB.Z);
+        dot = -dot;
+    }
+
+    const float DOT_THRESHOLD = 0.00095f;
+    if (dot > DOT_THRESHOLD)
+    {
+        FQuat result = FQuat(
+            FMath::Lerp(NormalizedA.W, NormalizedB.W, Alpha),
+            FMath::Lerp(NormalizedA.X, NormalizedB.X, Alpha),
+            FMath::Lerp(NormalizedA.Y, NormalizedB.Y, Alpha),
+            FMath::Lerp(NormalizedA.Z, NormalizedB.Z, Alpha)
+        );
+        return result.Normalize();
+    }
+
+    float theta_0 = acosf(dot);
+    float theta = theta_0 * Alpha;
+    float sin_theta = sinf(theta);
+    float sin_theta_0 = sinf(theta_0);
+
+    float s0 = cosf(theta) - dot * sin_theta / sin_theta_0;
+    float s1 = sin_theta / sin_theta_0;
+
+    FQuat result = FQuat(
+        s0 * NormalizedA.W + s1 * NormalizedB.W,
+        s0 * NormalizedA.X + s1 * NormalizedB.X,
+        s0 * NormalizedA.Y + s1 * NormalizedB.Y,
+        s0 * NormalizedA.Z + s1 * NormalizedB.Z
+    );
+
+    return result.Normalize();
 }
 
 FMatrix FQuat::ToMatrix() const
@@ -184,72 +258,6 @@ FQuat FQuat::Inverse() const
         // 길이가 0에 가까우면 단위 쿼터니언 반환 (오류 상황)
         return FQuat::Identity();
     }
-}
-
-// Slerp_NotNormalized가 실제 핵심 로직을 수행하도록 구현
-FQuat FQuat::Slerp_NotNormalized(const FQuat& Quat1, const FQuat& Quat2, float SlerpAlpha)
-{
-    // 두 쿼터니언 간의 각도의 코사인 값 (내적)
-    float CosTheta = FQuat::Dot(Quat1, Quat2);
-
-    // 만약 내적이 음수이면, 쿼터니언 중 하나를 반전시켜 최단 경로를 따라 보간하도록 함
-    // (q 와 -q 는 같은 회전을 나타냄)
-    FQuat Quat2Corrected = Quat2;
-    if (CosTheta < 0.0f)
-    {
-        CosTheta = -CosTheta;
-        Quat2Corrected = -Quat2; // 부호 반전된 쿼터니언 사용
-    }
-
-    // 코사인 값이 1에 매우 가까우면 (각도가 0에 가까움), 선형 보간(Lerp) 사용 (수치 안정성 및 성능)
-    if (CosTheta > THRESH_QUAT_DOT_AS_ONE)
-    {
-        // Lerp: (1 - t) * q1 + t * q2
-        FQuat Result = Quat1 * (1.0f - SlerpAlpha) + Quat2Corrected * SlerpAlpha;
-        // Lerp는 단위 길이를 보장하지 않으므로 정규화 필요
-        return Result.Normalize(); // Normalize 함수가 원본을 바꾸지 않고 새 것을 반환한다고 가정
-        // 만약 Normalize가 원본을 바꾼다면: Result.Normalize(); return Result;
-    }
-    else
-    {
-        // 표준 Slerp 공식 사용
-        // 각도(theta) 계산
-        float Theta = FMath::Acos(CosTheta); // acos 사용
-        if (Theta < SMALL_NUMBER) // 각도가 0에 매우 가까운 예외 케이스 추가 처리
-        {
-            // Lerp와 동일하게 처리
-            FQuat Result = Quat1 * (1.0f - SlerpAlpha) + Quat2Corrected * SlerpAlpha;
-            return Result.Normalize();
-        }
-
-        float SinTheta = FMath::Sin(Theta); // sin 사용
-
-        // SinTheta가 0에 가까운 경우 처리 (거의 180도 차이날 때 - CosTheta가 -1 근처)
-        // 이 경우는 CosTheta < 0 체크 및 반전으로 인해 발생하기 어려움.
-        // 하지만 방어적으로 체크 가능
-        if (FMath::Abs(SinTheta) < SMALL_NUMBER)
-        {
-            // Lerp와 유사하게 처리하거나, 단순히 Quat1 또는 Quat2 반환 가능
-            FQuat Result = Quat1 * (1.0f - SlerpAlpha) + Quat2Corrected * SlerpAlpha;
-            return Result.Normalize();
-        }
-
-        // Slerp 계수 계산
-        float Scale0 = FMath::Sin((1.0f - SlerpAlpha) * Theta) / SinTheta;
-        float Scale1 = FMath::Sin(SlerpAlpha * Theta) / SinTheta;
-
-        // 최종 보간된 쿼터니언 계산
-        return Quat1 * Scale0 + Quat2Corrected * Scale1;
-        // Slerp는 이론적으로 단위 길이를 유지하지만, 부동소수점 오류 누적 방지 위해
-        // 마지막에 Normalize()를 한번 더 호출하는 경우도 있음 (선택 사항).
-    }
-}
-
-// Slerp 함수는 Slerp_NotNormalized를 호출하여 구현
-FQuat FQuat::Slerp(const FQuat& Quat1, const FQuat& Quat2, float SlerpAlpha)
-{
-    // Slerp는 입력이 단위 쿼터니언이라고 가정하고 최단 경로 보간을 수행
-    return Slerp_NotNormalized(Quat1, Quat2, SlerpAlpha);
 }
 
 float FQuat::Dot(const FQuat& Q1, const FQuat& Q2)

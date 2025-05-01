@@ -2,6 +2,7 @@
 #include <cmath>
 #include <numbers>
 #include "Core/HAL/PlatformType.h"
+#include "Math/Quat.h"
 
 
 #define PI                   (3.1415926535897932f)
@@ -187,38 +188,6 @@ struct FMath
 	}
 
     template <typename T>
-    [[nodiscard]] static FORCEINLINE T Slerp_NotNormalized(const T& Quat1, const T& Quat2, float Slerp)
-    {
-        float RawCosom = Quat1.X * Quat2.X + Quat1.Y * Quat2.Y + Quat1.Z * Quat2.Z + Quat1.W * Quat2.W;
-        float Sign = (RawCosom >= 0.f) ? 1.f : -1.f;
-        RawCosom *= Sign;
-
-        float Scale0 = 1.f - Slerp;
-        float Scale1 = Slerp * Sign;
-
-        if (RawCosom < 0.9999f)
-        {
-            const float Omega = std::acos(RawCosom);
-            const float InvSin = 1.f / std::sin(Omega);
-            Scale0 = std::sin(Scale0 * Omega) * InvSin;
-            Scale1 = std::sin(Scale1 * Omega) * InvSin;
-        }
-
-        return T(
-            Scale0 * Quat1.X + Scale1 * Quat2.X,
-            Scale0 * Quat1.Y + Scale1 * Quat2.Y,
-            Scale0 * Quat1.Z + Scale1 * Quat2.Z,
-            Scale0 * Quat1.W + Scale1 * Quat2.W
-        );
-    }
-
-    template <typename T>
-    [[nodiscard]] static FORCEINLINE T Slerp(const T& Quat1, const T& Quat2, float Slerp)
-    {
-        return Slerp_NotNormalized(Quat1, Quat2, Slerp).Normalize();
-    }
-
-    template <typename T>
     [[nodiscard]] static FORCEINLINE T QInterpTo(const T& Current, const T& Target, float DeltaTime, float InterpSpeed)
     {
         if (InterpSpeed <= 0.f)
@@ -231,7 +200,7 @@ struct FMath
             return Target;
         }
 
-        return Slerp(Current, Target, Clamp<float>(InterpSpeed * DeltaTime, 0.f, 1.f));
+        return FQuat::Slerp(Current, Target, Clamp<float>(InterpSpeed * DeltaTime, 0.f, 1.f));
     }
 
     template <typename T>

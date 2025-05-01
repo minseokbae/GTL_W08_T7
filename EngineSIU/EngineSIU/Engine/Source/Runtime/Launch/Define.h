@@ -497,3 +497,19 @@ struct FFogConstants
     float padding1;
     float padding2;
 };
+struct FCameraOverlayConstants
+{
+    FLinearColor FadeColor;
+    float FadeAlpha;
+    FVector Padding;
+
+    FLinearColor LetterBoxColor;
+    float LetterBoxHeight;
+    float LetterBoxWidth;
+    FVector2D Padding2;
+
+    FLinearColor VignetteColor;
+    float  VignetteIntensity;   // 비네팅 강도 (0 = 없음, 1 = 최대)
+    float  VignetteSmoothness;  // 비네팅 부드러움 (0.01 ~ 0.5 정도)
+    FVector2D VignetteCenter;   // 비네팅 중심 (0.5,0.5 = 화면 중앙)
+};

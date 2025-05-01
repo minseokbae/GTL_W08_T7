@@ -22,6 +22,7 @@ private:
     float Score = 0.0f;
     float WinScore = 5.0f;
 
+    int32 HP =3;
 protected:
     USceneComponent* TransformComponent = nullptr;
 
@@ -30,6 +31,8 @@ public:
     void SetControlloer(UClass* NewController) { Controller = NewController; }
     UClass* GetDefaultPawn() { return DefaultPawn; }
     void SetDefaultPawn(UClass* pawn) { DefaultPawn = pawn; }
+    
+    int32 GetHP() { return HP; }
     float GetScore() { return Score; }
     void GameOver();
     void Win();

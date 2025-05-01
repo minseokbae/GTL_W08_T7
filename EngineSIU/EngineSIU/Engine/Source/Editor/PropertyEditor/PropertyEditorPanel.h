@@ -44,6 +44,9 @@ private:
     void RenderForMaterial(UStaticMeshComponent* StaticMeshComp);
     void RenderMaterialView(UMaterial* Material);
     void RenderCreateMaterialView();
+
+    void LoadBezier(float OutCurveParams[5], bool& OutbUseBezier);
+    void SaveBezier(float InCurveParams[5], bool InbUseBezier);
 private:
     float Width = 0, Height = 0;
     FVector Location = FVector(0, 0, 0);
@@ -56,4 +59,8 @@ private:
     UStaticMeshComponent* SelectedStaticMeshComp = nullptr;
     FObjMaterialInfo tempMaterialInfo;
     bool IsCreateMaterial;
+    bool bInitialized = false;
+
+    float CurveParams[5] = { 0.39f, 0.575f, 0.565f, 1.0f, 0 }; // x1, y1, x2, y2, presetIndex
+    bool bUseBezier = false;
 };

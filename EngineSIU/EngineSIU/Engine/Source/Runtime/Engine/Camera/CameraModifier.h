@@ -1,4 +1,5 @@
-﻿#pragma once
+#pragma once
+
 #include "UObject/Object.h"
 #include "UObject/ObjectMacros.h"
 
@@ -10,23 +11,31 @@ class UCameraModifier : public UObject
 public:
     UCameraModifier();
 
-    
-    uint8 Priority;
+    void DisableModifier();
+    void EnableModifier();
+
+    virtual bool ModifyCamera(float DeltaTime, APlayerCameraManager* NewCameraManager);
+
 protected:
-    APlayerCameraManager* CameraOwner;
+    APlayerCameraManager* CameraOwner = nullptr;
 
     float AlphaInTime;
     float AlphaOutTime;
     float Alpha;
     bool bDisabled = false;
+    float BezierCurve[5];
+    bool bUseBezier = false;
+
+    uint8 Priority;
+
+private:
 
 public:
     APlayerCameraManager* GetCameraManager() { return CameraOwner; }
     virtual void AddedToCamera(APlayerCameraManager* Camera);
-    bool IsDisabled() {return bDisabled;}
-    void DisableModifier();
-    void EnableModifier();
-    virtual void ModifyCamera(float DeltaTime, FVector ViewLocation, FRotator ViewRotation, float FOV, FVector& NewViewLocation, FRotator& NewViewRotation, float& NewFOV);
+    bool IsDisabled() { return bDisabled; }
+
+    void LoadBezierInfo();
 };
 
 
